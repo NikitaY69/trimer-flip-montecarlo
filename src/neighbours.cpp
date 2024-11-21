@@ -13,8 +13,8 @@ void UpdateNL(){
     NL.clear(); NL = std::vector < std::vector <int> > (N);
     for (int j=0; j<N-1; j++){
         for (int i=j+1; i<N; i++){
-            double xij = bcs(X[i], X[j]); double yij = bcs(Y[i], Y[j]);
-            double rij2 = (xij*xij)+(yij*yij);
+            double xij = bcs(X[i], X[j]); double yij = bcs(Y[i], Y[j]); double zij = bcs(Z[i], Z[j]);
+            double rij2 = (xij*xij)+(yij*yij)+(zij*zij);
             if (rij2 < rNL && i != j){
                 NL[j].push_back(i);
                 NL[i].push_back(j);
@@ -29,8 +29,8 @@ void UpdateNN(){
     for (int j=0; j<N-1; j++){
         for (int i=j+1; i<N; i++){
             double sigmaij = (S[i]+S[j])*(1-0.2*std::abs(S[i]-S[j]))/2;
-            double xij = bcs(X[i], X[j]); double yij = bcs(Y[i], Y[j]);
-            double rij = sqrt((xij*xij)+(yij*yij));
+            double xij = bcs(X[i], X[j]); double yij = bcs(Y[i], Y[j]); double zij = bcs(Z[i], Z[j]);
+            double rij = sqrt((xij*xij)+(yij*yij)+(zij*zij));
             if (rij < x_max*sigmaij && i != j){
                 NN[j].push_back(i);
                 NN[i].push_back(j);
@@ -45,8 +45,8 @@ void UpdateRL(){
     (N, std::vector < std::vector <int>>(nr));
     for (int i=0;i<N-1;i++){
         for (int j=i+1; j<N; j++){
-            double xij = bcs(X[i], X[j]), yij = bcs(Y[i], Y[j]);
-            double rij = sqrt(xij*xij + yij*yij);
+            double xij = bcs(X[i], X[j]); double yij = bcs(Y[i], Y[j]); double zij = bcs(Z[i], Z[j]);
+            double rij = sqrt((xij*xij)+(yij*yij)+(zij*zij));
             for (int k=0; k<nr; k++){
                 double r = k*r_step;
                 if (rij<=r){

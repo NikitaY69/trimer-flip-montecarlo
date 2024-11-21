@@ -2,7 +2,7 @@
 
 // Default run parameters
 int N = 5;
-double Size = std::sqrt (N);
+double Size = pow(N, 1./3.);
 double T = 0.04; 
 int tau = 100000;
 int tw = 1;
@@ -15,9 +15,11 @@ const int nr = 50;
 const int ns = 100;
 
 // Setting arrays
-double *X = nullptr, *Y = nullptr, *S = nullptr, *Sref = nullptr, *X0 = nullptr, *Y0 = nullptr;
-double *Xfull = nullptr, *Yfull = nullptr, *Xref = nullptr, *Yref = nullptr;
-std::vector < std::vector <double>> Xtw, Ytw;
+double *X = nullptr, *Y = nullptr, *Z = nullptr, *S = nullptr, *Sref = nullptr, 
+       *X0 = nullptr, *Y0 = nullptr, *Z0 = nullptr;
+double *Xfull = nullptr, *Yfull = nullptr, *Zfull = nullptr, 
+       *Xref = nullptr, *Yref = nullptr, *Zref = nullptr;
+std::vector < std::vector <double>> Xtw, Ytw, Ztw;
 std::vector < std::vector<int> > NL, NN;
 std::vector < std::vector < std::vector <int>>> NN_tw, RL;
 std::vector < std::string > allObs;
@@ -83,11 +85,13 @@ int main(int argc, const char * argv[]) {
     }
 
     // Resizing arrays
-    Size = std::sqrt (N);
+    Size = pow(N, 1./3.);
     steps = tw*(cycles-1)+tau;
-    X = new double[N]; Y = new double[N]; S = new double[N]; Sref = new double[N]; 
-    X0 = new double[N]; Y0 = new double[N];
-    Xfull = new double[N]; Yfull = new double[N]; Xref = new double[N]; Yref = new double[N];
+    X = new double[N]; Y = new double[N]; Z = new double[N]; 
+    S = new double[N]; Sref = new double[N]; 
+    X0 = new double[N]; Y0 = new double[N]; Z0 = new double[N];
+    Xfull = new double[N]; Yfull = new double[N]; Zfull = new double[N]; 
+    Xref = new double[N]; Yref = new double[N]; Zref = new double[N];
 
     // Xtw.resize(cycles, std::vector<double>(N));
     // Ytw.resize(cycles, std::vector<double>(N));
@@ -127,9 +131,11 @@ int main(int argc, const char * argv[]) {
             while (ss >> value){
                 cfg[i].push_back(value);
             }
-            S[i] = cfg[i][0]; X[i] = cfg[i][1]; Y[i] = cfg[i][2];
+            S[i] = cfg[i][0]; 
+            X[i] = Pshift(cfg[i][1]); Y[i] = Pshift(cfg[i][2]); Z[i] = Pshift(cfg[i][3]);
             X0[i] = X[i]; Xfull[i] = X[i]; Xref[i] = X[i]; 
             Y0[i] = Y[i]; Yfull[i] = Y[i]; Yref[i] = Y[i];
+            Z0[i] = Z[i]; Zfull[i] = Z[i]; Zref[i] = Z[i];
             Sref[i] = S[i];
             i++;}
         input_file.close();
@@ -147,8 +153,10 @@ int main(int argc, const char * argv[]) {
     std::cout << "Done" << std::endl;
 
     // Freeing allocated memory
-    delete[] X; delete[] Y; delete[] S; delete[] Sref; delete[] X0; delete[] Y0;
-    delete[] Xfull; delete[] Yfull; delete[] Xref; delete[] Yref;
+    delete[] X; delete[] Y; delete[] Z; delete[] S; delete[] Sref; 
+    delete[] X0; delete[] Y0; delete[] Z0;
+    delete[] Xfull; delete[] Yfull; delete[] Zfull;
+    delete[] Xref; delete[] Yref; delete[] Zref;
 
     return 0;
 }
