@@ -168,22 +168,28 @@ void MC(std::string out, int n_log, int n_lin){
 void TryDisp(int j){
     double dx = (ranf()-0.5)*deltaMax;
     double dy = (ranf()-0.5)*deltaMax;
+    double dz = (ranf()-0.5)*deltaMax;
     double Xnew = Pshift(X[j]+dx);
     double Ynew = Pshift(Y[j]+dy);
-    double deltaE = V(Xnew, Ynew, S[j], j) - V(X[j], Y[j], S[j], j);
+    double Znew = Pshift(Z[j]+dz);
+    double deltaE = V(Xnew, Ynew, Znew, S[j], j) - V(X[j], Y[j], Z[j], S[j], j);
     // why is the modulus function not in deltaE ?
     if (deltaE < 0){
         // Xnew = fmod(X[j],Size);
         X[j] = Xnew; //Check modulus function
         Y[j] = Ynew;
+        Z[j] = Znew;
         Xfull[j] = Xfull[j]+dx;
         Yfull[j] = Yfull[j]+dy;
+        Zfull[j] = Zfull[j]+dz;
     }
     else if (exp(-deltaE/T) > ranf()){
         X[j] = Xnew;
         Y[j] = Ynew;
+        Z[j] = Znew;
         Xfull[j] = Xfull[j]+dx;
         Yfull[j] = Yfull[j]+dy;
+        Zfull[j] = Zfull[j]+dz;
     }
 }
 
@@ -191,7 +197,7 @@ void TryDisp(int j){
 void TrySwap(int j, int k){
     double deltaS = std::abs (S[j]-S[k]);
     if(deltaS<=deltaSMax){
-        double deltaE = V(X[j],Y[j],S[k],j)+V(X[k],Y[k],S[j],k)-V(X[j],Y[j],S[j],j)-V(X[k],Y[k],S[k],k);
+        double deltaE = V(X[j],Y[j],Z[j],S[k],j)+V(X[k],Y[k],Z[k],S[j],k)-V(X[j],Y[j],S[j],Z[j],j)-V(X[k],Y[k],Z[k],S[k],k);
         if (deltaE < 0){
             double Rnew = S[k];
             S[k] = S[j];
