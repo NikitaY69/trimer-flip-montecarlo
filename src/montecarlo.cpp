@@ -1,6 +1,6 @@
 #include "swap.h"
 
-double dXCM, dYCM;
+double dXCM, dYCM, dZCM;
 int dataCounter=0;
 int cycle;
 // double swapCount[N] = {0};
@@ -8,7 +8,7 @@ int cycle;
 // Monte Carlo Simulation
 void MC(std::string out, int n_log, int n_lin){
     int cycleCounter = 0;
-    double deltaX[N], deltaY[N], deltaR2[N], R2Max = 0;
+    double deltaX[N], deltaY[N], deltaZ[N], deltaR2[N], R2Max = 0;
     // Building snapshots list (log-spaced)
     std::vector < std::pair <double, double>> pairs;
     std::vector <double> samplePoints, twPoints;
@@ -68,7 +68,8 @@ void MC(std::string out, int n_log, int n_lin){
             for (int i = 0; i < N; i++){
                 deltaX[i] = bcs(X[i],X0[i]);
                 deltaY[i] = bcs(Y[i],Y0[i]);
-                deltaR2[i] = deltaX[i]*deltaX[i] + deltaY[i]*deltaY[i];
+                deltaZ[i] = bcs(Z[i],Z0[i]);
+                deltaR2[i] = deltaX[i]*deltaX[i] + deltaY[i]*deltaY[i] + deltaZ[i]*deltaZ[i];
             R2Max = std::max_element(deltaR2,deltaR2+N)[0];
             }
             if(R2Max > RUpdate){
@@ -77,6 +78,7 @@ void MC(std::string out, int n_log, int n_lin){
                 for(int j = 0; j < N; j++){
                     X0[j] = X[j];
                     Y0[j] = Y[j];
+                    Z0[j] = Z[j];
                 }
             }
         }
@@ -102,7 +104,7 @@ void MC(std::string out, int n_log, int n_lin){
             for (int i = 0; i<N; i++){
                 // std::vector <double> disp_loc = MicroDispCorrLoc(i);
                 // std::vector <double> u_sigma = SigmaScan(i);
-                log_cfg << S[i] << " " << Xfull[i] << " " << Yfull[i] << std::endl;
+                log_cfg << S[i] << " " << Xfull[i] << " " << Yfull[i] << " " << Zfull[i] << std::endl;
                 // for (int k=0;k<nr;k++){
                 //     log_ploc << disp_loc[k] << " ";
                 // } log_ploc << std::endl;
@@ -116,10 +118,10 @@ void MC(std::string out, int n_log, int n_lin){
         if(log>0){ // checking if saving time
             UpdateNN(); // updating nearest neighbours
             // UpdateRL(); // updating per-radius neighbour-list
-            dXCM = 0; dYCM = 0;
+            dXCM = 0; dYCM = 0, dZCM;
             for (int i=0;i<N;i++){
-                double dX = Xfull[i]-Xref[i], dY = Yfull[i]-Yref[i];
-                dXCM += dX; dYCM += dY;
+                double dX = Xfull[i]-Xref[i], dY = Yfull[i]-Yref[i], dZ = Zfull[i]-Zref[i];
+                dXCM += dX; dYCM += dY; dZCM += dZ;
             } dXCM /= N; dYCM /= N;
 
             for(int s=0; s<log; s++){
@@ -130,7 +132,7 @@ void MC(std::string out, int n_log, int n_lin){
                     log_cfg.open(out_cfg + "cfg_" + std::to_string(t) + ".xy");
                     log_cfg << std::scientific << std::setprecision(8);
                     for (int i = 0; i<N; i++){
-                        log_cfg << S[i] << " " << Xfull[i] << " " << Yfull[i] << std::endl;
+                        log_cfg << S[i] << " " << Xfull[i] << " " << Yfull[i] << " " << Zfull[i] << std::endl;
                     }
                     log_cfg.close();
                 } 
