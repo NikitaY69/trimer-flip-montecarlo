@@ -37,7 +37,7 @@ const double rNL = pow(rC+rSkin,2); //NL radius squared
 const double deltaMax = 0.12; //Max particle displacement
 const double deltaSMax = 0.2; //Max diameter difference for swap
 const double RUpdate = pow(rSkin,2)/4; //When R2Max exceeds this, update NL
-const double x_max = 1.3; // maximal value of r/s for the real neighbours
+const double x_max = 1.7; // maximal value of r/s for the real neighbours
 
 const double c0 = -28/pow(1.25,12);
 const double c2 = 48/pow(1.25,14);
