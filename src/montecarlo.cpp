@@ -197,7 +197,7 @@ void TryDisp(int j){
 void TrySwap(int j, int k){
     double deltaS = std::abs (S[j]-S[k]);
     if(deltaS<=deltaSMax){
-        double deltaE = V(X[j],Y[j],Z[j],S[k],j)+V(X[k],Y[k],Z[k],S[j],k)-V(X[j],Y[j],S[j],Z[j],j)-V(X[k],Y[k],Z[k],S[k],k);
+        double deltaE = V(X[j],Y[j],Z[j],S[k],j)+V(X[k],Y[k],Z[k],S[j],k)-V(X[j],Y[j],Z[j],S[j],j)-V(X[k],Y[k],Z[k],S[k],k);
         if (deltaE < 0){
             double Rnew = S[k];
             S[k] = S[j];
