@@ -37,7 +37,6 @@ const double rNL = pow(rC+rSkin,2); //NL radius squared
 const double deltaMax = 0.12; //Max particle displacement
 const double deltaSMax = 0.2; //Max diameter difference for swap
 const double RUpdate = pow(rSkin,2)/4; //When R2Max exceeds this, update NL
-const double x_max = 1.7; // maximal value of r/s for the real neighbours
 
 const double c0 = -28/pow(1.25,12);
 const double c2 = 48/pow(1.25,14);
@@ -63,7 +62,7 @@ extern std::vector < std::vector < std::vector <int>>> NN_tw, RL;
 
 //  Function prototypes
 double bcs(double a, double b), Pshift(double a);
-void UpdateAge(int cycle), UpdateNL(), UpdateNN(), UpdateRL();
+void UpdateAge(int cycle), UpdateNL(), UpdateNN(int t0), UpdateRL();
 double PairPotential(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2),
        V(double xj, double yj, double zj, double rj, int j);
 double VTotal(), CBLoc(int cycle, int j), CB(int cycle), MSD(), FS(int cycle),

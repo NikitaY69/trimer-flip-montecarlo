@@ -166,7 +166,7 @@ double C_sigma(){
 
 // Updates the reference points for the correlation functions
 void UpdateAge(int cycle){
-    UpdateNN(); NN_tw.push_back(NN);
+    UpdateNN(0); NN_tw.push_back(NN);
     Xtw.push_back(std::vector <double>());
     Ytw.push_back(std::vector <double>());
     Ztw.push_back(std::vector <double>());
