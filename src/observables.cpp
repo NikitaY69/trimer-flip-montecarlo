@@ -1,12 +1,12 @@
 #include "swap.h"
 
 //  Calculates the potential of a pair of particles
-double PairPotential(double x1, double y1, double s1, double x2, double y2, double s2){
+double PairPotential(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2){
     double sigmaij = (s1+s2)*(1-0.2*std::abs(s1-s2))/2;
     double sigma2 = sigmaij*sigmaij;
     double rc2 = 1.25 * 1.25 * sigma2;
-    double xij = bcs(x1, x2); double yij = bcs(y1, y2);
-    double rij2 = (xij*xij)+(yij*yij);
+    double xij = bcs(x1, x2); double yij = bcs(y1, y2); double zij = bcs(z1, z2);
+    double rij2 = (xij*xij) + (yij*yij) + (zij*zij);
 
     if (rij2 > rc2) return 0;
     else {
@@ -16,10 +16,10 @@ double PairPotential(double x1, double y1, double s1, double x2, double y2, doub
 }
 
 //  Calculates potential of particle j
-double V(double xj, double yj, double rj, int j){
+double V(double xj, double yj, double zj, double rj, int j){
     double total = 0;
     for (int k: NL[j]){
-        total += PairPotential(xj, yj, rj, X[k], Y[k], S[k]);
+        total += PairPotential(xj, yj, zj, rj, X[k], Y[k], Z[k], S[k]);
     } return total;
 }
 
@@ -27,18 +27,19 @@ double V(double xj, double yj, double rj, int j){
 double VTotal(){
     double vTot = 0;
     for (int j = 0; j < N; j++)
-        vTot += V(X[j], Y[j], S[j], j);
+        vTot += V(X[j], Y[j], Z[j], S[j], j);
     return vTot;
 }
 
 //  Calculates avg. mean square displacements
 double MSD(){
-    double sum = 0, deltaX, deltaY;
+    double sum = 0, deltaX, deltaY, deltaZ;
         for (int i = 0; i < N; i++){
             deltaX = Xfull[i]-Xref[i];
             deltaY = Yfull[i]-Yref[i];
-            deltaX -= dXCM; deltaY -= dYCM;
-            sum += deltaX*deltaX + deltaY*deltaY;
+            deltaZ = Zfull[i]-Zref[i];
+            deltaX -= dXCM; deltaY -= dYCM; deltaZ -= dZCM;
+            sum += deltaX*deltaX + deltaY*deltaY + deltaZ*deltaZ;
     }
     return sum/N;
 }
@@ -49,14 +50,15 @@ double MSD(){
 double FS(int cycle){
     double dotProduct;
     double q = 2*pi/sigmaMax;
-    double sum = 0, deltaX, deltaY;
+    double sum = 0, deltaX, deltaY, deltaZ;
     int ang = 360;
     
     for (int theta=0; theta<ang; theta++){
         for (int i = 0; i < N; i++){
             deltaX = Xfull[i]-Xtw[cycle][i];
             deltaY = Yfull[i]-Ytw[cycle][i];
-            deltaX -= dXCM; deltaY -= dYCM;
+            deltaZ = Zfull[i]-Ztw[cycle][i];
+            deltaX -= dXCM; deltaY -= dYCM; deltaZ -= dZCM;
             dotProduct = q*((cos(theta*pi/180)*deltaX)+(sin(theta*pi/180)*deltaY));
             sum += cos(dotProduct);
         }
@@ -91,14 +93,14 @@ double CB(int cycle){
 // Computes the averaged local displacement correlation over all pair of particles
 double DispCorrLoc(int j){
     double sum = 0;
-    double deltaXi, deltaYi, deltaXj, deltaYj;
-    deltaXj = Xfull[j]-Xref[j], deltaYj = Yfull[j]-Yref[j];
-    deltaXj -= dXCM; deltaYj -= dYCM;
+    double deltaXi, deltaYi, deltaZi, deltaXj, deltaYj, deltaZj;
+    deltaXj = Xfull[j]-Xref[j], deltaYj = Yfull[j]-Yref[j]; deltaZj = Zfull[j]-Zref[j];
+    deltaXj -= dXCM; deltaYj -= dYCM; deltaZj -= dZCM;
     for (int i=0; i<N; i++){
         if (i!=j){
-            deltaXi=Xfull[i]-Xref[i]; deltaYi=Yfull[i]-Yref[i];
-            deltaXi -= dXCM; deltaYi -= dYCM;
-            sum += deltaXi*deltaXj + deltaYi*deltaYj;
+            deltaXi=Xfull[i]-Xref[i]; deltaYi=Yfull[i]-Yref[i]; deltaZi=Zfull[i]-Zref[i];
+            deltaXi -= dXCM; deltaYi -= dYCM; deltaZi -= dZCM;
+            sum += deltaXi*deltaXj + deltaYi*deltaYj + deltaZi*deltaZj;
         }
     }
     return sum/(N-1);
@@ -115,16 +117,16 @@ double DispCorr(){
 // Per-radius local displacement correlation
 std::vector <double> MicroDispCorrLoc(int j){
     std::vector <double> sum(nr, 0);
-    double deltaXi, deltaYi, deltaXj, deltaYj;
-    deltaXj = Xfull[j]-Xref[j], deltaYj = Yfull[j]-Yref[j];
-    deltaXj -= dXCM; deltaYj -= dYCM;
+    double deltaXi, deltaYi, deltaZi, deltaXj, deltaYj, deltaZj;
+    deltaXj = Xfull[j]-Xref[j], deltaYj = Yfull[j]-Yref[j]; deltaZj = Zfull[j]-Zref[j];
+    deltaXj -= dXCM; deltaYj -= dYCM; deltaZj -= dZCM;
     for (int k=0; k<nr; k++){
         if (RL[j][k].size()==0) sum[k] = 0;
         else{
             for (int i: RL[j][k]){
-                deltaXi=Xfull[i]-Xref[i]; deltaYi=Yfull[i]-Yref[i];
-                deltaXi -= dXCM; deltaYi -= dYCM;
-                sum[k] += deltaXi*deltaXj + deltaYi*deltaYj;
+                deltaXi=Xfull[i]-Xref[i]; deltaYi=Yfull[i]-Yref[i]; deltaZi=Zfull[i]-Zref[i];
+                deltaXi -= dXCM; deltaYi -= dYCM; deltaZi -= dZCM;
+                sum[k] += deltaXi*deltaXj + deltaYi*deltaYj + deltaZi*deltaZj;
             } sum[k] /= RL[j][k].size();
         }
     } return sum;
@@ -148,7 +150,7 @@ std::vector <double> SigmaScan(int j){
     std::vector <double> Vs(ns, 0);
     for (int k=0; k<ns; k++){
         s = S[j]+k*dS;
-        Vs[k] = V(X[j], Y[j], s, j);
+        Vs[k] = V(X[j], Y[j], Z[j], s, j);
     } return Vs;
 }
 
@@ -164,12 +166,14 @@ double C_sigma(){
 
 // Updates the reference points for the correlation functions
 void UpdateAge(int cycle){
-    UpdateNN(); NN_tw.push_back(NN);
+    UpdateNN(0); NN_tw.push_back(NN);
     Xtw.push_back(std::vector <double>());
     Ytw.push_back(std::vector <double>());
+    Ztw.push_back(std::vector <double>());
     for (int i=0; i<N; i++){
         Xtw[cycle].push_back(Xfull[i]);
         Ytw[cycle].push_back(Yfull[i]);
+        Ztw[cycle].push_back(Zfull[i]);
     }
 }
 

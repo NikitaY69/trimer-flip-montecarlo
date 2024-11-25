@@ -1,6 +1,6 @@
 #include "swap.h"
 
-double dXCM, dYCM;
+double dXCM, dYCM, dZCM;
 int dataCounter=0;
 int cycle;
 // double swapCount[N] = {0};
@@ -8,7 +8,7 @@ int cycle;
 // Monte Carlo Simulation
 void MC(std::string out, int n_log, int n_lin){
     int cycleCounter = 0;
-    double deltaX[N], deltaY[N], deltaR2[N], R2Max = 0;
+    double deltaX[N], deltaY[N], deltaZ[N], deltaR2[N], R2Max = 0;
     // Building snapshots list (log-spaced)
     std::vector < std::pair <double, double>> pairs;
     std::vector <double> samplePoints, twPoints;
@@ -68,7 +68,8 @@ void MC(std::string out, int n_log, int n_lin){
             for (int i = 0; i < N; i++){
                 deltaX[i] = bcs(X[i],X0[i]);
                 deltaY[i] = bcs(Y[i],Y0[i]);
-                deltaR2[i] = deltaX[i]*deltaX[i] + deltaY[i]*deltaY[i];
+                deltaZ[i] = bcs(Z[i],Z0[i]);
+                deltaR2[i] = deltaX[i]*deltaX[i] + deltaY[i]*deltaY[i] + deltaZ[i]*deltaZ[i];
             R2Max = std::max_element(deltaR2,deltaR2+N)[0];
             }
             if(R2Max > RUpdate){
@@ -77,6 +78,7 @@ void MC(std::string out, int n_log, int n_lin){
                 for(int j = 0; j < N; j++){
                     X0[j] = X[j];
                     Y0[j] = Y[j];
+                    Z0[j] = Z[j];
                 }
             }
         }
@@ -102,7 +104,7 @@ void MC(std::string out, int n_log, int n_lin){
             for (int i = 0; i<N; i++){
                 // std::vector <double> disp_loc = MicroDispCorrLoc(i);
                 // std::vector <double> u_sigma = SigmaScan(i);
-                log_cfg << S[i] << " " << Xfull[i] << " " << Yfull[i] << std::endl;
+                log_cfg << S[i] << " " << Xfull[i] << " " << Yfull[i] << " " << Zfull[i] << std::endl;
                 // for (int k=0;k<nr;k++){
                 //     log_ploc << disp_loc[k] << " ";
                 // } log_ploc << std::endl;
@@ -114,13 +116,13 @@ void MC(std::string out, int n_log, int n_lin){
             // log_sigma.close(); log_ploc.close();
         }
         if(log>0){ // checking if saving time
-            UpdateNN(); // updating nearest neighbours
+            UpdateNN(t); // updating nearest neighbours
             // UpdateRL(); // updating per-radius neighbour-list
-            dXCM = 0; dYCM = 0;
+            dXCM = 0; dYCM = 0, dZCM = 0;
             for (int i=0;i<N;i++){
-                double dX = Xfull[i]-Xref[i], dY = Yfull[i]-Yref[i];
-                dXCM += dX; dYCM += dY;
-            } dXCM /= N; dYCM /= N;
+                double dX = Xfull[i]-Xref[i], dY = Yfull[i]-Yref[i], dZ = Zfull[i]-Zref[i];
+                dXCM += dX; dYCM += dY; dZCM += dZ;
+            } dXCM /= N; dYCM /= N; dZCM /= N;
 
             for(int s=0; s<log; s++){
                 // looping different eventual tws
@@ -130,7 +132,7 @@ void MC(std::string out, int n_log, int n_lin){
                     log_cfg.open(out_cfg + "cfg_" + std::to_string(t) + ".xy");
                     log_cfg << std::scientific << std::setprecision(8);
                     for (int i = 0; i<N; i++){
-                        log_cfg << S[i] << " " << Xfull[i] << " " << Yfull[i] << std::endl;
+                        log_cfg << S[i] << " " << Xfull[i] << " " << Yfull[i] << " " << Zfull[i] << std::endl;
                     }
                     log_cfg.close();
                 } 
@@ -166,22 +168,28 @@ void MC(std::string out, int n_log, int n_lin){
 void TryDisp(int j){
     double dx = (ranf()-0.5)*deltaMax;
     double dy = (ranf()-0.5)*deltaMax;
+    double dz = (ranf()-0.5)*deltaMax;
     double Xnew = Pshift(X[j]+dx);
     double Ynew = Pshift(Y[j]+dy);
-    double deltaE = V(Xnew, Ynew, S[j], j) - V(X[j], Y[j], S[j], j);
+    double Znew = Pshift(Z[j]+dz);
+    double deltaE = V(Xnew, Ynew, Znew, S[j], j) - V(X[j], Y[j], Z[j], S[j], j);
     // why is the modulus function not in deltaE ?
     if (deltaE < 0){
         // Xnew = fmod(X[j],Size);
         X[j] = Xnew; //Check modulus function
         Y[j] = Ynew;
+        Z[j] = Znew;
         Xfull[j] = Xfull[j]+dx;
         Yfull[j] = Yfull[j]+dy;
+        Zfull[j] = Zfull[j]+dz;
     }
     else if (exp(-deltaE/T) > ranf()){
         X[j] = Xnew;
         Y[j] = Ynew;
+        Z[j] = Znew;
         Xfull[j] = Xfull[j]+dx;
         Yfull[j] = Yfull[j]+dy;
+        Zfull[j] = Zfull[j]+dz;
     }
 }
 
@@ -189,7 +197,7 @@ void TryDisp(int j){
 void TrySwap(int j, int k){
     double deltaS = std::abs (S[j]-S[k]);
     if(deltaS<=deltaSMax){
-        double deltaE = V(X[j],Y[j],S[k],j)+V(X[k],Y[k],S[j],k)-V(X[j],Y[j],S[j],j)-V(X[k],Y[k],S[k],k);
+        double deltaE = V(X[j],Y[j],Z[j],S[k],j)+V(X[k],Y[k],Z[k],S[j],k)-V(X[j],Y[j],Z[j],S[j],j)-V(X[k],Y[k],Z[k],S[k],k);
         if (deltaE < 0){
             double Rnew = S[k];
             S[k] = S[j];
