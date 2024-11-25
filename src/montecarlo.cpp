@@ -118,11 +118,11 @@ void MC(std::string out, int n_log, int n_lin){
         if(log>0){ // checking if saving time
             UpdateNN(t); // updating nearest neighbours
             // UpdateRL(); // updating per-radius neighbour-list
-            dXCM = 0; dYCM = 0, dZCM;
+            dXCM = 0; dYCM = 0, dZCM = 0;
             for (int i=0;i<N;i++){
                 double dX = Xfull[i]-Xref[i], dY = Yfull[i]-Yref[i], dZ = Zfull[i]-Zref[i];
                 dXCM += dX; dYCM += dY; dZCM += dZ;
-            } dXCM /= N; dYCM /= N;
+            } dXCM /= N; dYCM /= N; dZCM /= N;
 
             for(int s=0; s<log; s++){
                 // looping different eventual tws
