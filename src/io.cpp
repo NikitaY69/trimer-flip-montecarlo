@@ -49,7 +49,6 @@ void ReadTrimCFG(std::string input){
             mol_index[i] = cfg[i][0];
             type = cfg[i][1]-1; 
             S[i] = diameters[type];
-            std::cout << S[i] << std::endl;
             X[i] = Pshift(cfg[i][2]); Y[i] = Pshift(cfg[i][3]); Z[i] = Pshift(cfg[i][4]);
             X0[i] = X[i]; Xfull[i] = X[i]; Xref[i] = X[i]; 
             Y0[i] = Y[i]; Yfull[i] = Y[i]; Yref[i] = Y[i];

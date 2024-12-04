@@ -66,6 +66,7 @@ extern std::vector < std::vector < std::vector <int>>> NN_tw, RL;
 //  Function prototypes
 void ReadPolyCFG(std::string input), ReadTrimCFG(std::string input);
 double bcs(double a, double b), Pshift(double a);
+std::vector < std::vector<int> > GetBonds();
 void UpdateAge(int cycle), UpdateNL(), UpdateNN(int t0), UpdateRL();
 double PairPotential(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2),
        V(double xj, double yj, double zj, double rj, int j);

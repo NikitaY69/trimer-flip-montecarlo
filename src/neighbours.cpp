@@ -9,6 +9,18 @@ double Pshift(double a){
     return a - Size*floor((a+Size/2)/Size);
 }
 
+// Retrieves bonded particles for all particles (done only once)
+// ATM it is implicit that configurations are written in the trimers index order
+std::vector < std::vector<int> > GetBonds(){
+    std::vector < std::vector<int> > vec(N);
+    for (int i=0; i<N; i+=3){
+        vec[i].push_back(i+1); vec[i].push_back(i+2);
+        vec[i+1].push_back(i); vec[i+1].push_back(i+2);
+        vec[i+2].push_back(i); vec[i+2].push_back(i+1);
+    }
+    return vec;
+}
+
 // Computes the pseudo-interacting neighbours list
 void UpdateNL(){
     NL.clear(); NL = std::vector < std::vector <int> > (N);
