@@ -30,6 +30,7 @@ extern const int ns; // Number of sigma calculations for the energy scan
 
 // Model parameters
 extern double Size; //44.721359550000003; //Size of the system
+const double density = 1.2;
 const double sigmaMax = 1.613048; //Maximum diameter of particles
 const double rSkin = 1.5; //Radius of neighbours included in NL (e.g. 1.8)
 const double rC = 1.25 * sigmaMax; //Cutoff radius for calculating potential
@@ -42,8 +43,10 @@ const double c0 = -28/pow(1.25,12);
 const double c2 = 48/pow(1.25,14);
 const double c4 = -21/pow(1.25,16);
 const double pi = 3.14159265358979323846;
+const double diameters[3] = {0.9, 1.0, 1.1};
 
 // Arrays
+extern int *mol_index;
 extern double *X, *Y, *Z, *S, *Sref, *X0, *Y0, *Z0;
 extern double *Xfull, *Yfull, *Zfull, *Xref, *Yref, *Zref;
 extern std::vector < std::vector <double>> Xtw, Ytw, Ztw;
@@ -61,7 +64,9 @@ extern std::vector < std::vector < std::vector <int>>> NN_tw, RL;
 // nn_tw nearest neighbours at last aging update
 
 //  Function prototypes
+void ReadPolyCFG(std::string input), ReadTrimCFG(std::string input);
 double bcs(double a, double b), Pshift(double a);
+std::vector < std::vector<int> > GetBonds();
 void UpdateAge(int cycle), UpdateNL(), UpdateNN(int t0), UpdateRL();
 double PairPotential(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2),
        V(double xj, double yj, double zj, double rj, int j);

@@ -2,7 +2,7 @@
 
 // Default run parameters
 int N = 5;
-double Size = pow(N, 1./3.);
+double Size = pow(N, density/3.);
 double T = 0.04; 
 int tau = 100000;
 int tw = 1;
@@ -15,6 +15,7 @@ const int nr = 50;
 const int ns = 100;
 
 // Setting arrays
+int *mol_index = nullptr;
 double *X = nullptr, *Y = nullptr, *Z = nullptr, *S = nullptr, *Sref = nullptr, 
        *X0 = nullptr, *Y0 = nullptr, *Z0 = nullptr;
 double *Xfull = nullptr, *Yfull = nullptr, *Zfull = nullptr, 
@@ -85,8 +86,9 @@ int main(int argc, const char * argv[]) {
     }
 
     // Resizing arrays
-    Size = pow(N, 1./3.);
+    Size = pow(N, density/3.);
     steps = tw*(cycles-1)+tau;
+    mol_index = new int[N];
     X = new double[N]; Y = new double[N]; Z = new double[N]; 
     S = new double[N]; Sref = new double[N]; 
     X0 = new double[N]; Y0 = new double[N]; Z0 = new double[N];
@@ -118,41 +120,17 @@ int main(int argc, const char * argv[]) {
     params.close();
 
     // Read init config
-    std::string line;
-    std::ifstream input_file(input);
-    if (input_file.is_open()){
-        int i = 0; // particle index
-        std::vector<std::vector<double>> cfg; // array of configurations
-        while (std::getline(input_file, line)){
-            double value;
-            std::stringstream ss(line);
+    ReadTrimCFG(input);
+    // UpdateNL(); // First list of neighbours
 
-            cfg.push_back(std::vector<double>());
-            while (ss >> value){
-                cfg[i].push_back(value);
-            }
-            S[i] = cfg[i][0]; 
-            X[i] = Pshift(cfg[i][1]); Y[i] = Pshift(cfg[i][2]); Z[i] = Pshift(cfg[i][3]);
-            X0[i] = X[i]; Xfull[i] = X[i]; Xref[i] = X[i]; 
-            Y0[i] = Y[i]; Yfull[i] = Y[i]; Yref[i] = Y[i];
-            Z0[i] = Z[i]; Zfull[i] = Z[i]; Zref[i] = Z[i];
-            Sref[i] = S[i];
-            i++;}
-        input_file.close();
-
-    } else {
-        std::cout << input << std::endl;
-        return 0;
-    }
-    UpdateNL(); // First list of neighbours
-
-    // Do simulation with timer
-    double t0 = time(NULL); // Timer
-    MC(outdir, logPoints, linPoints); 
-    std::cout << "Time taken: " << (time(NULL) - t0) << "s" << std::endl; 
-    std::cout << "Done" << std::endl;
+    // // Do simulation with timer
+    // double t0 = time(NULL); // Timer
+    // MC(outdir, logPoints, linPoints); 
+    // std::cout << "Time taken: " << (time(NULL) - t0) << "s" << std::endl; 
+    // std::cout << "Done" << std::endl;
 
     // Freeing allocated memory
+    delete[] mol_index;
     delete[] X; delete[] Y; delete[] Z; delete[] S; delete[] Sref; 
     delete[] X0; delete[] Y0; delete[] Z0;
     delete[] Xfull; delete[] Yfull; delete[] Zfull;
