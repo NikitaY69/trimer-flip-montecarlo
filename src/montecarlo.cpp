@@ -5,7 +5,7 @@ int dataCounter=0;
 int cycle;
 // double swapCount[N] = {0};
 
-// Monte Carlo Simulation
+// Monte Carlo Simulation loop
 void MC(std::string out, int n_log, int n_lin){
     int cycleCounter = 0;
     double deltaX[N], deltaY[N], deltaZ[N], deltaR2[N], R2Max = 0;
@@ -164,7 +164,7 @@ void MC(std::string out, int n_log, int n_lin){
     // log_p.close();
 }
 
-//  Tries displacing one particle j by vector dr = (dx, dy)
+//  Tries displacing one particle j by vector dr = (dx, dy, dz)
 void TryDisp(int j){
     double dx = (ranf()-0.5)*deltaMax;
     double dy = (ranf()-0.5)*deltaMax;
@@ -215,6 +215,7 @@ void TrySwap(int j, int k){
     }
 }
 
+// Converts string to real observable
 double whichObs(std::string obs, int cycl){
     if (obs=="MSD") return MSD();
     else if (obs=="U") return VTotal()/(2*N);

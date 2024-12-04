@@ -1,6 +1,6 @@
 #include "swap.h"
 
-//  Calculates the potential of a pair of particles
+//  Calculates the pairwise potential between two particles
 double PairPotential(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2){
     double sigmaij = (s1+s2)*(1-0.2*std::abs(s1-s2))/2;
     double sigma2 = sigmaij*sigmaij;
@@ -15,7 +15,7 @@ double PairPotential(double x1, double y1, double z1, double s1, double x2, doub
     }
 }
 
-//  Calculates potential of particle j
+//  Calculates potential associated to particle j
 double V(double xj, double yj, double zj, double rj, int j){
     double total = 0;
     for (int k: NL[j]){
@@ -23,7 +23,7 @@ double V(double xj, double yj, double zj, double rj, int j){
     } return total;
 }
 
-//  Calculates total system energy
+//  Calculates total system energy (double)
 double VTotal(){
     double vTot = 0;
     for (int j = 0; j < N; j++)
@@ -46,7 +46,7 @@ double MSD(){
 
 // Correlation functions
 
-//  Calculates the self scattering function
+//  Calculates the intermediate self-scattering function
 double FS(int cycle){
     double dotProduct;
     double q = 2*pi/sigmaMax;

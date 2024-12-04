@@ -5,6 +5,7 @@ double x_max; // Maximum value of r/s for real neighbours
 //  Calculates difference of a and b while applying periodic boundary conditions
 double bcs(double a, double b) {return Size/2 - std::abs(std::abs(a-b)-Size/2);}
 
+// Shifts coordinate inside main box
 double Pshift(double a){
     return a - Size*floor((a+Size/2)/Size);
 }
