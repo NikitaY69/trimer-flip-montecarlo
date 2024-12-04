@@ -90,70 +90,6 @@ double CB(int cycle){
     } return tot/N;
 }
 
-// Computes the averaged local displacement correlation over all pair of particles
-double DispCorrLoc(int j){
-    double sum = 0;
-    double deltaXi, deltaYi, deltaZi, deltaXj, deltaYj, deltaZj;
-    deltaXj = Xfull[j]-Xref[j], deltaYj = Yfull[j]-Yref[j]; deltaZj = Zfull[j]-Zref[j];
-    deltaXj -= dXCM; deltaYj -= dYCM; deltaZj -= dZCM;
-    for (int i=0; i<N; i++){
-        if (i!=j){
-            deltaXi=Xfull[i]-Xref[i]; deltaYi=Yfull[i]-Yref[i]; deltaZi=Zfull[i]-Zref[i];
-            deltaXi -= dXCM; deltaYi -= dYCM; deltaZi -= dZCM;
-            sum += deltaXi*deltaXj + deltaYi*deltaYj + deltaZi*deltaZj;
-        }
-    }
-    return sum/(N-1);
-}
-
-// Global displacement correlation
-double DispCorr(){
-    double sum = 0;
-    for (int i=0;i<N;i++){
-        sum += DispCorrLoc(i);
-    } return sum/N;
-}
-
-// Per-radius local displacement correlation
-std::vector <double> MicroDispCorrLoc(int j){
-    std::vector <double> sum(nr, 0);
-    double deltaXi, deltaYi, deltaZi, deltaXj, deltaYj, deltaZj;
-    deltaXj = Xfull[j]-Xref[j], deltaYj = Yfull[j]-Yref[j]; deltaZj = Zfull[j]-Zref[j];
-    deltaXj -= dXCM; deltaYj -= dYCM; deltaZj -= dZCM;
-    for (int k=0; k<nr; k++){
-        if (RL[j][k].size()==0) sum[k] = 0;
-        else{
-            for (int i: RL[j][k]){
-                deltaXi=Xfull[i]-Xref[i]; deltaYi=Yfull[i]-Yref[i]; deltaZi=Zfull[i]-Zref[i];
-                deltaXi -= dXCM; deltaYi -= dYCM; deltaZi -= dZCM;
-                sum[k] += deltaXi*deltaXj + deltaYi*deltaYj + deltaZi*deltaZj;
-            } sum[k] /= RL[j][k].size();
-        }
-    } return sum;
-}
-
-// Per-radius global dispalcement correlation
-std::vector <double> MicroDispCorr(){
-    std::vector <double> sum(nr, 0);
-    for (int i=0; i<N; i++){
-        std::vector <double> disp_i = MicroDispCorrLoc(i);
-        for (int k=0;k<nr;k++){
-            sum[k] += disp_i[k];
-        } 
-    } return sum;
-}
-
-// Computes the sigma-dependence of the potential energy at the particle level
-std::vector <double> SigmaScan(int j){
-    double dS = 0.002;
-    double s;
-    std::vector <double> Vs(ns, 0);
-    for (int k=0; k<ns; k++){
-        s = S[j]+k*dS;
-        Vs[k] = V(X[j], Y[j], Z[j], s, j);
-    } return Vs;
-}
-
 // Computes the diameter auto-correlation function
 double C_sigma(){
     double sigma_m = 1.000218223;
@@ -174,11 +110,5 @@ void UpdateAge(int cycle){
         Xtw[cycle].push_back(Xfull[i]);
         Ytw[cycle].push_back(Yfull[i]);
         Ztw[cycle].push_back(Zfull[i]);
-    }
-}
-
-double whichObs(int idx){
-    if (idx == 0){
-        
     }
 }

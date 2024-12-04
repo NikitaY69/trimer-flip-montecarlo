@@ -11,8 +11,6 @@ int steps = tw*(cycles-1)+tau;
 int linPoints = 50;
 int logPoints = 50;
 double p_swap = 0.2;
-const int nr = 50;
-const int ns = 100;
 
 // Setting arrays
 int *mol_index = nullptr;
@@ -94,13 +92,6 @@ int main(int argc, const char * argv[]) {
     X0 = new double[N]; Y0 = new double[N]; Z0 = new double[N];
     Xfull = new double[N]; Yfull = new double[N]; Zfull = new double[N]; 
     Xref = new double[N]; Yref = new double[N]; Zref = new double[N];
-
-    // Xtw.resize(cycles, std::vector<double>(N));
-    // Ytw.resize(cycles, std::vector<double>(N));
-    // NL.resize(N, std::vector<int>(N));
-    // NN.resize(N, std::vector<int>(N));
-    // NN_tw.resize(N, std::vector<std::vector<int>>(tw, std::vector<int>(N)));
-    // RL.resize(N, std::vector<std::vector<int>>(nr, std::vector<int>(N)));
 
     // creating outdir if not existing
     fs::path out_path = outdir;

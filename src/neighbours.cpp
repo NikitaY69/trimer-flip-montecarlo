@@ -1,5 +1,4 @@
 #include "swap.h"
-double r_step = 35.0/(nr-1);
 double x_max; // Maximum value of r/s for real neighbours
 
 //  Calculates difference of a and b while applying periodic boundary conditions
@@ -56,24 +55,5 @@ void UpdateNN(int t0){
                 NN[i].push_back(j);
             }
         } 
-    }
-}
-
-// Computes the per-radius neighbours list
-void UpdateRL(){
-    RL.clear(); RL = std::vector < std::vector < std::vector <int>>> 
-    (N, std::vector < std::vector <int>>(nr));
-    for (int i=0;i<N-1;i++){
-        for (int j=i+1; j<N; j++){
-            double xij = bcs(X[i], X[j]); double yij = bcs(Y[i], Y[j]); double zij = bcs(Z[i], Z[j]);
-            double rij = sqrt((xij*xij)+(yij*yij)+(zij*zij));
-            for (int k=0; k<nr; k++){
-                double r = k*r_step;
-                if (rij<=r){
-                    RL[j][k].push_back(i);
-                    RL[i][k].push_back(j);
-                }
-            }
-        }
     }
 }
