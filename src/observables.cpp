@@ -43,7 +43,7 @@ double FENEPair(double x1, double y1, double z1, double s1, double x2, double y2
     // if (1-rij2/R02 <= 0){
     //     std::cout << "Houston we have a problem" << std::endl;
     // }
-    return -0.5*kij*R02*(1-rij2/R02);
+    return -0.5*kij*R02*log(1-rij2/R02);
 }
 
 //  Calculates potential associated to particle j
