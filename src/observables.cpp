@@ -1,7 +1,7 @@
 #include "swap.h"
 
-//  Calculates the pairwise potential between two particles
-double PairPotential(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2){
+//  Calculates the pairwise purely repulsive potential between two particles
+double RepulsivePair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2){
     double sigmaij = (s1+s2)*(1-0.2*std::abs(s1-s2))/2;
     double sigma2 = sigmaij*sigmaij;
     double rc2 = 1.25 * 1.25 * sigma2;
@@ -15,12 +15,51 @@ double PairPotential(double x1, double y1, double z1, double s1, double x2, doub
     }
 }
 
+//  Calculates the pairwise WCA potential between two particles
+double WCAPair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2){
+    double sigmaij = (s1+s2)/2;
+    double sigma2 = sigmaij*sigmaij;
+    double rc2 = pow(2, 1./3.) * sigma2;
+    double xij = bcs(x1, x2); double yij = bcs(y1, y2); double zij = bcs(z1, z2);
+    double rij2 = (xij*xij) + (yij*yij) + (zij*zij);
+    if (rij2 > rc2) return 0;
+    else {
+        double a2 = sigma2/rij2; double a6 = a2*a2*a2;
+        return 4*(a6*a6-a6+0.25);
+    }
+}
+
+//  Calculates the pairwise FENE potential between two particles
+double FENEPair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2){
+    double sigmaij = (s1+s2)/2;
+    double sigma2 = sigmaij*sigmaij;
+    double kij = 30/sigma2;
+    // std::cout << kij << " ";
+    double R02 = 1.5*1.5*sigma2;
+    // std::cout << sqrt(R02) << " ";
+    double xij = bcs(x1, x2); double yij = bcs(y1, y2); double zij = bcs(z1, z2);
+    double rij2 = (xij*xij) + (yij*yij) + (zij*zij);
+    // std::cout << pow(2, 1./6.)*sigmaij << " ";
+    // if (1-rij2/R02 <= 0){
+    //     std::cout << "Houston we have a problem" << std::endl;
+    // }
+    return -0.5*kij*R02*(1-rij2/R02);
+}
+
 //  Calculates potential associated to particle j
 double V(double xj, double yj, double zj, double rj, int j){
+    // std::cout << j << std::endl;;
     double total = 0;
     for (int k: NL[j]){
-        total += PairPotential(xj, yj, zj, rj, X[k], Y[k], Z[k], S[k]);
-    } return total;
+        total += WCAPair(xj, yj, zj, rj, X[k], Y[k], Z[k], S[k]);
+    }
+    for (int k: BN[j]){
+        // std::cout << k << " ";
+        total += FENEPair(xj, yj, zj, rj, X[k], Y[k], Z[k], S[k]);
+        // std::cout << std::endl;
+    } 
+    // std::cout << std::endl;
+    return total;
 }
 
 //  Calculates total system energy (double)

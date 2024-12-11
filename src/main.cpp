@@ -19,7 +19,7 @@ double *X = nullptr, *Y = nullptr, *Z = nullptr, *S = nullptr, *Sref = nullptr,
 double *Xfull = nullptr, *Yfull = nullptr, *Zfull = nullptr, 
        *Xref = nullptr, *Yref = nullptr, *Zref = nullptr;
 std::vector < std::vector <double>> Xtw, Ytw, Ztw;
-std::vector < std::vector<int> > NL, NN;
+std::vector < std::vector<int> > NL, NN, BN;
 std::vector < std::vector < std::vector <int>>> NN_tw, RL;
 std::vector < std::string > allObs;
 
@@ -112,6 +112,11 @@ int main(int argc, const char * argv[]) {
 
     // Read init config
     ReadTrimCFG(input);
+    BN = GetBonds();
+    UpdateNL(); // First list of neighbours
+    // std::cout << FENEPair(X[0], Y[0], Z[0], S[0], X[1], Y[1], Z[1], S[1]) << std::endl;
+    std::cout << VTotal()/(2*N) << std::endl;
+    // std::cout << log(1) << std::endl;
     // UpdateNL(); // First list of neighbours
 
     // // Do simulation with timer
