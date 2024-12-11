@@ -2,7 +2,7 @@
 
 // Default run parameters
 int N = 5;
-double Size = pow(N, density/3.);
+double Size = pow(N/density, 1/3.);
 double T = 0.04; 
 int tau = 100000;
 int tw = 1;
@@ -84,7 +84,7 @@ int main(int argc, const char * argv[]) {
     }
 
     // Resizing arrays
-    Size = pow(N, density/3.);
+    Size = pow(N/density, 1./3.);
     steps = tw*(cycles-1)+tau;
     mol_index = new int[N];
     X = new double[N]; Y = new double[N]; Z = new double[N]; 
