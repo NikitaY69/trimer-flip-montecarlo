@@ -2,7 +2,7 @@
 
 // Default run parameters
 int N = 5;
-double Size = pow(N, density/3.);
+double Size = pow(N/density, 1/3.);
 double T = 0.04; 
 int tau = 100000;
 int tw = 1;
@@ -19,7 +19,7 @@ double *X = nullptr, *Y = nullptr, *Z = nullptr, *S = nullptr, *Sref = nullptr,
 double *Xfull = nullptr, *Yfull = nullptr, *Zfull = nullptr, 
        *Xref = nullptr, *Yref = nullptr, *Zref = nullptr;
 std::vector < std::vector <double>> Xtw, Ytw, Ztw;
-std::vector < std::vector<int> > NL, NN;
+std::vector < std::vector<int> > NL, NN, BN;
 std::vector < std::vector < std::vector <int>>> NN_tw, RL;
 std::vector < std::string > allObs;
 
@@ -84,7 +84,7 @@ int main(int argc, const char * argv[]) {
     }
 
     // Resizing arrays
-    Size = pow(N, density/3.);
+    Size = pow(N/density, 1./3.);
     steps = tw*(cycles-1)+tau;
     mol_index = new int[N];
     X = new double[N]; Y = new double[N]; Z = new double[N]; 
@@ -112,7 +112,9 @@ int main(int argc, const char * argv[]) {
 
     // Read init config
     ReadTrimCFG(input);
-    // UpdateNL(); // First list of neighbours
+    BN = GetBonds();
+    UpdateNL(); // First list of neighbours
+    std::cout << VTotal()/(2*N) << std::endl;
 
     // // Do simulation with timer
     // double t0 = time(NULL); // Timer
