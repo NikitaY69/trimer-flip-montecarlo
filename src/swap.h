@@ -29,12 +29,10 @@ extern const int nr; // Number of radius calculations for the correlation length
 extern const int ns; // Number of sigma calculations for the energy scan
 
 // Model parameters
-extern double Size; //44.721359550000003; //Size of the system
+extern double Size;
 const double density = 1.2;
-// const double sigmaMax = 1.613048; //Maximum diameter of particles
 const double sigmaMax = 1.1; //Maximum diameter of particles
 const double rSkin = 1.5; //Radius of neighbours included in NL (e.g. 1.8)
-// const double rC = 1.25 * sigmaMax; //Cutoff radius for calculating potential
 const double rC = pow(2., 1./6.) * sigmaMax; //Cutoff radius for calculating potential
 const double rNL = pow(rC+rSkin,2); //NL radius squared
 const double deltaMax = 0.12; //Max particle displacement
@@ -47,6 +45,8 @@ const double pi = 3.14159265358979323846;
 const double c0 = -28/pow(1.25,12);
 const double c2 = 48/pow(1.25,14);
 const double c4 = -21/pow(1.25,16);
+// const double sigmaMax = 1.613048; //Maximum diameter of particles
+// const double rC = 1.25 * sigmaMax; //Cutoff radius for calculating potential
 
 // WCA parameters
 // Arrays

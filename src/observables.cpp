@@ -34,32 +34,21 @@ double FENEPair(double x1, double y1, double z1, double s1, double x2, double y2
     double sigmaij = (s1+s2)/2;
     double sigma2 = sigmaij*sigmaij;
     double kij = 30/sigma2;
-    // std::cout << kij << " ";
     double R02 = 1.5*1.5*sigma2;
-    // std::cout << sqrt(R02) << " ";
     double xij = bcs(x1, x2); double yij = bcs(y1, y2); double zij = bcs(z1, z2);
     double rij2 = (xij*xij) + (yij*yij) + (zij*zij);
-    // std::cout << pow(2, 1./6.)*sigmaij << " ";
-    // if (1-rij2/R02 <= 0){
-    //     std::cout << "Houston we have a problem" << std::endl;
-    // }
     return -0.5*kij*R02*log(1-rij2/R02);
 }
 
 //  Calculates potential associated to particle j
 double V(double xj, double yj, double zj, double rj, int j){
-    // std::cout << j << std::endl;;
     double total = 0;
     for (int k: NL[j]){
         total += WCAPair(xj, yj, zj, rj, X[k], Y[k], Z[k], S[k]);
     }
     for (int k: BN[j]){
-        // std::cout << k << " ";
         total += FENEPair(xj, yj, zj, rj, X[k], Y[k], Z[k], S[k]);
-        // std::cout << std::endl;
-    } 
-    // std::cout << std::endl;
-    return total;
+    } return total;
 }
 
 //  Calculates total system energy (double)

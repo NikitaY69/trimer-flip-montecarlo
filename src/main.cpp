@@ -114,10 +114,7 @@ int main(int argc, const char * argv[]) {
     ReadTrimCFG(input);
     BN = GetBonds();
     UpdateNL(); // First list of neighbours
-    // std::cout << FENEPair(X[0], Y[0], Z[0], S[0], X[1], Y[1], Z[1], S[1]) << std::endl;
     std::cout << VTotal()/(2*N) << std::endl;
-    // std::cout << log(1) << std::endl;
-    // UpdateNL(); // First list of neighbours
 
     // // Do simulation with timer
     // double t0 = time(NULL); // Timer
