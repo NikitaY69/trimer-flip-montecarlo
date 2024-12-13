@@ -10,7 +10,7 @@ int cycles = 1;
 int steps = tw*(cycles-1)+tau;
 int linPoints = 50;
 int logPoints = 50;
-double p_swap = 0.2;
+double p_flip = 0.2;
 
 // Setting arrays
 int *mol_index = nullptr;
@@ -46,7 +46,7 @@ int main(int argc, const char * argv[]) {
         ("cycles", po::value<int>(&cycles)->default_value(cycles), "set number of cycles")
         ("lin", po::value<int>(&linPoints)->default_value(linPoints), "set number of lin-spaced snapshots")
         ("log", po::value<int>(&logPoints)->default_value(logPoints), "set number of log-spaced snapshots")
-        ("p_swap", po::value<double>(&p_swap)->default_value(p_swap), "set swap-attempt probability")
+        ("p_flip", po::value<double>(&p_flip)->default_value(p_flip), "set flip-attempt probability")
         ("MSD", "Flag to compute MSD")
         ("Cb", "Flag to compute Cb")
         ("Fs", "Flag to compute Fs")
@@ -105,22 +105,21 @@ int main(int argc, const char * argv[]) {
     params.open(outdir + "params.txt");
     params << "rootdir" << " " << "N" << " " << "T" << " " 
            << "tau" << " " << "tw" << " " << "cycles" << " " 
-           << "logPoints" << " " << "linPoints" << " " << "p_swap" << std::endl;
+           << "logPoints" << " " << "linPoints" << " " << "p_flip" << std::endl;
     params << outdir << " " << N << " " << T << " " << tau << " " << tw << " "
-           << cycles << " " << logPoints << " " << linPoints << " " << p_swap << std::endl;
+           << cycles << " " << logPoints << " " << linPoints << " " << p_flip << std::endl;
     params.close();
 
     // Read init config
     ReadTrimCFG(input);
     BN = GetBonds();
     UpdateNL(); // First list of neighbours
-    std::cout << VTotal()/(2*N) << std::endl;
 
-    // // Do simulation with timer
-    // double t0 = time(NULL); // Timer
-    // MC(outdir, logPoints, linPoints); 
-    // std::cout << "Time taken: " << (time(NULL) - t0) << "s" << std::endl; 
-    // std::cout << "Done" << std::endl;
+    // Do simulation with timer
+    double t0 = time(NULL); // Timer
+    MC(outdir, logPoints, linPoints); 
+    std::cout << "Time taken: " << (time(NULL) - t0) << "s" << std::endl; 
+    std::cout << "Done" << std::endl;
 
     // Freeing allocated memory
     delete[] mol_index;

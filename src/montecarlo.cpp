@@ -125,8 +125,8 @@ void MC(std::string out, int n_log, int n_lin){
         };
         // Doing the MC
         for (int i = 0; i < N; i++){
-            if (ranf() > p_swap) TryDisp(i); //Displacement probability 0.8
-            else TrySwap(i,floor(ranf()*N)); //Swap probability 0.2
+            if (ranf() > p_flip) TryDisp(floor(ranf()*N)); //Displacement probability 0.8
+            else TryFlip(floor(ranf()*N)); //Flip probability 0.2
         }
         
         if((t-1)%100==0) std::cout << (t-1) << std::endl;; // Counting steps
@@ -163,25 +163,21 @@ void TryDisp(int j){
     }
 }
 
-//  Tries swapping the pair of particles j, k
-void TrySwap(int j, int k){
-    double deltaS = std::abs (S[j]-S[k]);
-    if(deltaS<=deltaSMax){
-        double deltaE = V(X[j],Y[j],Z[j],S[k],j)+V(X[k],Y[k],Z[k],S[j],k)-V(X[j],Y[j],Z[j],S[j],j)-V(X[k],Y[k],Z[k],S[k],k);
-        if (deltaE < 0){
-            double Rnew = S[k];
-            S[k] = S[j];
-            S[j] = Rnew;
-            // swapCount[j] += 1; swapCount[k] += 1;
-        }
-        else if (exp(-deltaE/T) > ranf()){
-            double Rnew = S[k];
-            S[k] = S[j];
-            S[j] = Rnew;
-            // swapCount[j] += 1; swapCount[k] += 1;
-        }
-    } else{
-        // pass
+//  Tries swapping two particles diameters in the molecule containing particle j
+void TryFlip(int j){
+    int a = rand() % 2; int k = BN[j][a]; 
+    double deltaE = V(X[j],Y[j],Z[j],S[k],j)+V(X[k],Y[k],Z[k],S[j],k)-V(X[j],Y[j],Z[j],S[j],j)-V(X[k],Y[k],Z[k],S[k],k);
+    if (deltaE < 0){
+        double Rnew = S[k];
+        S[k] = S[j];
+        S[j] = Rnew;
+        // swapCount[j] += 1; swapCount[k] += 1;
+    }
+    else if (exp(-deltaE/T) > ranf()){
+        double Rnew = S[k];
+        S[k] = S[j];
+        S[j] = Rnew;
+        // swapCount[j] += 1; swapCount[k] += 1;
     }
 }
 
