@@ -6,7 +6,7 @@ double bcs(double a, double b) {return Size/2 - std::abs(std::abs(a-b)-Size/2);}
 
 // Shifts coordinate inside main box
 double Pshift(double a){
-    return a - Size*floor((a+Size/2)/Size);
+    return fmod(a, Size);//- Size*floor((a+Size/2)/Size);
 }
 
 // Retrieves bonded particles for all particles (done only once)
