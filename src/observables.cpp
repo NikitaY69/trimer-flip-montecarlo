@@ -37,7 +37,10 @@ double FENEPair(double x1, double y1, double z1, double s1, double x2, double y2
     double R02 = 1.5*1.5*sigma2;
     double xij = bcs(x1, x2); double yij = bcs(y1, y2); double zij = bcs(z1, z2);
     double rij2 = (xij*xij) + (yij*yij) + (zij*zij);
-    return -0.5*kij*R02*log(1-rij2/R02);
+    if (rij2 > R02) return 0;
+    else {
+        return -0.5*kij*R02*log(1-rij2/R02);
+    }
 }
 
 //  Calculates potential associated to particle j
