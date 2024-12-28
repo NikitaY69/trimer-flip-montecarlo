@@ -31,7 +31,7 @@ std::string outdir;
 int main(int argc, const char * argv[]) {
     
     // Random number generator
-    srand(time(NULL)*1.0);
+    srand(42);
 
     // Define the command-line options
     po::options_description desc("Allowed options");
@@ -114,7 +114,13 @@ int main(int argc, const char * argv[]) {
     ReadTrimCFG(input);
     BN = GetBonds();
     UpdateNL(); // First list of neighbours
-
+    std::cout << NL[141].size() << std::endl;
+    // std::cout << "11: "; WCAPair(2, 2, 2, 0.9, 2, 2, 2, 0.9);
+    // std::cout << "12: "; FENEPair(2, 2, 2, 0.9, 2, 2, 2, 1);
+    // std::cout << "13: "; FENEPair(2, 2, 2, 0.9, 2, 2, 2, 1.1);
+    // std::cout << "22: "; WCAPair(2, 2, 2, 1, 2, 2, 2, 1);
+    // std::cout << "23: "; FENEPair(2, 2, 2, 1, 2, 2, 2, 1.1);
+    // std::cout << "33: "; WCAPair(2, 2, 2, 1.1, 2, 2, 2, 1.1);
     // Do simulation with timer
     double t0 = time(NULL); // Timer
     MC(outdir, logPoints, linPoints); 

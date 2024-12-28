@@ -55,7 +55,7 @@ void MC(std::string out, int n_log, int n_lin){
 
     for(int t = 1; t <= steps; t++){
         // Updating NL
-        if((t-1) % 150 == 0) {//Change number?
+        if((t-1) % 1 == 0) {//Change number?
             // every 150 steps we check if we need to update the NL
             for (int i = 0; i < N; i++){
                 deltaX[i] = bcs(X[i],X0[i]);
@@ -65,6 +65,7 @@ void MC(std::string out, int n_log, int n_lin){
             R2Max = std::max_element(deltaR2,deltaR2+N)[0];
             }
             if(R2Max > RUpdate){
+                // std::cout << (t-1) << std::endl;
                 UpdateNL();
                 R2Max = 0;
                 for(int j = 0; j < N; j++){
@@ -95,7 +96,7 @@ void MC(std::string out, int n_log, int n_lin){
         }
 
         if(log>0){ // checking if log saving time
-            UpdateNN(t); // updating nearest neighbours
+            // UpdateNN(t); // updating nearest neighbours
             dXCM = 0; dYCM = 0, dZCM = 0;
             for (int i=0;i<N;i++){
                 double dX = Xfull[i]-Xref[i], dY = Yfull[i]-Yref[i], dZ = Zfull[i]-Zref[i];
@@ -129,7 +130,7 @@ void MC(std::string out, int n_log, int n_lin){
             else TryFlip(floor(ranf()*N)); //Flip probability 0.2
         }
         
-        if((t-1)%100==0) std::cout << (t-1) << std::endl;; // Counting steps
+        // if((t-1)%100==0) std::cout << (t-1) << std::endl;; // Counting steps
     };
     log_obs.close();
 }

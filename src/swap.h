@@ -32,7 +32,7 @@ extern const int ns; // Number of sigma calculations for the energy scan
 extern double Size;
 const double density = 1.2;
 const double sigmaMax = 1.1; //Maximum diameter of particles
-const double rSkin = 1.5; //Radius of neighbours included in NL (e.g. 1.8)
+const double rSkin = 2; //Radius of neighbours included in NL (e.g. 1.8)
 const double rC = pow(2., 1./6.) * sigmaMax; //Cutoff radius for calculating potential
 const double rNL = pow(rC+rSkin,2); //NL radius squared
 const double deltaMax = 0.12; //Max particle displacement
