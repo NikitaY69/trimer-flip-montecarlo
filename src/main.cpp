@@ -11,6 +11,8 @@ int steps = tw*(cycles-1)+tau;
 int linPoints = 50;
 int logPoints = 50;
 double p_flip = 0.2;
+double rSkin = 2.;
+double rNL = pow(rC+rSkin, 2);
 
 // Setting arrays
 int *mol_index = nullptr;
@@ -31,7 +33,7 @@ std::string outdir;
 int main(int argc, const char * argv[]) {
     
     // Random number generator
-    srand(time(NULL)*1.0);
+    srand(42);
 
     // Define the command-line options
     po::options_description desc("Allowed options");
@@ -47,6 +49,7 @@ int main(int argc, const char * argv[]) {
         ("lin", po::value<int>(&linPoints)->default_value(linPoints), "set number of lin-spaced snapshots")
         ("log", po::value<int>(&logPoints)->default_value(logPoints), "set number of log-spaced snapshots")
         ("p_flip", po::value<double>(&p_flip)->default_value(p_flip), "set flip-attempt probability")
+        ("rSkin", po::value<double>(&rSkin)->default_value(rSkin), "set skin-radius for the neighbours lists")
         ("MSD", "Flag to compute MSD")
         ("Cb", "Flag to compute Cb")
         ("Fs", "Flag to compute Fs")
@@ -86,6 +89,7 @@ int main(int argc, const char * argv[]) {
     // Resizing arrays
     Size = pow(N/density, 1./3.);
     steps = tw*(cycles-1)+tau;
+    rNL = pow(rC+rSkin,2);
     mol_index = new int[N];
     X = new double[N]; Y = new double[N]; Z = new double[N]; 
     S = new double[N]; Sref = new double[N]; 
@@ -114,12 +118,15 @@ int main(int argc, const char * argv[]) {
     ReadTrimCFG(input);
     BN = GetBonds();
     UpdateNL(); // First list of neighbours
-
+    // Calculating average number of particles in neighbours list
+    double avg = 0;
+    for (int i=0; i<N; i++){
+        avg += NL[i].size();
+    }
     // Do simulation with timer
     double t0 = time(NULL); // Timer
     MC(outdir, logPoints, linPoints); 
-    std::cout << "Time taken: " << (time(NULL) - t0) << "s" << std::endl; 
-    std::cout << "Done" << std::endl;
+    std::cout << rSkin << " " << avg/N << " " << (time(NULL) - t0) << std::endl; 
 
     // Freeing allocated memory
     delete[] mol_index;

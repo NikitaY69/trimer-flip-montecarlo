@@ -25,6 +25,7 @@ extern int steps; //Monte Carlo sweeps
 extern double T; //Temperature in units of 1/k_B
 extern int tw; //Waiting time to start correlation calculations
 extern double p_flip; //Flip-attempt probability
+extern double rSkin; //Radius of neighbours included in NL (e.g. 1.8)
 extern const int nr; // Number of radius calculations for the correlation lengths
 extern const int ns; // Number of sigma calculations for the energy scan
 
@@ -32,9 +33,8 @@ extern const int ns; // Number of sigma calculations for the energy scan
 extern double Size;
 const double density = 1.2;
 const double sigmaMax = 1.1; //Maximum diameter of particles
-const double rSkin = 2; //Radius of neighbours included in NL (e.g. 1.8)
 const double rC = pow(2., 1./6.) * sigmaMax; //Cutoff radius for calculating potential
-const double rNL = pow(rC+rSkin,2); //NL radius squared
+extern double rNL; //NL radius squared
 const double deltaMax = 0.12; //Max particle displacement
 const double RUpdate = pow(rSkin,2)/4; //When R2Max exceeds this, update NL
 const double diameters[3] = {0.9, 1.0, 1.1};
