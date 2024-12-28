@@ -19,7 +19,7 @@ double RepulsivePair(double x1, double y1, double z1, double s1, double x2, doub
 double WCAPair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2){
     double sigmaij = (s1+s2)/2;
     double sigma2 = sigmaij*sigmaij;
-    double rc;
+    // double rc;
     // if (s1==0.9 & s2 == s1){
     //     rc = 1.01025;
     // } else if (s1 == 0.9 & s2 == 1.0){
