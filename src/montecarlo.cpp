@@ -130,7 +130,7 @@ void MC(std::string out, int n_log, int n_lin){
             else TryFlip(floor(ranf()*N)); //Flip probability 0.2
         }
         
-        if((t-1)%10000==0) std::cout << (t-1) << std::endl;; // Counting steps
+        if((t-1)%100000==0) std::cout << (t-1) << std::endl;; // Counting steps
     };
     log_obs.close();
 }
