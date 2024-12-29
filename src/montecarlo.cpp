@@ -65,7 +65,7 @@ void MC(std::string out, int n_log, int n_lin){
             R2Max = std::max_element(deltaR2,deltaR2+N)[0];
             }
             if(R2Max > RUpdate){
-                // std::cout << (t-1) << std::endl;
+                std::cout << (t-1) << std::endl;
                 UpdateNL();
                 R2Max = 0;
                 for(int j = 0; j < N; j++){

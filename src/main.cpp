@@ -13,6 +13,7 @@ int logPoints = 50;
 double p_flip = 0.2;
 double rSkin = 2.;
 double rNL = pow(rC+rSkin, 2);
+double RUpdate = pow(rSkin,2)/4;
 
 // Setting arrays
 int *mol_index = nullptr;
@@ -90,6 +91,8 @@ int main(int argc, const char * argv[]) {
     Size = pow(N/density, 1./3.);
     steps = tw*(cycles-1)+tau;
     rNL = pow(rC+rSkin,2);
+    RUpdate = pow(rSkin,2)/4;
+
     mol_index = new int[N];
     X = new double[N]; Y = new double[N]; Z = new double[N]; 
     S = new double[N]; Sref = new double[N]; 

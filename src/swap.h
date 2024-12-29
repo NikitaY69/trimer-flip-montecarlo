@@ -36,7 +36,7 @@ const double sigmaMax = 1.1; //Maximum diameter of particles
 const double rC = pow(2., 1./6.) * sigmaMax; //Cutoff radius for calculating potential
 extern double rNL; //NL radius squared
 const double deltaMax = 0.12; //Max particle displacement
-const double RUpdate = pow(rSkin,2)/4; //When R2Max exceeds this, update NL
+extern double RUpdate; //When R2Max exceeds this, update NL
 const double diameters[3] = {0.9, 1.0, 1.1};
 const double pi = 3.14159265358979323846;
 
