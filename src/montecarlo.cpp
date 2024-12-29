@@ -167,18 +167,20 @@ void TryDisp(int j){
 //  Tries swapping two particles diameters in the molecule containing particle j
 void TryFlip(int j){
     int a = rand() % 2; int k = BN[j][a]; 
-    double deltaE = V(X[j],Y[j],Z[j],S[k],j)+V(X[k],Y[k],Z[k],S[j],k)-V(X[j],Y[j],Z[j],S[j],j)-V(X[k],Y[k],Z[k],S[k],k);
+    // Energy of the two clusters before the move attempt
+    double V_old = V(X[j],Y[j],Z[j],S[j],j)+V(X[k],Y[k],Z[k],S[k],k);
+    // Temporarily saving old configurations
+    double Sj_old = S[j]; double Sk_old = S[k];
+    S[j] = Sk_old; S[k] = Sj_old;
+    // Energy of the two clusters after the move attempt
+    double V_new = V(X[j],Y[j],Z[j],S[j],j)+V(X[k],Y[k],Z[k],S[k],k);
+
+    double deltaE = V_new - V_old;
     if (deltaE < 0){
-        double Rnew = S[k];
-        S[k] = S[j];
-        S[j] = Rnew;
-        // swapCount[j] += 1; swapCount[k] += 1;
+        // pass
     }
-    else if (exp(-deltaE/T) > ranf()){
-        double Rnew = S[k];
-        S[k] = S[j];
-        S[j] = Rnew;
-        // swapCount[j] += 1; swapCount[k] += 1;
+    else if (exp(-deltaE/T) < ranf()){
+        S[j] = Sj_old; S[k] = Sk_old;
     }
 }
 
