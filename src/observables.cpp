@@ -33,20 +33,8 @@ double WCAPair(double x1, double y1, double z1, double s1, double x2, double y2,
 double FENEPair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2){
     double sigmaij = (s1+s2)/2;
     double sigma2 = sigmaij*sigmaij;
-    double k; double R0;
-    if ((s1 == 0.9 && s2 == 1.0) || (s1 == 1.0 && s2 == 0.9)){
-        k = 33.241; R0 = 1.425;
-    } else if ((s1 == 1.0 && s2 == 1.1) || (s1 == 1.1 && s2 == 1.0)){
-        k = 27.210884; R0 = 1.575;
-    } else if ((s1 == 0.9 && s2 == 1.1) || (s1 == 1.1 && s2 == 0.9)){
-        k = 30.0; R0 = 1.5;
-    } else{
-        std::cout << s1 << " " << s2 << std::endl;
-    }
-    double kij = k;
-    double R02 = R0*R0;
-    // double kij = 30/sigma2;
-    // double R02 = 1.5*1.5*sigma2;
+    double kij = 30/sigma2;
+    double R02 = 1.5*1.5*sigma2;
     double xij = bcs(x1, x2); double yij = bcs(y1, y2); double zij = bcs(z1, z2);
     double rij2 = (xij*xij) + (yij*yij) + (zij*zij);
     if (rij2 > R02) return 0;
