@@ -49,27 +49,41 @@ const double c4 = -21/pow(1.25,16);
 
 // WCA parameters
 // Arrays
-extern int *mol_index;
-extern double *X, *Y, *Z, *S, *Sref, *X0, *Y0, *Z0;
-extern double *Xfull, *Yfull, *Zfull, *Xref, *Yref, *Zref;
-extern std::vector < std::vector <double>> Xtw, Ytw, Ztw;
+// extern int *mol_index;
+// extern double *X, *Y, *Z, *S, *Sref, *X0, *Y0, *Z0;
+// extern double *Xfull, *Yfull, *Zfull, *Xref, *Yref, *Zref;
+// extern std::vector < std::vector <double>> Xtw, Ytw, Ztw;
 // X0 initial position at last neighbour list update
 // Xfull real positions (not taking into account periodic boundaries)
 // Xref positition at t=0
 // Xtw position at last aging update
-extern double dXCM, dYCM, dZCM;
+// extern double dXCM, dYCM, dZCM;
 extern std::vector < std::string > allObs;
 
 //  Neighbour Lists
-extern std::vector < std::vector<int> > NL, NN, BN;
-extern std::vector < std::vector < std::vector <int>>> NN_tw, RL;
+// extern std::vector < std::vector<int> > NL, NN, BN;
+// extern std::vector < std::vector < std::vector <int>>> NN_tw, RL;
 // nn_0 nearest neighbours at t=0
 // nn_tw nearest neighbours at last aging update
 
 //  Function prototypes
-void ReadPolyCFG(std::string input), ReadTrimCFG(std::string input);
+// Structure to keep track of the evolution of configurations
+struct configuration {
+    std::vector <double> X, Y, Z, Xfull, Yfull, Zfull, X0, Y0, Z0, S;
+    std::vector < std::vector<int> > NL, BN;
+
+    // Constructor to initialize vectors
+    configuration(): X(N), Y(N), Z(N), Xfull(N), Yfull(N), Zfull(N), 
+                     X0(N), Y0(N), Z0(N), S(N), NL(N), BN(N){};
+    // Method to calculate center of mass coordinates
+    double GetCM_coord(int coord_index);
+    // Method to update the verlet lists for each particle
+    void UpdateNL(), GetBonds();
+};
+
+configuration ReadPolyCFG(std::string input), ReadTrimCFG(std::string input);
 double bcs(double a, double b), Pshift(double a);
-std::vector < std::vector<int> > GetBonds();
+std::vector < std::vector <int> > GetBonds();;
 void UpdateAge(int cycle), UpdateNL(), UpdateNN(int t0), UpdateRL();
 
 double RepulsivePair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2),

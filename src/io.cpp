@@ -1,7 +1,8 @@
 #include "swap.h"
 
 // Read polydisperse configs
-void ReadPolyCFG(std::string input){
+configuration ReadPolyCFG(std::string input){
+    configuration C;
     std::string line;
     std::ifstream input_file(input);
     if (input_file.is_open()){
@@ -15,12 +16,12 @@ void ReadPolyCFG(std::string input){
             while (ss >> value){
                 cfg[i].push_back(value);
             }
-            S[i] = cfg[i][0]; 
-            X[i] = Pshift(cfg[i][1]); Y[i] = Pshift(cfg[i][2]); Z[i] = Pshift(cfg[i][3]);
-            X0[i] = X[i]; Xfull[i] = X[i]; Xref[i] = X[i]; 
-            Y0[i] = Y[i]; Yfull[i] = Y[i]; Yref[i] = Y[i];
-            Z0[i] = Z[i]; Zfull[i] = Z[i]; Zref[i] = Z[i];
-            Sref[i] = S[i];
+            C.S[i] = cfg[i][0]; 
+            C.X[i] = Pshift(cfg[i][1]); C.Y[i] = Pshift(cfg[i][2]); C.Z[i] = Pshift(cfg[i][3]);
+            C.X0[i] = C.X[i]; C.Xfull[i] = C.X[i]; // C.Xref[i] = X[i]; 
+            C.Y0[i] = C.Y[i]; C.Yfull[i] = C.Y[i]; // C.Yref[i] = Y[i];
+            C.Z0[i] = C.Z[i]; C.Zfull[i] = C.Z[i]; // C.Zref[i] = Z[i];
+            // C.Sref[i] = S[i];
             i++;}
         input_file.close();
         
@@ -31,7 +32,8 @@ void ReadPolyCFG(std::string input){
 }
 
 // Read trimer configs
-void ReadTrimCFG(std::string input){
+configuration ReadTrimCFG(std::string input){
+    configuration C;
     int type;
     std::string line;
     std::ifstream input_file(input);
@@ -46,17 +48,18 @@ void ReadTrimCFG(std::string input){
             while (ss >> value){
                 cfg[i].push_back(value);
             }
-            mol_index[i] = cfg[i][0];
+            // mol_index[i] = cfg[i][0];
             type = cfg[i][1]-1; 
-            S[i] = diameters[type];
-            X[i] = Pshift(cfg[i][2]); Y[i] = Pshift(cfg[i][3]); Z[i] = Pshift(cfg[i][4]);
-            X0[i] = X[i]; Xfull[i] = X[i]; Xref[i] = X[i]; 
-            Y0[i] = Y[i]; Yfull[i] = Y[i]; Yref[i] = Y[i];
-            Z0[i] = Z[i]; Zfull[i] = Z[i]; Zref[i] = Z[i];
-            Sref[i] = S[i];
+            C.S[i] = (diameters[type]);
+            C.X[i] = Pshift(cfg[i][2]); C.Y[i] = Pshift(cfg[i][3]); C.Z[i] = Pshift(cfg[i][4]);
+            C.X0[i] = C.X[i]; C.Xfull[i] = C.X[i]; // Xref[i] = X[i]; 
+            C.Y0[i] = C.Y[i]; C.Yfull[i] = C.Y[i]; // Yref[i] = Y[i];
+            C.Z0[i] = C.Z[i]; C.Zfull[i] = C.Z[i]; // Zref[i] = Z[i];
+            // Sref[i] = S[i];
             i++;}
         input_file.close();
-        
+        return C;
+
     } else {
         std::string error = input + " not found";
         throw error;
