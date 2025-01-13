@@ -65,7 +65,7 @@ double VTotal(){
 }
 
 //  Calculates avg. mean square displacements
-double MSD(configuration cfg0){
+double MSD(const configuration& cfg0){
     double sum = 0, deltaX, deltaY, deltaZ;
         for (int i = 0; i < N; i++){
             deltaX = cfg.Xfull[i]-cfg0.Xfull[i]; deltaX -= (cfg.XCM-cfg0.XCM);
@@ -79,7 +79,7 @@ double MSD(configuration cfg0){
 // Correlation functions
 
 //  Calculates the intermediate self-scattering function
-double FS(configuration cfg0){
+double FS(const configuration& cfg0){
     double dotProduct;
     double q = 2*pi/sigmaMax;
     double sum = 0, deltaX, deltaY, deltaZ;
@@ -97,7 +97,7 @@ double FS(configuration cfg0){
     return sum/(ang*N);
 }
 
-// // Updates the reference points for the correlation functions
+// // Updates the reference configuration for the correlation functions
 // void UpdateAge(int cycle){
 //     UpdateNN(0); NN_tw.push_back(NN);
 //     Xtw.push_back(std::vector <double>());
