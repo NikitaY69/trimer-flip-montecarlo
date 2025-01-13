@@ -58,6 +58,7 @@ void MC(std::string out, int n_log, int n_lin){
     
         // Updating reference observables
         if((t-1)%tw == 0 && cycleCounter < cycles){
+            cfg.UpdateCM_coord();
             cfgsCycles.push_back(cfg); cycleCounter++;
         } 
 
@@ -76,6 +77,7 @@ void MC(std::string out, int n_log, int n_lin){
         }
 
         if(log>0){ // checking if log saving time
+            cfg.UpdateCM_coord();
             for(int s=0; s<log; s++){
                 // looping different eventual tws
                 cycle = twPoints[dataCounter];
