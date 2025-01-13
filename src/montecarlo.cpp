@@ -135,21 +135,21 @@ void TryDisp(int j){
 
 //  Tries swapping two particles diameters in the molecule containing particle j
 void TryFlip(int j){
-    int a = rand() % 2; int k = BN[j][a]; 
+    int a = rand() % 2; int k = cfg.BN[j][a]; 
     // Energy of the two clusters before the move attempt
-    double V_old = V(X[j],Y[j],Z[j],S[j],j)+V(X[k],Y[k],Z[k],S[k],k);
+    double V_old = V(j)+V(k);
     // Temporarily saving old configurations
-    double Sj_old = S[j]; double Sk_old = S[k];
-    S[j] = Sk_old; S[k] = Sj_old;
+    double Sj_old = cfg.S[j]; double Sk_old = cfg.S[k];
+    cfg.S[j] = Sk_old; cfg.S[k] = Sj_old;
     // Energy of the two clusters after the move attempt
-    double V_new = V(X[j],Y[j],Z[j],S[j],j)+V(X[k],Y[k],Z[k],S[k],k);
+    double V_new = V(j)+V(k);
 
     double deltaE = V_new - V_old;
     if (deltaE < 0){
         // pass
     }
     else if (exp(-deltaE/T) < ranf()){
-        S[j] = Sj_old; S[k] = Sk_old;
+        cfg.S[j] = Sj_old; cfg.S[k] = Sk_old;
     }
 }
 
