@@ -41,6 +41,23 @@ void configuration::GetBonds(){
     }
 }
 
+// Checking whether to update the neighbours list
+void configuration::CheckNL(){
+    double deltaX, deltaY, deltaZ, R2Max = 0;
+    std::vector <double> deltaR2(N);
+    for (int i = 0; i < N; i++){
+        deltaX = bcs(X[i],X0[i]);
+        deltaY = bcs(Y[i],Y0[i]);
+        deltaZ = bcs(Z[i],Z0[i]);
+        deltaR2[i] = deltaX*deltaX + deltaY*deltaY + deltaZ*deltaZ;
+    } R2Max = *(std::max_element(deltaR2.begin(), deltaR2.end()));
+    if(R2Max > RUpdate){
+        // std::cout << (t-1) << std::endl;
+        UpdateNL();
+        R2Max = 0;
+        X0 = X; Y0 = Y; Z0 = Z;
+    }
+}
 //  Calculates difference of a and b while applying periodic boundary conditions
 double bcs(double a, double b) {return Size/2 - std::abs(std::abs(a-b)-Size/2);}
 

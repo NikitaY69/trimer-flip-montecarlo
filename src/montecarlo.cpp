@@ -1,13 +1,12 @@
 #include "swap.h"
-
-double dXCM, dYCM, dZCM;
-int dataCounter=0;
-int cycle;
+std::vector <configuration> cfgsCycles;
 
 // Monte Carlo Simulation loop
 void MC(std::string out, int n_log, int n_lin){
+    int dataCounter=0;
+    int cycle;
     int cycleCounter = 0;
-    double deltaX[N], deltaY[N], deltaZ[N], deltaR2[N], R2Max = 0;
+    
     // Building snapshots list (log-spaced)
     std::vector < std::pair <double, double>> pairs;
     std::vector <double> samplePoints, twPoints;
@@ -54,31 +53,12 @@ void MC(std::string out, int n_log, int n_lin){
     fs::create_directory(out_cfg); 
 
     for(int t = 1; t <= steps; t++){
-        // Updating NL
-        if((t-1) % 1 == 0) {//Change number?
-            // every 150 steps we check if we need to update the NL
-            for (int i = 0; i < N; i++){
-                deltaX[i] = bcs(X[i],X0[i]);
-                deltaY[i] = bcs(Y[i],Y0[i]);
-                deltaZ[i] = bcs(Z[i],Z0[i]);
-                deltaR2[i] = deltaX[i]*deltaX[i] + deltaY[i]*deltaY[i] + deltaZ[i]*deltaZ[i];
-            R2Max = std::max_element(deltaR2,deltaR2+N)[0];
-            }
-            if(R2Max > RUpdate){
-                // std::cout << (t-1) << std::endl;
-                UpdateNL();
-                R2Max = 0;
-                for(int j = 0; j < N; j++){
-                    X0[j] = X[j];
-                    Y0[j] = Y[j];
-                    Z0[j] = Z[j];
-                }
-            }
-        }
+        // Checking whether to update the neighbours list
+        cfg.CheckNL();
     
         // Updating reference observables
         if((t-1)%tw == 0 && cycleCounter < cycles){
-            UpdateAge(cycleCounter); cycleCounter++;
+            cfgsCycles.push_back(cfg); cycleCounter++;
         } 
 
         // // Writing observables to text file
@@ -90,19 +70,12 @@ void MC(std::string out, int n_log, int n_lin){
             log_cfg.open(out_cfg + "cfg_" + std::to_string(t) + ".xy");
             log_cfg << std::scientific << std::setprecision(8);
             for (int i = 0; i<N; i++){
-                log_cfg << S[i] << " " << Xfull[i] << " " << Yfull[i] << " " << Zfull[i] << std::endl;
+                log_cfg << cfg.S[i] << " " << cfg.Xfull[i] << " " << cfg.Yfull[i] << " " << cfg.Zfull[i] << std::endl;
             }
             log_cfg.close();
         }
 
         if(log>0){ // checking if log saving time
-            // UpdateNN(t); // updating nearest neighbours
-            dXCM = 0; dYCM = 0, dZCM = 0;
-            for (int i=0;i<N;i++){
-                double dX = Xfull[i]-Xref[i], dY = Yfull[i]-Yref[i], dZ = Zfull[i]-Zref[i];
-                dXCM += dX; dYCM += dY; dZCM += dZ;
-            } dXCM /= N; dYCM /= N; dZCM /= N;
-
             for(int s=0; s<log; s++){
                 // looping different eventual tws
                 cycle = twPoints[dataCounter];
@@ -111,7 +84,7 @@ void MC(std::string out, int n_log, int n_lin){
                     log_cfg.open(out_cfg + "cfg_" + std::to_string(t) + ".xy");
                     log_cfg << std::scientific << std::setprecision(8);
                     for (int i = 0; i<N; i++){
-                        log_cfg << S[i] << " " << Xfull[i] << " " << Yfull[i] << " " << Zfull[i] << std::endl;
+                        log_cfg << cfg.S[i] << " " << cfg.Xfull[i] << " " << cfg.Yfull[i] << " " << cfg.Zfull[i] << std::endl;
                     }
                     log_cfg.close();
                 } 
@@ -186,8 +159,7 @@ void TryFlip(int j){
 
 // Converts string to real observable
 double whichObs(std::string obs, int cycl){
-    if (obs=="MSD") return MSD();
+    if (obs=="MSD") return MSD(cfgsCycles[cycl]);
     else if (obs=="U") return VTotal()/(2*N);
-    else if (obs=="Cb") return CB(cycl);
-    else if (obs=="Fs") return FS(cycl);
+    else if (obs=="Fs") return FS(cfgsCycles[cycl]);
 }

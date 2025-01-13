@@ -96,16 +96,3 @@ double FS(const configuration& cfg0){
     }
     return sum/(ang*N);
 }
-
-// // Updates the reference configuration for the correlation functions
-// void UpdateAge(int cycle){
-//     UpdateNN(0); NN_tw.push_back(NN);
-//     Xtw.push_back(std::vector <double>());
-//     Ytw.push_back(std::vector <double>());
-//     Ztw.push_back(std::vector <double>());
-//     for (int i=0; i<N; i++){
-//         Xtw[cycle].push_back(Xfull[i]);
-//         Ytw[cycle].push_back(Yfull[i]);
-//         Ztw[cycle].push_back(Zfull[i]);
-//     }
-// }

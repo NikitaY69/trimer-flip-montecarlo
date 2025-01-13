@@ -32,7 +32,7 @@ extern const int ns; // Number of sigma calculations for the energy scan
 extern double Size;
 const double density = 1.2;
 const double sigmaMax = 1.1; //Maximum diameter of particles
-const double rSkin = 2; //Radius of neighbours included in NL (e.g. 1.8)
+const double rSkin = 0.7; //Radius of neighbours included in NL (e.g. 1.8)
 const double rC = pow(2., 1./6.) * sigmaMax; //Cutoff radius for calculating potential
 const double rNL = pow(rC+rSkin,2); //NL radius squared
 const double deltaMax = 0.12; //Max particle displacement
@@ -81,21 +81,21 @@ struct configuration {
     void UpdateCM_coord();
     // Method to update the verlet lists for each particle
     void UpdateNL(), GetBonds();
+    // Method to check whether or not to update the neighbours list
+    void CheckNL();
 };
 extern configuration cfg;
+extern std::vector <configuration> cfgsCycles;
 
 // Function prototypes
 configuration ReadPolyCFG(std::string input), ReadTrimCFG(std::string input);
 double bcs(double a, double b), Pshift(double a);
-std::vector < std::vector <int> > GetBonds();;
-void UpdateAge(int cycle), UpdateNL(), UpdateNN(int t0), UpdateRL();
 
 double RepulsivePair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2),
        WCAPair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2),
-       FENEPair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2),
-       V(double xj, double yj, double zj, double rj, int j);
-double VTotal(), CBLoc(int cycle, int j), CB(int cycle), MSD(), FS(int cycle),
-       C_sigma(), whichObs(std::string obs, int cycl);
+       FENEPair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2);
+double V(int j), VTotal(), MSD(const configuration& cfg0), FS(const configuration& cfg0),
+       whichObs(std::string obs, int cycl);
 void TryDisp(int j), TryFlip(int j), MC(std::string out, int n_log, int n_lin);
 
 //  Random number between 0 and 1
