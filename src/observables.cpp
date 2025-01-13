@@ -97,40 +97,6 @@ double FS(configuration cfg0){
     return sum/(ang*N);
 }
 
-// // Computes the bond-breaking correlation function (local)
-// double CBLoc(int cycle, int j){
-//     std::vector<int> intersect;
-//     std::vector<int> nn0 = NN_tw[cycle][j]; // neighbors at t=0
-//     std::vector<int> nn = NN[j];
-//     std::set_intersection(nn0.begin(), nn0.end(), nn.begin(), nn.end(),
-//                      std::back_inserter(intersect));
-
-//     if (nn0.size()==0){
-//         return 0;
-//     } else { 
-//         double frac = intersect.size()/nn0.size();
-//         return frac;
-//     } 
-// }
-
-// // Computes the bond-breaking correlation function (averaged)
-// double CB(int cycle){
-//     double tot = 0;
-//     for (int j=0; j<N; j++){
-//         tot += CBLoc(cycle, j);
-//     } return tot/N;
-// }
-
-// // Computes the diameter auto-correlation function
-// double C_sigma(){
-//     double sigma_m = 1.000218223;
-//     double C = 0, C0 = 0;
-//     for (int i=0; i<N; i++){
-//         double deltaS0 = Sref[i]-sigma_m; double deltaS = S[i]-sigma_m;
-//         C0 += deltaS0*deltaS0; C += deltaS*deltaS0;
-//     } return C/C0;
-// }
-
 // // Updates the reference points for the correlation functions
 // void UpdateAge(int cycle){
 //     UpdateNN(0); NN_tw.push_back(NN);

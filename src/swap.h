@@ -66,7 +66,6 @@ extern std::vector < std::string > allObs;
 // nn_0 nearest neighbours at t=0
 // nn_tw nearest neighbours at last aging update
 
-//  Function prototypes
 // Structure to keep track of the evolution of configurations
 struct configuration {
     std::vector <double> X, Y, Z, Xfull, Yfull, Zfull, X0, Y0, Z0, S;
@@ -75,13 +74,17 @@ struct configuration {
     
     // Constructor to initialize vectors
     configuration(): X(N), Y(N), Z(N), Xfull(N), Yfull(N), Zfull(N), 
-                     X0(N), Y0(N), Z0(N), S(N), NL(N), BN(N), XCM(0), YCM(0), ZCM(0){};
+                     X0(N), Y0(N), Z0(N), S(N), // 
+                     NL(N), BN(N),
+                     XCM(0), YCM(0), ZCM(0){};
     // Method to calculate center of mass coordinates
     void UpdateCM_coord();
     // Method to update the verlet lists for each particle
     void UpdateNL(), GetBonds();
 };
 extern configuration cfg;
+
+// Function prototypes
 configuration ReadPolyCFG(std::string input), ReadTrimCFG(std::string input);
 double bcs(double a, double b), Pshift(double a);
 std::vector < std::vector <int> > GetBonds();;
