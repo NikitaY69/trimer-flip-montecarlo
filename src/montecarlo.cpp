@@ -113,27 +113,23 @@ void TryDisp(int j){
     double dx = (ranf()-0.5)*deltaMax;
     double dy = (ranf()-0.5)*deltaMax;
     double dz = (ranf()-0.5)*deltaMax;
-    double Xnew = Pshift(X[j]+dx);
-    double Ynew = Pshift(Y[j]+dy);
-    double Znew = Pshift(Z[j]+dz);
-    double deltaE = V(Xnew, Ynew, Znew, S[j], j) - V(X[j], Y[j], Z[j], S[j], j);
-    // why is the modulus function not in deltaE ?
+    double Xold = cfg.X[j], Xnew = Pshift(cfg.X[j]+dx); 
+    double Yold = cfg.Y[j], Ynew = Pshift(cfg.Y[j]+dy);
+    double Zold = cfg.Z[j], Znew = Pshift(cfg.Z[j]+dz);
+    // Energy before the displacement
+    double V_old = V(j);
+    // Energy after the displacement
+    cfg.X[j] = Xnew; cfg.Y[j] = Ynew; cfg.Z[j] = Znew;
+    cfg.Xfull[j] += dx; cfg.Yfull[j] += dy; cfg.Zfull[j] += dz;
+    double V_new = V(j);
+
+    double deltaE = V_new - V_old;
     if (deltaE < 0){
-        // Xnew = fmod(X[j],Size);
-        X[j] = Xnew; //Check modulus function
-        Y[j] = Ynew;
-        Z[j] = Znew;
-        Xfull[j] = Xfull[j]+dx;
-        Yfull[j] = Yfull[j]+dy;
-        Zfull[j] = Zfull[j]+dz;
+        // pass 
     }
-    else if (exp(-deltaE/T) > ranf()){
-        X[j] = Xnew;
-        Y[j] = Ynew;
-        Z[j] = Znew;
-        Xfull[j] = Xfull[j]+dx;
-        Yfull[j] = Yfull[j]+dy;
-        Zfull[j] = Zfull[j]+dz;
+    else if (exp(-deltaE/T) < ranf()){
+        cfg.X[j] = Xold; cfg.Y[j] = Yold; cfg.Z[j] = Zold;
+        cfg.Xfull[j] -= dx; cfg.Yfull[j] -= dy; cfg.Zfull[j] -= dz;
     }
 }
 
