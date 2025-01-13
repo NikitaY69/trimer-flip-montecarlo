@@ -13,14 +13,15 @@ int logPoints = 50;
 double p_flip = 0.2;
 
 // Setting arrays
-int *mol_index = nullptr;
-double *X = nullptr, *Y = nullptr, *Z = nullptr, *S = nullptr, *Sref = nullptr, 
-       *X0 = nullptr, *Y0 = nullptr, *Z0 = nullptr;
-double *Xfull = nullptr, *Yfull = nullptr, *Zfull = nullptr, 
-       *Xref = nullptr, *Yref = nullptr, *Zref = nullptr;
-std::vector < std::vector <double>> Xtw, Ytw, Ztw;
-std::vector < std::vector<int> > NL, NN, BN;
-std::vector < std::vector < std::vector <int>>> NN_tw, RL;
+configuration cfg;
+// int *mol_index = nullptr;
+// double *X = nullptr, *Y = nullptr, *Z = nullptr, *S = nullptr, *Sref = nullptr, 
+//        *X0 = nullptr, *Y0 = nullptr, *Z0 = nullptr;
+// double *Xfull = nullptr, *Yfull = nullptr, *Zfull = nullptr, 
+//        *Xref = nullptr, *Yref = nullptr, *Zref = nullptr;
+// std::vector < std::vector <double>> Xtw, Ytw, Ztw;
+// std::vector < std::vector<int> > NL, NN, BN;
+// std::vector < std::vector < std::vector <int>>> NN_tw, RL;
 std::vector < std::string > allObs;
 
 std::string input;
@@ -31,7 +32,7 @@ std::string outdir;
 int main(int argc, const char * argv[]) {
     
     // Random number generator
-    srand(time(NULL)*1.0);
+    srand(31);
 
     // Define the command-line options
     po::options_description desc("Allowed options");
@@ -86,12 +87,12 @@ int main(int argc, const char * argv[]) {
     // Resizing arrays
     Size = pow(N/density, 1./3.);
     steps = tw*(cycles-1)+tau;
-    mol_index = new int[N];
-    X = new double[N]; Y = new double[N]; Z = new double[N]; 
-    S = new double[N]; Sref = new double[N]; 
-    X0 = new double[N]; Y0 = new double[N]; Z0 = new double[N];
-    Xfull = new double[N]; Yfull = new double[N]; Zfull = new double[N]; 
-    Xref = new double[N]; Yref = new double[N]; Zref = new double[N];
+    // mol_index = new int[N];
+    // X = new double[N]; Y = new double[N]; Z = new double[N]; 
+    // S = new double[N]; Sref = new double[N]; 
+    // X0 = new double[N]; Y0 = new double[N]; Z0 = new double[N];
+    // Xfull = new double[N]; Yfull = new double[N]; Zfull = new double[N]; 
+    // Xref = new double[N]; Yref = new double[N]; Zref = new double[N];
 
     // creating outdir if not existing
     fs::path out_path = outdir;
@@ -111,10 +112,8 @@ int main(int argc, const char * argv[]) {
     params.close();
 
     // Read init config
-    ReadTrimCFG(input);
-    BN = GetBonds();
-    UpdateNL(); // First list of neighbours
-
+    cfg = ReadTrimCFG(input);
+    cfg.GetBonds(); cfg.UpdateNL();
     // Do simulation with timer
     double t0 = time(NULL); // Timer
     MC(outdir, logPoints, linPoints); 
@@ -122,11 +121,11 @@ int main(int argc, const char * argv[]) {
     std::cout << "Done" << std::endl;
 
     // Freeing allocated memory
-    delete[] mol_index;
-    delete[] X; delete[] Y; delete[] Z; delete[] S; delete[] Sref; 
-    delete[] X0; delete[] Y0; delete[] Z0;
-    delete[] Xfull; delete[] Yfull; delete[] Zfull;
-    delete[] Xref; delete[] Yref; delete[] Zref;
+    // delete[] mol_index;
+    // delete[] X; delete[] Y; delete[] Z; delete[] S; delete[] Sref; 
+    // delete[] X0; delete[] Y0; delete[] Z0;
+    // delete[] Xfull; delete[] Yfull; delete[] Zfull;
+    // delete[] Xref; delete[] Yref; delete[] Zref;
 
     return 0;
 }
