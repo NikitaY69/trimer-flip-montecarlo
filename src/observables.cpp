@@ -44,13 +44,15 @@ double FENEPair(double x1, double y1, double z1, double s1, double x2, double y2
 }
 
 //  Calculates potential associated to particle j
-double V(double xj, double yj, double zj, double rj, int j){
+double V(int j){
     double total = 0;
-    for (int k: NL[j]){
-        total += WCAPair(xj, yj, zj, rj, X[k], Y[k], Z[k], S[k]);
+    for (int k: cfg.NL[j]){
+        total += WCAPair(cfg.X[j], cfg.Y[j], cfg.Z[j], cfg.S[j], 
+                         cfg.X[k], cfg.Y[k], cfg.Z[k], cfg.S[k]);
     }
-    for (int k: BN[j]){
-        total += FENEPair(xj, yj, zj, rj, X[k], Y[k], Z[k], S[k]);
+    for (int k: cfg.BN[j]){
+        total += FENEPair(cfg.X[j], cfg.Y[j], cfg.Z[j], cfg.S[j], 
+                          cfg.X[k], cfg.Y[k], cfg.Z[k], cfg.S[k]);
     } return total;
 }
 
@@ -58,18 +60,17 @@ double V(double xj, double yj, double zj, double rj, int j){
 double VTotal(){
     double vTot = 0;
     for (int j = 0; j < N; j++)
-        vTot += V(X[j], Y[j], Z[j], S[j], j);
+        vTot += V(j);
     return vTot;
 }
 
 //  Calculates avg. mean square displacements
-double MSD(){
+double MSD(configuration cfg0){
     double sum = 0, deltaX, deltaY, deltaZ;
         for (int i = 0; i < N; i++){
-            deltaX = Xfull[i]-Xref[i];
-            deltaY = Yfull[i]-Yref[i];
-            deltaZ = Zfull[i]-Zref[i];
-            deltaX -= dXCM; deltaY -= dYCM; deltaZ -= dZCM;
+            deltaX = cfg.Xfull[i]-cfg0.Xfull[i]; deltaX -= (cfg.XCM-cfg0.XCM);
+            deltaY = cfg.Yfull[i]-cfg0.Yfull[i]; deltaY -= (cfg.YCM-cfg0.YCM);
+            deltaZ = cfg.Zfull[i]-cfg0.Zfull[i]; deltaZ -= (cfg.ZCM-cfg0.ZCM);
             sum += deltaX*deltaX + deltaY*deltaY + deltaZ*deltaZ;
     }
     return sum/N;
@@ -78,7 +79,7 @@ double MSD(){
 // Correlation functions
 
 //  Calculates the intermediate self-scattering function
-double FS(int cycle){
+double FS(configuration cfg0){
     double dotProduct;
     double q = 2*pi/sigmaMax;
     double sum = 0, deltaX, deltaY, deltaZ;
@@ -86,10 +87,9 @@ double FS(int cycle){
     
     for (int theta=0; theta<ang; theta++){
         for (int i = 0; i < N; i++){
-            deltaX = Xfull[i]-Xtw[cycle][i];
-            deltaY = Yfull[i]-Ytw[cycle][i];
-            deltaZ = Zfull[i]-Ztw[cycle][i];
-            deltaX -= dXCM; deltaY -= dYCM; deltaZ -= dZCM;
+            deltaX = cfg.Xfull[i]-cfg0.Xfull[i]; deltaX -= (cfg.XCM-cfg0.XCM);
+            deltaY = cfg.Yfull[i]-cfg0.Yfull[i]; deltaY -= (cfg.YCM-cfg0.YCM);
+            deltaZ = cfg.Zfull[i]-cfg0.Zfull[i]; deltaZ -= (cfg.ZCM-cfg0.ZCM);
             dotProduct = q*((cos(theta*pi/180)*deltaX)+(sin(theta*pi/180)*deltaY));
             sum += cos(dotProduct);
         }
@@ -97,49 +97,49 @@ double FS(int cycle){
     return sum/(ang*N);
 }
 
-// Computes the bond-breaking correlation function (local)
-double CBLoc(int cycle, int j){
-    std::vector<int> intersect;
-    std::vector<int> nn0 = NN_tw[cycle][j]; // neighbors at t=0
-    std::vector<int> nn = NN[j];
-    std::set_intersection(nn0.begin(), nn0.end(), nn.begin(), nn.end(),
-                     std::back_inserter(intersect));
+// // Computes the bond-breaking correlation function (local)
+// double CBLoc(int cycle, int j){
+//     std::vector<int> intersect;
+//     std::vector<int> nn0 = NN_tw[cycle][j]; // neighbors at t=0
+//     std::vector<int> nn = NN[j];
+//     std::set_intersection(nn0.begin(), nn0.end(), nn.begin(), nn.end(),
+//                      std::back_inserter(intersect));
 
-    if (nn0.size()==0){
-        return 0;
-    } else { 
-        double frac = intersect.size()/nn0.size();
-        return frac;
-    } 
-}
+//     if (nn0.size()==0){
+//         return 0;
+//     } else { 
+//         double frac = intersect.size()/nn0.size();
+//         return frac;
+//     } 
+// }
 
-// Computes the bond-breaking correlation function (averaged)
-double CB(int cycle){
-    double tot = 0;
-    for (int j=0; j<N; j++){
-        tot += CBLoc(cycle, j);
-    } return tot/N;
-}
+// // Computes the bond-breaking correlation function (averaged)
+// double CB(int cycle){
+//     double tot = 0;
+//     for (int j=0; j<N; j++){
+//         tot += CBLoc(cycle, j);
+//     } return tot/N;
+// }
 
-// Computes the diameter auto-correlation function
-double C_sigma(){
-    double sigma_m = 1.000218223;
-    double C = 0, C0 = 0;
-    for (int i=0; i<N; i++){
-        double deltaS0 = Sref[i]-sigma_m; double deltaS = S[i]-sigma_m;
-        C0 += deltaS0*deltaS0; C += deltaS*deltaS0;
-    } return C/C0;
-}
+// // Computes the diameter auto-correlation function
+// double C_sigma(){
+//     double sigma_m = 1.000218223;
+//     double C = 0, C0 = 0;
+//     for (int i=0; i<N; i++){
+//         double deltaS0 = Sref[i]-sigma_m; double deltaS = S[i]-sigma_m;
+//         C0 += deltaS0*deltaS0; C += deltaS*deltaS0;
+//     } return C/C0;
+// }
 
-// Updates the reference points for the correlation functions
-void UpdateAge(int cycle){
-    UpdateNN(0); NN_tw.push_back(NN);
-    Xtw.push_back(std::vector <double>());
-    Ytw.push_back(std::vector <double>());
-    Ztw.push_back(std::vector <double>());
-    for (int i=0; i<N; i++){
-        Xtw[cycle].push_back(Xfull[i]);
-        Ytw[cycle].push_back(Yfull[i]);
-        Ztw[cycle].push_back(Zfull[i]);
-    }
-}
+// // Updates the reference points for the correlation functions
+// void UpdateAge(int cycle){
+//     UpdateNN(0); NN_tw.push_back(NN);
+//     Xtw.push_back(std::vector <double>());
+//     Ytw.push_back(std::vector <double>());
+//     Ztw.push_back(std::vector <double>());
+//     for (int i=0; i<N; i++){
+//         Xtw[cycle].push_back(Xfull[i]);
+//         Ytw[cycle].push_back(Yfull[i]);
+//         Ztw[cycle].push_back(Zfull[i]);
+//     }
+// }

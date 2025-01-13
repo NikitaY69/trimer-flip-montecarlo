@@ -71,16 +71,17 @@ extern std::vector < std::string > allObs;
 struct configuration {
     std::vector <double> X, Y, Z, Xfull, Yfull, Zfull, X0, Y0, Z0, S;
     std::vector < std::vector<int> > NL, BN;
-
+    double XCM, YCM, ZCM;
+    
     // Constructor to initialize vectors
     configuration(): X(N), Y(N), Z(N), Xfull(N), Yfull(N), Zfull(N), 
-                     X0(N), Y0(N), Z0(N), S(N), NL(N), BN(N){};
+                     X0(N), Y0(N), Z0(N), S(N), NL(N), BN(N), XCM(0), YCM(0), ZCM(0){};
     // Method to calculate center of mass coordinates
-    double GetCM_coord(int coord_index);
+    void UpdateCM_coord();
     // Method to update the verlet lists for each particle
     void UpdateNL(), GetBonds();
 };
-
+extern configuration cfg;
 configuration ReadPolyCFG(std::string input), ReadTrimCFG(std::string input);
 double bcs(double a, double b), Pshift(double a);
 std::vector < std::vector <int> > GetBonds();;
