@@ -12,14 +12,10 @@ int linPoints = 50;
 int logPoints = 50;
 double p_flip = 0.2;
 
-// Defining global variables
-configuration cfg;
-std::vector < std::string > allObs;
-
 //-----------------------------------------------------------------------------
 //  main.cpp
 int main(int argc, const char * argv[]) {
-    
+
     // Random number generator
     srand(time(NULL)*1.0);
 
@@ -59,14 +55,15 @@ int main(int argc, const char * argv[]) {
     }
 
     // Parsing the observables in order of appearance
+    std::vector < std::string > observables;
     for (int i = 1; i < argc; ++i) {
         std::string arg = argv[i];
         if (arg == "--MSD") {
-            allObs.push_back("MSD");
+            observables.push_back("MSD");
         } else if (arg == "--Fs") {
-            allObs.push_back("Fs");
+            observables.push_back("Fs");
         } else if (arg == "--U") {
-            allObs.push_back("U");
+            observables.push_back("U");
         }
     }
 
@@ -91,12 +88,12 @@ int main(int argc, const char * argv[]) {
     params.close();
 
     // Read init config
-    cfg = ReadTrimCFG(input);
-    cfg.GetBonds(); cfg.UpdateNL();
+    configuration initconf;
+    initconf = ReadTrimCFG(input);
 
     // Do simulation with timer
     double t0 = time(NULL); // Timer
-    MC(outdir, logPoints, linPoints); 
+    MC(initconf, observables, outdir, logPoints, linPoints); 
     std::cout << "Time taken: " << (time(NULL) - t0) << "s" << std::endl; 
     std::cout << "Done" << std::endl;
 
