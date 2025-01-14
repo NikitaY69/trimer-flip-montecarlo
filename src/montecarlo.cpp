@@ -100,9 +100,10 @@ void MC(configuration& cfg,
                 // observables
                 log_obs << t << " " << cycle;
                 for (std::string obs: observables){
-                    log_obs << " " << 
-                    (obs == "U") ? VTotal(cfg)/(2*N) : 
-                    (obs == "MSD") ? MSD(cfg, cfg0) : FS(cfg, cfg0) ;
+                    log_obs << " ";
+                    (obs == "U") ?   log_obs << VTotal(cfg)/(2*N) : 
+                    (obs == "MSD") ? log_obs << MSD(cfg, cfg0) : 
+                                     log_obs << FS(cfg, cfg0);
                 } log_obs << std::endl;
 
                 dataCounter++;
