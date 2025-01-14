@@ -73,10 +73,6 @@ struct configuration {
     void CheckNL();
 };
 
-extern configuration cfg; // configuration evolving throughout the simulation
-extern std::vector <configuration> cfgsCycles; // list of reference configurations for correlation functions
-extern std::vector < std::string > allObs; // list of observables to compute
-
 // Function prototypes
 configuration ReadPolyCFG(std::string input), ReadTrimCFG(std::string input);
 double bcs(double a, double b), Pshift(double a);
@@ -84,9 +80,12 @@ double bcs(double a, double b), Pshift(double a);
 double RepulsivePair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2),
        WCAPair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2),
        FENEPair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2);
-double V(int j), VTotal(), MSD(const configuration& cfg0), FS(const configuration& cfg0),
-       whichObs(std::string obs, int cycl);
-void TryDisp(int j), TryFlip(int j), MC(std::string out, int n_log, int n_lin);
+double V(const configuration& cfg, int j), VTotal(const configuration& cfg), 
+       MSD(const configuration& cfg, const configuration& cfg0), 
+       FS(const configuration& cfg, const configuration& cfg0);
+void TryDisp(configuration& cfg, int j), TryFlip(configuration& cfg, int j), 
+     MC(configuration& cfg, 
+        std::vector <std::string> observables, std::string out, int n_log, int n_lin);
 
 //  Random number between 0 and 1
 #define ranf() \

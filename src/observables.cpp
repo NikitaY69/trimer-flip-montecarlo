@@ -44,7 +44,7 @@ double FENEPair(double x1, double y1, double z1, double s1, double x2, double y2
 }
 
 //  Calculates potential associated to particle j
-double V(int j){
+double V(const configuration& cfg, int j){
     double total = 0;
     for (int k: cfg.NL[j]){
         total += WCAPair(cfg.X[j], cfg.Y[j], cfg.Z[j], cfg.S[j], 
@@ -57,15 +57,15 @@ double V(int j){
 }
 
 //  Calculates total system energy (double)
-double VTotal(){
+double VTotal(const configuration& cfg){
     double vTot = 0;
     for (int j = 0; j < N; j++)
-        vTot += V(j);
+        vTot += V(cfg, j);
     return vTot;
 }
 
 //  Calculates avg. mean square displacements
-double MSD(const configuration& cfg0){
+double MSD(const configuration& cfg, const configuration& cfg0){
     double sum = 0, deltaX, deltaY, deltaZ;
         for (int i = 0; i < N; i++){
             deltaX = cfg.Xfull[i]-cfg0.Xfull[i]; deltaX -= (cfg.XCM-cfg0.XCM);
@@ -79,7 +79,7 @@ double MSD(const configuration& cfg0){
 // Correlation functions
 
 //  Calculates the intermediate self-scattering function
-double FS(const configuration& cfg0){
+double FS(const configuration& cfg, const configuration& cfg0){
     double dotProduct;
     double q = 2*pi/sigmaMax;
     double sum = 0, deltaX, deltaY, deltaZ;
