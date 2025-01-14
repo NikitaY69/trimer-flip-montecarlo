@@ -3,7 +3,7 @@
 // Default run parameters
 int N = 5;
 double Size = pow(N/density, 1/3.);
-double T = 0.04; 
+double T = 2.0; 
 int tau = 100000;
 int tw = 1;
 int cycles = 1;
@@ -12,19 +12,9 @@ int linPoints = 50;
 int logPoints = 50;
 double p_flip = 0.2;
 
-// Setting arrays
-int *mol_index = nullptr;
-double *X = nullptr, *Y = nullptr, *Z = nullptr, *S = nullptr, *Sref = nullptr, 
-       *X0 = nullptr, *Y0 = nullptr, *Z0 = nullptr;
-double *Xfull = nullptr, *Yfull = nullptr, *Zfull = nullptr, 
-       *Xref = nullptr, *Yref = nullptr, *Zref = nullptr;
-std::vector < std::vector <double>> Xtw, Ytw, Ztw;
-std::vector < std::vector<int> > NL, NN, BN;
-std::vector < std::vector < std::vector <int>>> NN_tw, RL;
+// Defining global variables
+configuration cfg;
 std::vector < std::string > allObs;
-
-std::string input;
-std::string outdir;
 
 //-----------------------------------------------------------------------------
 //  main.cpp
@@ -34,6 +24,8 @@ int main(int argc, const char * argv[]) {
     srand(time(NULL)*1.0);
 
     // Define the command-line options
+    std::string input;
+    std::string outdir;
     po::options_description desc("Allowed options");
     desc.add_options()
         ("help,h", "produce help message")
@@ -48,11 +40,8 @@ int main(int argc, const char * argv[]) {
         ("log", po::value<int>(&logPoints)->default_value(logPoints), "set number of log-spaced snapshots")
         ("p_flip", po::value<double>(&p_flip)->default_value(p_flip), "set flip-attempt probability")
         ("MSD", "Flag to compute MSD")
-        ("Cb", "Flag to compute Cb")
         ("Fs", "Flag to compute Fs")
         ("U", "Flag to compute U");
-    // std::string input = motherdir + argv[1];
-    // std::string outdir = motherdir + argv[2] + "results/";
 
     // Parse the command-line arguments
     po::variables_map vm;
@@ -74,8 +63,6 @@ int main(int argc, const char * argv[]) {
         std::string arg = argv[i];
         if (arg == "--MSD") {
             allObs.push_back("MSD");
-        } else if (arg == "--Cb") {
-            allObs.push_back("Cb");
         } else if (arg == "--Fs") {
             allObs.push_back("Fs");
         } else if (arg == "--U") {
@@ -83,20 +70,13 @@ int main(int argc, const char * argv[]) {
         }
     }
 
-    // Resizing arrays
+    // Recalculating user-defined parameters
     Size = pow(N/density, 1./3.);
     steps = tw*(cycles-1)+tau;
-    mol_index = new int[N];
-    X = new double[N]; Y = new double[N]; Z = new double[N]; 
-    S = new double[N]; Sref = new double[N]; 
-    X0 = new double[N]; Y0 = new double[N]; Z0 = new double[N];
-    Xfull = new double[N]; Yfull = new double[N]; Zfull = new double[N]; 
-    Xref = new double[N]; Yref = new double[N]; Zref = new double[N];
 
-    // creating outdir if not existing
+    // Creating outdir if not existing
     fs::path out_path = outdir;
     if(!fs::is_directory(out_path)){
-        
         fs::create_directory(outdir);
     }
     
@@ -111,22 +91,14 @@ int main(int argc, const char * argv[]) {
     params.close();
 
     // Read init config
-    ReadTrimCFG(input);
-    BN = GetBonds();
-    UpdateNL(); // First list of neighbours
+    cfg = ReadTrimCFG(input);
+    cfg.GetBonds(); cfg.UpdateNL();
 
     // Do simulation with timer
     double t0 = time(NULL); // Timer
     MC(outdir, logPoints, linPoints); 
     std::cout << "Time taken: " << (time(NULL) - t0) << "s" << std::endl; 
     std::cout << "Done" << std::endl;
-
-    // Freeing allocated memory
-    delete[] mol_index;
-    delete[] X; delete[] Y; delete[] Z; delete[] S; delete[] Sref; 
-    delete[] X0; delete[] Y0; delete[] Z0;
-    delete[] Xfull; delete[] Yfull; delete[] Zfull;
-    delete[] Xref; delete[] Yref; delete[] Zref;
 
     return 0;
 }

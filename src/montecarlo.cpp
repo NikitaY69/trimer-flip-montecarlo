@@ -1,13 +1,12 @@
 #include "swap.h"
-
-double dXCM, dYCM, dZCM;
-int dataCounter=0;
-int cycle;
+std::vector <configuration> cfgsCycles;
 
 // Monte Carlo Simulation loop
 void MC(std::string out, int n_log, int n_lin){
+    int dataCounter=0;
+    int cycle;
     int cycleCounter = 0;
-    double deltaX[N], deltaY[N], deltaZ[N], deltaR2[N], R2Max = 0;
+    
     // Building snapshots list (log-spaced)
     std::vector < std::pair <double, double>> pairs;
     std::vector <double> samplePoints, twPoints;
@@ -54,31 +53,13 @@ void MC(std::string out, int n_log, int n_lin){
     fs::create_directory(out_cfg); 
 
     for(int t = 1; t <= steps; t++){
-        // Updating NL
-        if((t-1) % 1 == 0) {//Change number?
-            // every 150 steps we check if we need to update the NL
-            for (int i = 0; i < N; i++){
-                deltaX[i] = bcs(X[i],X0[i]);
-                deltaY[i] = bcs(Y[i],Y0[i]);
-                deltaZ[i] = bcs(Z[i],Z0[i]);
-                deltaR2[i] = deltaX[i]*deltaX[i] + deltaY[i]*deltaY[i] + deltaZ[i]*deltaZ[i];
-            R2Max = std::max_element(deltaR2,deltaR2+N)[0];
-            }
-            if(R2Max > RUpdate){
-                // std::cout << (t-1) << std::endl;
-                UpdateNL();
-                R2Max = 0;
-                for(int j = 0; j < N; j++){
-                    X0[j] = X[j];
-                    Y0[j] = Y[j];
-                    Z0[j] = Z[j];
-                }
-            }
-        }
+        // Checking whether to update the neighbours list
+        cfg.CheckNL();
     
         // Updating reference observables
         if((t-1)%tw == 0 && cycleCounter < cycles){
-            UpdateAge(cycleCounter); cycleCounter++;
+            cfg.UpdateCM_coord();
+            cfgsCycles.push_back(cfg); cycleCounter++;
         } 
 
         // // Writing observables to text file
@@ -90,19 +71,13 @@ void MC(std::string out, int n_log, int n_lin){
             log_cfg.open(out_cfg + "cfg_" + std::to_string(t) + ".xy");
             log_cfg << std::scientific << std::setprecision(8);
             for (int i = 0; i<N; i++){
-                log_cfg << S[i] << " " << Xfull[i] << " " << Yfull[i] << " " << Zfull[i] << std::endl;
+                log_cfg << cfg.S[i] << " " << cfg.Xfull[i] << " " << cfg.Yfull[i] << " " << cfg.Zfull[i] << std::endl;
             }
             log_cfg.close();
         }
 
         if(log>0){ // checking if log saving time
-            // UpdateNN(t); // updating nearest neighbours
-            dXCM = 0; dYCM = 0, dZCM = 0;
-            for (int i=0;i<N;i++){
-                double dX = Xfull[i]-Xref[i], dY = Yfull[i]-Yref[i], dZ = Zfull[i]-Zref[i];
-                dXCM += dX; dYCM += dY; dZCM += dZ;
-            } dXCM /= N; dYCM /= N; dZCM /= N;
-
+            cfg.UpdateCM_coord();
             for(int s=0; s<log; s++){
                 // looping different eventual tws
                 cycle = twPoints[dataCounter];
@@ -111,7 +86,7 @@ void MC(std::string out, int n_log, int n_lin){
                     log_cfg.open(out_cfg + "cfg_" + std::to_string(t) + ".xy");
                     log_cfg << std::scientific << std::setprecision(8);
                     for (int i = 0; i<N; i++){
-                        log_cfg << S[i] << " " << Xfull[i] << " " << Yfull[i] << " " << Zfull[i] << std::endl;
+                        log_cfg << cfg.S[i] << " " << cfg.Xfull[i] << " " << cfg.Yfull[i] << " " << cfg.Zfull[i] << std::endl;
                     }
                     log_cfg.close();
                 } 
@@ -140,54 +115,49 @@ void TryDisp(int j){
     double dx = (ranf()-0.5)*deltaMax;
     double dy = (ranf()-0.5)*deltaMax;
     double dz = (ranf()-0.5)*deltaMax;
-    double Xnew = Pshift(X[j]+dx);
-    double Ynew = Pshift(Y[j]+dy);
-    double Znew = Pshift(Z[j]+dz);
-    double deltaE = V(Xnew, Ynew, Znew, S[j], j) - V(X[j], Y[j], Z[j], S[j], j);
-    // why is the modulus function not in deltaE ?
+    double Xold = cfg.X[j], Xnew = Pshift(cfg.X[j]+dx); 
+    double Yold = cfg.Y[j], Ynew = Pshift(cfg.Y[j]+dy);
+    double Zold = cfg.Z[j], Znew = Pshift(cfg.Z[j]+dz);
+    // Energy before the displacement
+    double V_old = V(j);
+    // Energy after the displacement
+    cfg.X[j] = Xnew; cfg.Y[j] = Ynew; cfg.Z[j] = Znew;
+    cfg.Xfull[j] += dx; cfg.Yfull[j] += dy; cfg.Zfull[j] += dz;
+    double V_new = V(j);
+
+    double deltaE = V_new - V_old;
     if (deltaE < 0){
-        // Xnew = fmod(X[j],Size);
-        X[j] = Xnew; //Check modulus function
-        Y[j] = Ynew;
-        Z[j] = Znew;
-        Xfull[j] = Xfull[j]+dx;
-        Yfull[j] = Yfull[j]+dy;
-        Zfull[j] = Zfull[j]+dz;
+        // pass 
     }
-    else if (exp(-deltaE/T) > ranf()){
-        X[j] = Xnew;
-        Y[j] = Ynew;
-        Z[j] = Znew;
-        Xfull[j] = Xfull[j]+dx;
-        Yfull[j] = Yfull[j]+dy;
-        Zfull[j] = Zfull[j]+dz;
+    else if (exp(-deltaE/T) < ranf()){
+        cfg.X[j] = Xold; cfg.Y[j] = Yold; cfg.Z[j] = Zold;
+        cfg.Xfull[j] -= dx; cfg.Yfull[j] -= dy; cfg.Zfull[j] -= dz;
     }
 }
 
 //  Tries swapping two particles diameters in the molecule containing particle j
 void TryFlip(int j){
-    int a = rand() % 2; int k = BN[j][a]; 
+    int a = rand() % 2; int k = cfg.BN[j][a]; 
     // Energy of the two clusters before the move attempt
-    double V_old = V(X[j],Y[j],Z[j],S[j],j)+V(X[k],Y[k],Z[k],S[k],k);
+    double V_old = V(j)+V(k);
     // Temporarily saving old configurations
-    double Sj_old = S[j]; double Sk_old = S[k];
-    S[j] = Sk_old; S[k] = Sj_old;
+    double Sj_old = cfg.S[j]; double Sk_old = cfg.S[k];
+    cfg.S[j] = Sk_old; cfg.S[k] = Sj_old;
     // Energy of the two clusters after the move attempt
-    double V_new = V(X[j],Y[j],Z[j],S[j],j)+V(X[k],Y[k],Z[k],S[k],k);
+    double V_new = V(j)+V(k);
 
     double deltaE = V_new - V_old;
     if (deltaE < 0){
         // pass
     }
     else if (exp(-deltaE/T) < ranf()){
-        S[j] = Sj_old; S[k] = Sk_old;
+        cfg.S[j] = Sj_old; cfg.S[k] = Sk_old;
     }
 }
 
 // Converts string to real observable
 double whichObs(std::string obs, int cycl){
-    if (obs=="MSD") return MSD();
+    if (obs=="MSD") return MSD(cfgsCycles[cycl]);
     else if (obs=="U") return VTotal()/(2*N);
-    else if (obs=="Cb") return CB(cycl);
-    else if (obs=="Fs") return FS(cycl);
+    else if (obs=="Fs") return FS(cfgsCycles[cycl]);
 }
