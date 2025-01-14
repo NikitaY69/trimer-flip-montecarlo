@@ -84,7 +84,9 @@ double bcs(double a, double b), Pshift(double a);
 double RepulsivePair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2),
        WCAPair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2),
        FENEPair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2);
-double V(int j), VTotal(), MSD(const configuration& cfg0), FS(const configuration& cfg0),
+double V(const configuration& cfg, int j), VTotal(const configuration& cfg), 
+       MSD(const configuration& cfg, const configuration& cfg0), 
+       FS(const configuration& cfg, const configuration& cfg0),
        whichObs(std::string obs, int cycl);
 void TryDisp(int j), TryFlip(int j), MC(std::string out, int n_log, int n_lin);
 
