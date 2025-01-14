@@ -27,8 +27,6 @@ extern int steps; // Monte Carlo sweeps
 extern double T; // Temperature in units of 1/k_B
 extern int tw; // Waiting time to start correlation calculations
 extern double p_flip; // Flip-attempt probability
-extern const int nr; // Number of radius calculations for the correlation lengths
-extern const int ns; // Number of sigma calculations for the energy scan
 
 // Purely repulsive parameters
 const double c0 = -28/pow(1.25,12);
@@ -83,9 +81,9 @@ double RepulsivePair(double x1, double y1, double z1, double s1, double x2, doub
 double V(const configuration& cfg, int j), VTotal(const configuration& cfg), 
        MSD(const configuration& cfg, const configuration& cfg0), 
        FS(const configuration& cfg, const configuration& cfg0);
-void TryDisp(configuration& cfg, int j), TryFlip(configuration& cfg, int j), 
-     MC(configuration& cfg, 
-        std::vector <std::string> observables, std::string out, int n_log, int n_lin);
+void TryDisp(configuration& cfg, int j, double T), TryFlip(configuration& cfg, int j, double T), 
+     MC(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip, 
+        std::vector <std::string>& observables, std::string& out, int n_log, int n_lin);
 
 //  Random number between 0 and 1
 #define ranf() \

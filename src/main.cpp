@@ -17,7 +17,7 @@ double p_flip = 0.2;
 int main(int argc, const char * argv[]) {
 
     // Random number generator
-    srand(time(NULL)*1.0);
+    srand(31);
 
     // Define the command-line options
     std::string input;
@@ -93,7 +93,8 @@ int main(int argc, const char * argv[]) {
 
     // Do simulation with timer
     double t0 = time(NULL); // Timer
-    MC(initconf, observables, outdir, logPoints, linPoints); 
+    MC(initconf, T, tau, cycles, tw, p_flip, 
+       observables, outdir, logPoints, linPoints); 
     std::cout << "Time taken: " << (time(NULL) - t0) << "s" << std::endl; 
     std::cout << "Done" << std::endl;
 
