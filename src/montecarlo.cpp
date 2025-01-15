@@ -24,38 +24,18 @@ void MC(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip
     std::vector <configuration> cfgsCycles;
     configuration* cfg0;
 
-    // Building snapshots list (log-spaced)
-    std::vector < std::pair <double, double>> pairs;
-    std::vector <double> samplePoints, twPoints;
-    double endingPoints[cycles], linPoints[n_lin];
-    double exponents = log10(tau)/(n_log-1);
+    // Building snapshots list
+    std::vector <int> logpoints, twpoints, linpoints, cyclepoints;
 
-    for(int c=0; c<cycles; c++){
-        for (int x = 0; x < n_log; x++){
-            double value = tw*c + floor(pow(10,exponents*(x)));
-            std::pair <double,double> p = {value, c};
-            int f = std::count(pairs.begin(), pairs.end(), p);
-            if(f==0){
-                pairs.emplace_back(value, c);
-            // this if condition is actually relevent because of the floor function
-            }
-        }
-    }
-
-    // Sorting
-    std::sort(pairs.begin(), pairs.end());
-    for (auto p: pairs){
-        samplePoints.push_back(p.first); twPoints.push_back(p.second);
-    }
-
-    // Ending points
-    for(int c=0;c<cycles;c++){
-        endingPoints[c] = c*tw + tau;
+    // Logspaced
+    std::vector < std::pair <int, int>> log_and_tws = GetLogspacedSnapshots(cycles, tau, tw, n_log);
+    for (auto p: log_and_tws){
+        logpoints.push_back(p.first); twpoints.push_back(p.second);
     }
     // Linspaced points
-    for (int k=1;k<=n_lin;k++){
-        linPoints[k] = (tau/(n_lin))*k;
-    }
+    linpoints = GetLinspacedSnapshots(tau, n_lin);
+    // Cycles ending points
+    cyclepoints = GetCyclesEndingSnapshots(cycles, tw, tau);
 
     // File writing
     std::string out_cfg = out + "configs/";
@@ -78,8 +58,8 @@ void MC(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip
         } 
 
         // // Writing observables to text file
-        int lin = std::count(linPoints, linPoints+n_lin, 1.0*t);
-        int log = std::count(samplePoints.begin(), samplePoints.end(), 1.0*t);
+        int lin = std::count(linpoints.begin(), linpoints.end(), t);
+        int log = std::count(logpoints.begin(), logpoints.end(), t);
 
         if(lin>0){ // checking if linear saving time
             // Configs
@@ -90,7 +70,7 @@ void MC(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip
             cfg.UpdateCM_coord();
             for(int s=0; s<log; s++){
                 // looping different eventual tws
-                cycle = twPoints[dataCounter];
+                cycle = twpoints[dataCounter];
                 cfg0 = &cfgsCycles[cycle];
                 // Configs
                 if(! fs::exists (out_cfg + "cfg_" + std::to_string(t) + ".xy")){

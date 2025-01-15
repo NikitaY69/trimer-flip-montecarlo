@@ -1,5 +1,7 @@
+#include <cmath>
 #include <sstream>
 #include <iomanip>
+#include <algorithm>
 #include "globals.hpp"
 #include "io.hpp"
 #include "observables.hpp"
@@ -73,4 +75,41 @@ void WriteObs(const configuration& cfg, const configuration& cfg0,
         (obs == "MSD") ? log_obs << MSD(cfg, cfg0) : 
                          log_obs << FS(cfg, cfg0);
     } log_obs << std::endl;
+}
+
+std::vector <std::pair <int,int>> GetLogspacedSnapshots(int cycles, int tau, int tw, int n_log){
+    std::vector < std::pair <int, int>> pairs;
+    std::vector <int> samplePoints, twPoints;
+    double exponents = log10(tau)/(n_log-1);
+
+    for(int c=0; c<cycles; c++){
+        for (int x = 0; x < n_log; x++){
+            int value = tw*c + floor(pow(10,exponents*(x)));
+            std::pair <int,int> p = {value, c};
+            int f = std::count(pairs.begin(), pairs.end(), p);
+            if(f==0){
+                pairs.emplace_back(value, c);
+            // this if condition is actually relevent because of the floor function
+            }
+        }
+    }
+
+    // Sorting
+    std::sort(pairs.begin(), pairs.end());
+    return pairs;
+
+}
+
+std::vector <int> GetLinspacedSnapshots(int tau, int n_lin){
+    std::vector <int> linpoints;
+    for (int k=1; k<=n_lin; k++){
+        linpoints.push_back((tau/(n_lin))*k);
+    } return linpoints;
+}
+
+std::vector <int> GetCyclesEndingSnapshots(int cycles, int tw, int tau){
+    std::vector <int> endingpoints;
+    for(int c=0; c<cycles; c++){
+        endingpoints.push_back(c*tw + tau);
+    } return endingpoints;
 }

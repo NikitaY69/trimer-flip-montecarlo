@@ -16,4 +16,10 @@ void WriteObs(const configuration& cfg, const configuration& cfg0,
               int t, int cycle, std::vector <std::string>& observables, 
               std::ofstream& log_obs);
 
+std::vector <std::pair <int,int>> GetLogspacedSnapshots(int cycles, int tau, int tw, int n_log);
+
+std::vector <int> GetLinspacedSnapshots(int tau, int n_lin);
+
+std::vector <int> GetCyclesEndingSnapshots(int cycles, int tw, int tau);
+
 #endif
