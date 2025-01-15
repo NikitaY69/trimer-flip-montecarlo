@@ -1,4 +1,13 @@
-#include "swap.h"
+#include <cmath>
+#include <algorithm>
+#include "globals.hpp"
+#include "particles.hpp"
+
+// Neighbours lists parameters
+const double rC = pow(2., 1./6.) * sigmaMax; // Cutoff radius for calculating potential
+const double rSkin = 0.7; // Radius of neighbours included in NL
+const double rNL = pow(rC+rSkin,2); // NL radius squared
+const double RUpdate = pow(rSkin,2)/4; // When R2Max exceeds this, update NL
 
 // Method to calculate center of mass coordinates
 void configuration::UpdateCM_coord(){

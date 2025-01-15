@@ -1,13 +1,27 @@
-#include "swap.h"
+#include <cmath>
+#include <vector>
+#include <string>
+#include <fstream>
+#include <iostream>
+#include <ctime>
+#include <experimental/filesystem>
+#include <boost/program_options.hpp>
+#include "globals.hpp"
+#include "particles.hpp"
+#include "io.hpp"
+#include "montecarlo.hpp"
+
+namespace fs = std::experimental::filesystem;
+namespace po = boost::program_options;
 
 // Default run parameters
+const double density = 1.2;
 int N = 5;
 double Size = pow(N/density, 1/3.);
 double T = 2.0; 
 int tau = 100000;
 int tw = 1;
 int cycles = 1;
-int steps = tw*(cycles-1)+tau;
 int linPoints = 50;
 int logPoints = 50;
 double p_flip = 0.2;
@@ -16,7 +30,7 @@ double p_flip = 0.2;
 //  main.cpp
 int main(int argc, const char * argv[]) {
 
-    // Random number generator
+    // Random number seed
     srand(time(NULL)*1.0);
 
     // Define the command-line options
@@ -69,7 +83,6 @@ int main(int argc, const char * argv[]) {
 
     // Recalculating user-defined parameters
     Size = pow(N/density, 1./3.);
-    steps = tw*(cycles-1)+tau;
 
     // Creating outdir if not existing
     fs::path out_path = outdir;
@@ -93,7 +106,8 @@ int main(int argc, const char * argv[]) {
 
     // Do simulation with timer
     double t0 = time(NULL); // Timer
-    MC(initconf, observables, outdir, logPoints, linPoints); 
+    MC(initconf, T, tau, cycles, tw, p_flip, 
+       observables, outdir, logPoints, linPoints); 
     std::cout << "Time taken: " << (time(NULL) - t0) << "s" << std::endl; 
     std::cout << "Done" << std::endl;
 

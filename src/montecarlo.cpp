@@ -1,8 +1,23 @@
-#include "swap.h"
+#include <cmath>
+#include <fstream>
+#include <experimental/filesystem>
+#include <algorithm>
+#include <iostream>
+#include <iomanip>
+#include "globals.hpp"
+#include "montecarlo.hpp"
+#include "observables.hpp"
+
+namespace fs = std::experimental::filesystem;
+
+// Constants
+const double deltaMax = 0.12; // Max particle displacement
 
 // Monte Carlo Simulation loop
-void MC(configuration& cfg, 
-        std::vector <std::string> observables, std::string out, int n_log, int n_lin){
+void MC(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip, 
+        std::vector <std::string>& observables, std::string& out, int n_log, int n_lin){
+            
+    double steps = tw*(cycles-1)+tau;
     int dataCounter=0;
     int cycle;
     int cycleCounter = 0;
@@ -111,8 +126,8 @@ void MC(configuration& cfg,
         };
         // Doing the MC
         for (int i = 0; i < N; i++){
-            if (ranf() > p_flip) TryDisp(cfg, floor(ranf()*N)); //Displacement probability 0.8
-            else TryFlip(cfg, floor(ranf()*N)); //Flip probability 0.2
+            if (ranf() > p_flip) TryDisp(cfg, floor(ranf()*N), T); //Displacement probability 0.8
+            else TryFlip(cfg, floor(ranf()*N), T); //Flip probability 0.2
         }
         
         if((t-1)%100==0) std::cout << (t-1) << std::endl;; // Counting steps
@@ -121,7 +136,7 @@ void MC(configuration& cfg,
 }
 
 //  Tries displacing one particle j by vector dr = (dx, dy, dz)
-void TryDisp(configuration& cfg, int j){
+void TryDisp(configuration& cfg, int j, double T){
     double dx = (ranf()-0.5)*deltaMax;
     double dy = (ranf()-0.5)*deltaMax;
     double dz = (ranf()-0.5)*deltaMax;
@@ -146,7 +161,7 @@ void TryDisp(configuration& cfg, int j){
 }
 
 //  Tries swapping two particles diameters in the molecule containing particle j
-void TryFlip(configuration& cfg, int j){
+void TryFlip(configuration& cfg, int j, double T){
     int a = rand() % 2; int k = cfg.BN[j][a]; 
     // Energy of the two clusters before the move attempt
     double V_old = V(cfg, j) + V(cfg, k);

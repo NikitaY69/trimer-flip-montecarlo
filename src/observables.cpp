@@ -1,19 +1,9 @@
-#include "swap.h"
+#include <cmath> // For math operations
+#include "globals.hpp"
+#include "observables.hpp"
 
-//  Calculates the pairwise purely repulsive potential between two particles
-double RepulsivePair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2){
-    double sigmaij = (s1+s2)*(1-0.2*std::abs(s1-s2))/2;
-    double sigma2 = sigmaij*sigmaij;
-    double rc2 = 1.25 * 1.25 * sigma2;
-    double xij = bcs(x1, x2); double yij = bcs(y1, y2); double zij = bcs(z1, z2);
-    double rij2 = (xij*xij) + (yij*yij) + (zij*zij);
-
-    if (rij2 > rc2) return 0;
-    else {
-        double a2 = rij2/sigma2; double a4 = a2*a2;
-        return (1/(a4*a4*a4))+c0+(c2*a2)+(c4*a4);
-    }
-}
+// Universal constants
+const double pi = 3.14159265358979323846;
 
 //  Calculates the pairwise WCA potential between two particles
 double WCAPair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2){
