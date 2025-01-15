@@ -88,7 +88,7 @@ void MC(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip
             else TryFlip(cfg, floor(ranf()*N), T); //Flip probability 0.2
         }
         
-        if((t-1)%100==0) std::cout << (t-1) << std::endl;; // Counting steps
+        if((t-1)%(tau/100)==0) std::cout << (t-1) << std::endl;; // Counting steps
     };
     log_obs.close();
 }
