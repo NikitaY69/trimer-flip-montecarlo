@@ -4,6 +4,6 @@
 #include <string>
 #include "particles.hpp"
 
-configuration ReadPolyCFG(std::string input), ReadTrimCFG(std::string input);
+configuration ReadTrimCFG(std::string input);
 
 #endif
