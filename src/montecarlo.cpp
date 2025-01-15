@@ -3,7 +3,6 @@
 #include <experimental/filesystem>
 #include <algorithm>
 #include <iostream>
-#include <iomanip>
 #include "globals.hpp"
 #include "montecarlo.hpp"
 #include "io.hpp"
@@ -59,14 +58,8 @@ void MC(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip
     }
 
     // File writing
-    std::ofstream log_obs; 
     std::string out_cfg = out + "configs/";
-    log_obs.open(out + "obs.txt");
-    log_obs << "t" << " " << "cycle";
-    for (std::string obs: observables){
-        log_obs << " " << obs;
-    } log_obs << std::endl;
-    log_obs << std::scientific << std::setprecision(8);
+    std::ofstream log_obs = MakeObsFile(observables, out + "obs.txt");
     // creating configs dir
     fs::create_directory(out_cfg); 
 
@@ -101,17 +94,10 @@ void MC(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip
                 cfg0 = &cfgsCycles[cycle];
                 // Configs
                 if(! fs::exists (out_cfg + "cfg_" + std::to_string(t) + ".xy")){
-                    // Configs
                     WriteTrimCFG(cfg, out_cfg + "cfg_" + std::to_string(t) + ".xy");
                 } 
-                // observables
-                log_obs << t << " " << cycle;
-                for (std::string obs: observables){
-                    log_obs << " ";
-                    (obs == "U") ?   log_obs << VTotal(cfg)/(2*N) : 
-                    (obs == "MSD") ? log_obs << MSD(cfg, *cfg0) : 
-                                     log_obs << FS(cfg, *cfg0);
-                } log_obs << std::endl;
+                // Observables
+                WriteObs(cfg, *cfg0, t, cycle, observables, log_obs);
 
                 dataCounter++;
             }  

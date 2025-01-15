@@ -1,9 +1,8 @@
-#include <vector>
-#include <fstream>
 #include <sstream>
 #include <iomanip>
 #include "globals.hpp"
 #include "io.hpp"
+#include "observables.hpp"
 
 // Read trimer configs
 configuration ReadTrimCFG(std::string input){
@@ -48,4 +47,30 @@ void WriteTrimCFG(const configuration& cfg, std::string output){
         log_cfg << cfg.S[i] << " " << cfg.Xfull[i] << " " << cfg.Yfull[i] << " " << cfg.Zfull[i] << std::endl;
     }
     log_cfg.close();
+}
+
+// Create observables file
+std::ofstream MakeObsFile(std::vector <std::string>& observables, std::string output){
+    std::ofstream log_obs; 
+    log_obs.open(output);
+    log_obs << "t" << " " << "cycle";
+    for (const std::string obs: observables){
+        log_obs << " " << obs;
+    } log_obs << std::endl;
+    log_obs << std::scientific << std::setprecision(8);
+    return log_obs;
+}
+
+// Write observables at specific timestep
+void WriteObs(const configuration& cfg, const configuration& cfg0, 
+              int t, int cycle, std::vector <std::string>& observables, 
+              std::ofstream& log_obs){
+    
+    log_obs << t << " " << cycle;
+    for (std::string obs: observables){
+        log_obs << " ";
+        (obs == "U")   ? log_obs << VTotal(cfg)/(2*N) : 
+        (obs == "MSD") ? log_obs << MSD(cfg, cfg0) : 
+                         log_obs << FS(cfg, cfg0);
+    } log_obs << std::endl;
 }
