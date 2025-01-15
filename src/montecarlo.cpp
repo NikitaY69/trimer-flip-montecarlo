@@ -22,7 +22,7 @@ void MC(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip
     int cycle;
     int cycleCounter = 0;
     std::vector <configuration> cfgsCycles;
-    configuration cfg0;
+    configuration* cfg0;
 
     // Building snapshots list (log-spaced)
     std::vector < std::pair <double, double>> pairs;
@@ -102,7 +102,7 @@ void MC(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip
             for(int s=0; s<log; s++){
                 // looping different eventual tws
                 cycle = twPoints[dataCounter];
-                cfg0 = cfgsCycles[cycle];
+                cfg0 = &cfgsCycles[cycle];
                 // Configs
                 if(! fs::exists (out_cfg + "cfg_" + std::to_string(t) + ".xy")){
                     log_cfg.open(out_cfg + "cfg_" + std::to_string(t) + ".xy");
@@ -117,8 +117,8 @@ void MC(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip
                 for (std::string obs: observables){
                     log_obs << " ";
                     (obs == "U") ?   log_obs << VTotal(cfg)/(2*N) : 
-                    (obs == "MSD") ? log_obs << MSD(cfg, cfg0) : 
-                                     log_obs << FS(cfg, cfg0);
+                    (obs == "MSD") ? log_obs << MSD(cfg, *cfg0) : 
+                                     log_obs << FS(cfg, *cfg0);
                 } log_obs << std::endl;
 
                 dataCounter++;
