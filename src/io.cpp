@@ -100,16 +100,12 @@ std::vector <std::pair <int,int>> GetLogspacedSnapshots(int cycles, int tau, int
 
 }
 
-std::vector <int> GetLinspacedSnapshots(int tau, int n_lin){
+std::vector <int> GetLinspacedSnapshots(int cycles, int tau, int tw, int n_lin){
     std::vector <int> linpoints;
-    for (int k=1; k<=n_lin; k++){
-        linpoints.push_back((tau/(n_lin))*k);
-    } return linpoints;
-}
-
-std::vector <int> GetCyclesEndingSnapshots(int cycles, int tw, int tau){
-    std::vector <int> endingpoints;
-    for(int c=0; c<cycles; c++){
-        endingpoints.push_back(c*tw + tau);
-    } return endingpoints;
+    for (int c=0; c<cycles; c++){
+        for (int k=1; k<=n_lin; k++){
+            linpoints.push_back(tw*c+(tau/(n_lin))*k);
+        }
+    } std::sort(linpoints.begin(), linpoints.end());
+    return linpoints;
 }

@@ -25,17 +25,15 @@ void MC(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip
     configuration* cfg0;
 
     // Building snapshots list
-    std::vector <int> logpoints, twpoints, linpoints, cyclepoints;
+    std::vector <int> logpoints, twpoints, linpoints;
 
     // Logspaced
     std::vector < std::pair <int, int>> log_and_tws = GetLogspacedSnapshots(cycles, tau, tw, n_log);
     for (auto p: log_and_tws){
         logpoints.push_back(p.first); twpoints.push_back(p.second);
     }
-    // Linspaced points
-    linpoints = GetLinspacedSnapshots(tau, n_lin);
-    // Cycles ending points
-    cyclepoints = GetCyclesEndingSnapshots(cycles, tw, tau);
+    // Linspaced
+    linpoints = GetLinspacedSnapshots(cycles, tau, tw, n_lin);
 
     // File writing
     std::string out_cfg = out + "configs/";

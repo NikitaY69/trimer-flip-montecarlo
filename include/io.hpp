@@ -18,8 +18,6 @@ void WriteObs(const configuration& cfg, const configuration& cfg0,
 
 std::vector <std::pair <int,int>> GetLogspacedSnapshots(int cycles, int tau, int tw, int n_log);
 
-std::vector <int> GetLinspacedSnapshots(int tau, int n_lin);
-
-std::vector <int> GetCyclesEndingSnapshots(int cycles, int tw, int tau);
+std::vector <int> GetLinspacedSnapshots(int cycles, int tau, int tw, int n_lin);
 
 #endif
