@@ -61,7 +61,9 @@ void MC(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip
 
         if(lin>0){ // checking if linear saving time
             // Configs
-            WriteTrimCFG(cfg, out_cfg + "cfg_" + std::to_string(t) + ".xy");
+            if(! fs::exists (out_cfg + "cfg_" + std::to_string(t) + ".xy")){
+                WriteTrimCFG(cfg, out_cfg + "cfg_" + std::to_string(t) + ".xy");
+            }
         }
 
         if(log>0){ // checking if log saving time
