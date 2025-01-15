@@ -7,7 +7,6 @@ double T = 2.0;
 int tau = 100000;
 int tw = 1;
 int cycles = 1;
-int steps = tw*(cycles-1)+tau;
 int linPoints = 50;
 int logPoints = 50;
 double p_flip = 0.2;
@@ -16,8 +15,8 @@ double p_flip = 0.2;
 //  main.cpp
 int main(int argc, const char * argv[]) {
 
-    // Random number generator
-    srand(31);
+    // Random number seed
+    srand(time(NULL)*1.0);
 
     // Define the command-line options
     std::string input;
@@ -69,7 +68,6 @@ int main(int argc, const char * argv[]) {
 
     // Recalculating user-defined parameters
     Size = pow(N/density, 1./3.);
-    steps = tw*(cycles-1)+tau;
 
     // Creating outdir if not existing
     fs::path out_path = outdir;

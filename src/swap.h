@@ -21,12 +21,6 @@ const double pi = 3.14159265358979323846;
 
 // User-defined parameters
 extern int N; // Number of particles
-extern int tau; // Correlation max-duration
-extern int cycles; // Number of correlation cycles
-extern int steps; // Monte Carlo sweeps
-extern double T; // Temperature in units of 1/k_B
-extern int tw; // Waiting time to start correlation calculations
-extern double p_flip; // Flip-attempt probability
 
 // Purely repulsive parameters
 const double c0 = -28/pow(1.25,12);
