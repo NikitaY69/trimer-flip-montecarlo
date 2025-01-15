@@ -1,4 +1,5 @@
-#include "swap.h"
+#include "montecarlo.hpp"
+const double deltaMax = 0.12; // Max particle displacement
 
 // Monte Carlo Simulation loop
 void MC(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip, 

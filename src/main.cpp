@@ -1,6 +1,17 @@
-#include "swap.h"
+#include <fstream>
+#include <ctime> // For timing purposes
+#include <experimental/filesystem>
+#include <boost/program_options.hpp> // For parsing arguments
+#include "globals.hpp"
+#include "particles.hpp"
+#include "io.hpp"
+#include "montecarlo.hpp"
+
+namespace fs = std::experimental::filesystem;
+namespace po = boost::program_options;
 
 // Default run parameters
+const double density = 1.2;
 int N = 5;
 double Size = pow(N/density, 1/3.);
 double T = 2.0; 

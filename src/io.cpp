@@ -1,4 +1,6 @@
-#include "swap.h"
+#include "globals.hpp"
+#include "particles.hpp"
+#include "io.hpp"
 
 // Read trimer configs
 configuration ReadTrimCFG(std::string input){
