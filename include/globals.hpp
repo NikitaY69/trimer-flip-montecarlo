@@ -1,17 +1,18 @@
-#ifndef SWAP_H
-#define SWAP_H
+#ifndef GLOBALS_H
+#define GLOBALS_H
 
 // Libraries
-#include <iostream>
-#include <fstream>
-#include <cmath>
-#include <ctime>
-#include <algorithm>
-#include <sstream> 
-#include <iomanip>
-#include <vector> 
-#include <experimental/filesystem>
-#include <boost/program_options.hpp>
+#include <cstdlib> // For dynamic memory and random numbers (included in algorithm)
+#include <cmath> // For math operations
+#include <vector> // For vectors (included in filesystem)
+#include <iostream> // For interaction with the terminal
+#include <fstream> // For operating on files
+#include <sstream> // For operating on strings (included in fstream)
+#include <algorithm> // For operating on ranges of elements
+#include <iomanip> // For precision purposes
+#include <ctime> // For timing purposes
+#include <experimental/filesystem> // For operating on file systems 
+#include <boost/program_options.hpp> // For parsing arguments
 
 namespace fs = std::experimental::filesystem;
 namespace po = boost::program_options;
@@ -65,7 +66,6 @@ struct configuration {
     void CheckNL();
 };
 
-// Function prototypes
 configuration ReadPolyCFG(std::string input), ReadTrimCFG(std::string input);
 double bcs(double a, double b), Pshift(double a);
 
@@ -75,9 +75,6 @@ double RepulsivePair(double x1, double y1, double z1, double s1, double x2, doub
 double V(const configuration& cfg, int j), VTotal(const configuration& cfg), 
        MSD(const configuration& cfg, const configuration& cfg0), 
        FS(const configuration& cfg, const configuration& cfg0);
-void TryDisp(configuration& cfg, int j, double T), TryFlip(configuration& cfg, int j, double T), 
-     MC(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip, 
-        std::vector <std::string>& observables, std::string& out, int n_log, int n_lin);
 
 //  Random number between 0 and 1
 #define ranf() \
