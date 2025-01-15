@@ -4,8 +4,7 @@
 #include "globals.hpp"
 #include "particles.hpp"
 
-double RepulsivePair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2),
-       WCAPair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2),
+double WCAPair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2),
        FENEPair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2);
 
 double V(const configuration& cfg, int j), VTotal(const configuration& cfg), 
