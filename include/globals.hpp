@@ -3,10 +3,6 @@
 
 // Libraries
 #include <cstdlib> // For dynamic memory and random numbers
-#include <cmath> // For math operations
-#include <vector> // For vectors
-#include <string> // For strings
-#include <iostream> // For interaction with the terminal
 
 // Shared variables
 extern int N; // Number of particles

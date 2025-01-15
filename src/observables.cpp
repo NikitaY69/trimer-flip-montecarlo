@@ -1,3 +1,5 @@
+#include <cmath> // For math operations
+#include "globals.hpp"
 #include "observables.hpp"
 
 // Universal constants

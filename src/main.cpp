@@ -1,7 +1,11 @@
+#include <cmath>
+#include <vector>
+#include <string>
 #include <fstream>
-#include <ctime> // For timing purposes
+#include <iostream>
+#include <ctime>
 #include <experimental/filesystem>
-#include <boost/program_options.hpp> // For parsing arguments
+#include <boost/program_options.hpp>
 #include "globals.hpp"
 #include "particles.hpp"
 #include "io.hpp"

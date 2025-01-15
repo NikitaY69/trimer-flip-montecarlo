@@ -1,4 +1,16 @@
+#include <cmath>
+#include <fstream>
+#include <experimental/filesystem>
+#include <algorithm>
+#include <iostream>
+#include <iomanip>
+#include "globals.hpp"
 #include "montecarlo.hpp"
+#include "observables.hpp"
+
+namespace fs = std::experimental::filesystem;
+
+// Constants
 const double deltaMax = 0.12; // Max particle displacement
 
 // Monte Carlo Simulation loop

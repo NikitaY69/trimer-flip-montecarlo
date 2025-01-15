@@ -1,7 +1,6 @@
 #ifndef OBS_H
 #define OBS_H
 
-#include "globals.hpp"
 #include "particles.hpp"
 
 double WCAPair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2),

@@ -1,8 +1,8 @@
 #ifndef PARTICLES_H
 #define PARTICLES_H
 
+#include <vector>
 #include "globals.hpp"
-#include <algorithm>
 
 // Structure to keep track of the evolution of configurations
 struct configuration {

@@ -1,3 +1,5 @@
+#include <cmath>
+#include <algorithm>
 #include "globals.hpp"
 #include "particles.hpp"
 
