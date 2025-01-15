@@ -6,6 +6,7 @@
 #include <iomanip>
 #include "globals.hpp"
 #include "montecarlo.hpp"
+#include "io.hpp"
 #include "observables.hpp"
 
 namespace fs = std::experimental::filesystem;
@@ -58,7 +59,7 @@ void MC(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip
     }
 
     // File writing
-    std::ofstream log_obs, log_cfg; 
+    std::ofstream log_obs; 
     std::string out_cfg = out + "configs/";
     log_obs.open(out + "obs.txt");
     log_obs << "t" << " " << "cycle";
@@ -89,12 +90,7 @@ void MC(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip
 
         if(lin>0){ // checking if linear saving time
             // Configs
-            log_cfg.open(out_cfg + "cfg_" + std::to_string(t) + ".xy");
-            log_cfg << std::scientific << std::setprecision(8);
-            for (int i = 0; i<N; i++){
-                log_cfg << cfg.S[i] << " " << cfg.Xfull[i] << " " << cfg.Yfull[i] << " " << cfg.Zfull[i] << std::endl;
-            }
-            log_cfg.close();
+            WriteTrimCFG(cfg, out_cfg + "cfg_" + std::to_string(t) + ".xy");
         }
 
         if(log>0){ // checking if log saving time
@@ -105,12 +101,8 @@ void MC(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip
                 cfg0 = &cfgsCycles[cycle];
                 // Configs
                 if(! fs::exists (out_cfg + "cfg_" + std::to_string(t) + ".xy")){
-                    log_cfg.open(out_cfg + "cfg_" + std::to_string(t) + ".xy");
-                    log_cfg << std::scientific << std::setprecision(8);
-                    for (int i = 0; i<N; i++){
-                        log_cfg << cfg.S[i] << " " << cfg.Xfull[i] << " " << cfg.Yfull[i] << " " << cfg.Zfull[i] << std::endl;
-                    }
-                    log_cfg.close();
+                    // Configs
+                    WriteTrimCFG(cfg, out_cfg + "cfg_" + std::to_string(t) + ".xy");
                 } 
                 // observables
                 log_obs << t << " " << cycle;

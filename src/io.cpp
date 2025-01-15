@@ -1,6 +1,7 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include <iomanip>
 #include "globals.hpp"
 #include "io.hpp"
 
@@ -36,4 +37,15 @@ configuration ReadTrimCFG(std::string input){
         std::string error = input + " not found";
         throw error;
     }
+}
+
+// Write trimer configs
+void WriteTrimCFG(const configuration& cfg, std::string output){
+    std::ofstream log_cfg;
+    log_cfg.open(output);
+    log_cfg << std::scientific << std::setprecision(8);
+    for (int i = 0; i<N; i++){
+        log_cfg << cfg.S[i] << " " << cfg.Xfull[i] << " " << cfg.Yfull[i] << " " << cfg.Zfull[i] << std::endl;
+    }
+    log_cfg.close();
 }

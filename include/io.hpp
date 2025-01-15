@@ -6,4 +6,6 @@
 
 configuration ReadTrimCFG(std::string input);
 
+void WriteTrimCFG(const configuration& cfg, std::string output);
+
 #endif
