@@ -50,18 +50,25 @@ int main(int argc, const char * argv[]) {
     Size = pow(N/density, 1./3.);
 
     // Creating outdir if not existing
-    fs::path out_path = rootdir;
-    if(!fs::is_directory(out_path)){
+    fs::path rootdir_path = rootdir;
+    if(!fs::is_directory(rootdir_path)){
         fs::create_directory(rootdir);
     }
 
-    // std::ofstream file(rootdir + "params.json");
-    // if (file.is_open()) {
-    //     file << params.dump(4); // Pretty-print JSON with 4 spaces of indentation
-    //     file.close();
-    // } else {
-    //     std::cerr << "Unable to open file for writing." << std::endl;
-    // }
+    // Checking if the json file is present in rootdir
+    fs::path json_file(params_path);
+    fs::path target_path = rootdir_path / json_file.filename();
+
+    if (fs::exists(target_path)) {
+        // pass
+    } else {
+        // Copy the file to the target directory
+        try {
+            fs::copy(json_file, target_path);
+        } catch (const fs::filesystem_error& e) {
+            std::cerr << "Error copying file: " << e.what() << std::endl;
+        }
+    }
 
     // Read init config
     configuration initconf;
