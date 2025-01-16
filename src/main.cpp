@@ -109,8 +109,13 @@ int main(int argc, const char * argv[]) {
     // Do simulation with timer
     double t0 = time(NULL); // Timer
     MC(initconf, T, tau, cycles, tw, p_flip, observables, rootdir, logPoints, linPoints); 
-    std::cout << "Time taken: " << (time(NULL) - t0) << "s" << std::endl; 
-    std::cout << "Done" << std::endl;
+    double time_elapsed = time(NULL) - t0;
+    std::cout << "================================================================" 
+              << std::endl;
+    std::cout << "Time taken: " << std::endl;
+    std::cout << time_elapsed << " seconds" << std::endl;
+    std::cout << time_elapsed/60 << " minutes" << std::endl;
+    std::cout << time_elapsed/3600 << " hours" << std::endl;
 
     return 0;
 }
