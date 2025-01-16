@@ -3,6 +3,7 @@
 #include <experimental/filesystem>
 #include <algorithm>
 #include <iostream>
+#include <indicators/progress_bar.hpp>
 #include "globals.hpp"
 #include "montecarlo.hpp"
 #include "utils.hpp"
@@ -12,6 +13,19 @@ namespace fs = std::experimental::filesystem;
 
 // Constants
 const double deltaMax = 0.12; // Max particle displacement
+
+// Progress bar
+indicators::ProgressBar bar{
+    indicators::option::BarWidth{50},
+    indicators::option::Start{"["},
+    indicators::option::Fill{"="},
+    indicators::option::Lead{">"},
+    indicators::option::Remainder{" "},
+    indicators::option::End{"]"},
+    indicators::option::ForegroundColor{indicators::Color::cyan},
+    indicators::option::ShowPercentage{true},
+    indicators::option::ShowElapsedTime{true},
+};
 
 // Monte Carlo Simulation loop
 void MC(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip, 
@@ -88,7 +102,8 @@ void MC(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip
             else TryFlip(cfg, floor(ranf()*N), T); //Flip probability 0.2
         }
         
-        if((t-1)%(tau/100)==0) std::cout << (t-1) << std::endl;; // Counting steps
+        if((t-1)%(tau/100)==0) bar.tick();
+        
     };
     log_obs.close();
 }
