@@ -78,6 +78,7 @@ bool ReadJSONParams(const std::string& params_path,
     linPoints = params["linPoints"];
     p_flip = params["p_flip"];
 
+    json_file.close();
     return true;
 }
 
