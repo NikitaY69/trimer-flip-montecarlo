@@ -59,15 +59,14 @@ int main(int argc, const char * argv[]) {
     fs::path json_file(params_path);
     fs::path target_path = rootdir_path / json_file.filename();
 
-    if (fs::exists(target_path)) {
-        // pass
-    } else {
-        // Copy the file to the target directory
-        try {
-            fs::copy(json_file, target_path);
-        } catch (const fs::filesystem_error& e) {
-            std::cerr << "Error copying file: " << e.what() << std::endl;
-        }
+    // if (fs::exists(target_path)) {
+    //     // pass
+    // } else {
+    // Copy the file to the target directory
+    try {
+        fs::copy(json_file, target_path, fs::copy_options::overwrite_existing);
+    } catch (const fs::filesystem_error& e) {
+        std::cerr << e.what() << std::endl;
     }
     
     // Setting run mode
