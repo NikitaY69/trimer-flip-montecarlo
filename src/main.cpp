@@ -35,7 +35,7 @@ int main(int argc, const char * argv[]) {
     std::string params_path;
     std::string rootdir;
     std::vector <std::string> observables;
-
+    bool norun;
     // Parse command line arguments
     if (!ParseCMDLine(argc, argv, input, params_path, observables)){
         return 1;
@@ -69,14 +69,22 @@ int main(int argc, const char * argv[]) {
             std::cerr << "Error copying file: " << e.what() << std::endl;
         }
     }
+    
+    // Setting run mode
+    (input == "") ? norun = true : norun = false;
 
-    // Read init config
-    configuration initconf;
-    initconf = ReadTrimCFG(input);
-
-    // Do simulation with timer
     double t0 = time(NULL); // Timer
-    MonteCarloRun(initconf, T, tau, cycles, tw, p_flip, observables, rootdir, logPoints, linPoints); 
+    if (norun){
+        // pass
+    } else{
+        // Read init config
+        configuration initconf;
+        initconf = ReadTrimCFG(input);
+
+        // Do simulation with timer
+        MonteCarloRun(initconf, T, tau, cycles, tw, p_flip, observables, rootdir, logPoints, linPoints); 
+    }
+    
     double time_elapsed = time(NULL) - t0;
     std::cout << "Time taken: " << std::endl;
     std::cout << time_elapsed << " seconds" << std::endl;

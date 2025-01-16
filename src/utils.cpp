@@ -21,7 +21,7 @@ bool ParseCMDLine(int argc, const char* argv[],
     po::options_description desc("Allowed options");
     desc.add_options()
         ("help,h", "Produce help message")
-        ("init", po::value<std::string>(&input), "Path to initial configuration file")
+        ("init", po::value<std::string>(&input)->default_value(""), "Path to initial configuration file")
         ("params", po::value<std::string>(&params)->required(), "Path to JSON file for simulation parameters")
         ("observables", po::value<std::vector<std::string>>(&observables)->multitoken(),
                         "List of observables to compute (e.g., MSD Fs U; separated by spaces)");
