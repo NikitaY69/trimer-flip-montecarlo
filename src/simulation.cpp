@@ -5,7 +5,7 @@
 #include <iostream>
 #include <indicators/progress_bar.hpp>
 #include "globals.hpp"
-#include "montecarlo.hpp"
+#include "simulation.hpp"
 #include "utils.hpp"
 #include "observables.hpp"
 
@@ -28,7 +28,7 @@ indicators::ProgressBar bar{
 };
 
 // Monte Carlo Simulation loop
-void MC(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip, 
+void MonteCarloRun(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip, 
         std::vector <std::string>& observables, std::string& out, int n_log, int n_lin){
             
     double steps = tw*(cycles-1)+tau;

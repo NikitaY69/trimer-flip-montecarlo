@@ -7,7 +7,7 @@
 #include "globals.hpp"
 #include "particles.hpp"
 #include "utils.hpp"
-#include "montecarlo.hpp"
+#include "simulation.hpp"
 
 namespace fs = std::experimental::filesystem;
 
@@ -76,7 +76,7 @@ int main(int argc, const char * argv[]) {
 
     // Do simulation with timer
     double t0 = time(NULL); // Timer
-    MC(initconf, T, tau, cycles, tw, p_flip, observables, rootdir, logPoints, linPoints); 
+    MonteCarloRun(initconf, T, tau, cycles, tw, p_flip, observables, rootdir, logPoints, linPoints); 
     double time_elapsed = time(NULL) - t0;
     std::cout << "Time taken: " << std::endl;
     std::cout << time_elapsed << " seconds" << std::endl;
