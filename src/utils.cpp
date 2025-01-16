@@ -4,11 +4,13 @@
 #include <iomanip>
 #include <algorithm>
 #include <boost/program_options.hpp>
+#include <nlohmann/json.hpp>
 #include "globals.hpp"
 #include "utils.hpp"
 #include "observables.hpp"
 
 namespace po = boost::program_options;
+using json = nlohmann::json;
 
 // Parse command line arguments
 bool ParseCMDLine(int argc, const char* argv[],
@@ -42,6 +44,41 @@ bool ParseCMDLine(int argc, const char* argv[],
     }
 
     return true; // Successfully parsed arguments
+}
+
+// Read params from JSON file
+bool ReadJSONParams(const std::string& params_path, 
+                    std::string& rootdir,
+                    int& N, 
+                    double& T,
+                    int& tau,
+                    int& tw,
+                    int& cycles,
+                    int& logPoints,
+                    int& linPoints,
+                    double& p_flip){
+    json params;
+    std::ifstream json_file(params_path);
+
+    // Check if the file is open
+    if (!json_file.is_open()) {
+        std::cerr << "Error opening JSON file.\n";
+        return false;
+    }
+
+    // Parse the JSON file
+    json_file >> params;
+    rootdir = params["rootdir"];
+    N = params["N"];
+    T = params["T"];
+    tau = params["tau"];
+    tw = params["tw"];
+    cycles = params["cycles"];
+    logPoints = params["logPoints"];
+    linPoints = params["linPoints"];
+    p_flip = params["p_flip"];
+
+    return true;
 }
 
 // Read trimer configs

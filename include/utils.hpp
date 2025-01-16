@@ -11,6 +11,17 @@ bool ParseCMDLine(int argc, const char* argv[],
                         std::string& params,
                         std::vector<std::string>& observables);
 
+bool ReadJSONParams(const std::string& params_path, 
+                    std::string& rootdir,
+                    int& N, 
+                    double& T,
+                    int& tau,
+                    int& tw,
+                    int& cycles,
+                    int& logPoints,
+                    int& linPoints,
+                    double& p_flip);
+                    
 configuration ReadTrimCFG(std::string input);
 
 void WriteTrimCFG(const configuration& cfg, std::string output);

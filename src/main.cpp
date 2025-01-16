@@ -1,18 +1,15 @@
 #include <cmath>
 #include <vector>
 #include <string>
-#include <fstream>
 #include <iostream>
 #include <ctime>
 #include <experimental/filesystem>
-#include <nlohmann/json.hpp>
 #include "globals.hpp"
 #include "particles.hpp"
 #include "utils.hpp"
 #include "montecarlo.hpp"
 
 namespace fs = std::experimental::filesystem;
-using json = nlohmann::json;
 
 // Default run parameters
 const double density = 1.2;
@@ -45,26 +42,9 @@ int main(int argc, const char * argv[]) {
     };
 
     // Loading params from json file
-    json params;
-    std::ifstream input_file(params_path);
-
-    // Check if the file is open
-    if (!input_file.is_open()) {
-        std::cerr << "Error opening file.\n";
+    if (!ReadJSONParams(params_path, rootdir, N, T, tau, tw, cycles, logPoints, linPoints, p_flip)){
         return 1;
     }
-
-    // Parse the JSON file
-    input_file >> params;
-    rootdir = params["rootdir"];
-    N = params["N"];
-    T = params["T"];
-    tau = params["tau"];
-    tw = params["tw"];
-    cycles = params["cycles"];
-    logPoints = params["logPoints"];
-    linPoints = params["linPoints"];
-    p_flip = params["p_flip"];
 
     // Recalculating size
     Size = pow(N/density, 1./3.);
@@ -75,13 +55,13 @@ int main(int argc, const char * argv[]) {
         fs::create_directory(rootdir);
     }
 
-    std::ofstream file(rootdir + "params.json");
-    if (file.is_open()) {
-        file << params.dump(4); // Pretty-print JSON with 4 spaces of indentation
-        file.close();
-    } else {
-        std::cerr << "Unable to open file for writing." << std::endl;
-    }
+    // std::ofstream file(rootdir + "params.json");
+    // if (file.is_open()) {
+    //     file << params.dump(4); // Pretty-print JSON with 4 spaces of indentation
+    //     file.close();
+    // } else {
+    //     std::cerr << "Unable to open file for writing." << std::endl;
+    // }
 
     // Read init config
     configuration initconf;
