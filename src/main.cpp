@@ -28,7 +28,7 @@ double p_flip = 0.2;
 int main(int argc, const char * argv[]) {
 
     // Random number seed
-    srand(time(NULL)*1.0);
+    srand(31);
 
     // Define the command-line options
     std::string input;
@@ -74,14 +74,16 @@ int main(int argc, const char * argv[]) {
     (input == "") ? norun = true : norun = false;
 
     double t0 = time(NULL); // Timer
+
     if (norun){
-        // pass
+        // Compute observables
+        ComputeObservables(tau, cycles, tw, observables, rootdir, logPoints);
     } else{
         // Read init config
         configuration initconf;
         initconf = ReadTrimCFG(input);
 
-        // Do simulation with timer
+        // Do simulation
         MonteCarloRun(initconf, T, tau, cycles, tw, p_flip, observables, rootdir, logPoints, linPoints); 
     }
     

@@ -12,4 +12,7 @@ void TryDisp(configuration& cfg, int j, double T);
 
 void TryFlip(configuration& cfg, int j, double T);
 
+void ComputeObservables(int tau, int cycles, int tw, 
+        std::vector <std::string>& observables, std::string& out, int n_log);
+
 #endif

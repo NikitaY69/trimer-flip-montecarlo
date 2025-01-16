@@ -133,6 +133,57 @@ void TryDisp(configuration& cfg, int j, double T){
     }
 }
 
+// Observables-only run
+void ComputeObservables(int tau, int cycles, int tw,  
+        std::vector <std::string>& observables, std::string& out, int n_log){
+    
+    double steps = tw*(cycles-1)+tau;
+    int dataCounter=0;
+    int cycle;
+    int cycleCounter = 0;
+    std::vector <configuration> cfgsCycles;
+    configuration cfg;
+    configuration* cfg0;
+
+    // Building snapshots list
+    std::vector <int> logpoints, twpoints;
+
+    // Logspaced
+    std::vector < std::pair <int, int>> log_and_tws = GetLogspacedSnapshots(cycles, tau, tw, n_log);
+    for (auto p: log_and_tws){
+        logpoints.push_back(p.first); twpoints.push_back(p.second);
+    }
+
+    // File writing
+    std::string out_cfg = out + "configs/";
+    std::ofstream log_obs = MakeObsFile(observables, out + "obs.txt");
+
+    // Looping over the saved snapshots
+    for(int t: logpoints){
+
+        cfg = ReadTrimCFG(out_cfg + "cfg_" + std::to_string(t) + ".xy");
+        cfg.UpdateNL();
+        cfg.UpdateCM_coord();
+        // std::cout << t << std::endl;
+        // Updating reference observables
+        if((t-1)%tw == 0 && cycleCounter < cycles){
+            // std::cout << "updating" << std::endl;
+            cfgsCycles.push_back(cfg); cycleCounter++;
+        } 
+        
+        cycle = twpoints[dataCounter];
+        cfg0 = &cfgsCycles[cycle];
+
+        // Observables
+        WriteObs(cfg, *cfg0, t, cycle, observables, log_obs);
+
+        dataCounter++;
+        bar.tick();
+   
+    };
+    log_obs.close();
+}
+
 //  Tries swapping two particles diameters in the molecule containing particle j
 void TryFlip(configuration& cfg, int j, double T){
     int a = rand() % 2; int k = cfg.BN[j][a]; 
@@ -152,3 +203,4 @@ void TryFlip(configuration& cfg, int j, double T){
         cfg.S[j] = Sj_old; cfg.S[k] = Sk_old;
     }
 }
+
