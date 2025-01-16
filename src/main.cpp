@@ -27,7 +27,6 @@ int cycles = 1;
 int linPoints = 50;
 int logPoints = 50;
 double p_flip = 0.2;
-std::vector < std::string > observables;
 
 //-----------------------------------------------------------------------------
 //  main.cpp
@@ -38,60 +37,64 @@ int main(int argc, const char * argv[]) {
 
     // Define the command-line options
     std::string input;
-    std::string outdir;
+    std::string rootdir;
+    std::vector <std::string> observables;
+
     po::options_description desc("Allowed options");
     desc.add_options()
-        ("help,h", "produce help message")
-        ("input", po::value<std::string>(&input)->required(), "set input file")
-        ("outdir", po::value<std::string>(&outdir)->required(), "set out directory")
-        ("N", po::value<int>(&N)->default_value(N), "set system size")
-        ("T", po::value<double>(&T)->default_value(T), "set temperature")
-        ("tau", po::value<int>(&tau)->default_value(tau), "set single-run time")
-        ("tw", po::value<int>(&tw)->default_value(tw), "set waiting time")
-        ("cycles", po::value<int>(&cycles)->default_value(cycles), "set number of cycles")
-        ("lin", po::value<int>(&linPoints)->default_value(linPoints), "set number of lin-spaced snapshots")
-        ("log", po::value<int>(&logPoints)->default_value(logPoints), "set number of log-spaced snapshots")
-        ("p_flip", po::value<double>(&p_flip)->default_value(p_flip), "set flip-attempt probability")
+        ("help,h", "Produce help message")
+        ("init", po::value<std::string>(&input), "Path to initial configuration file")
+        ("params", po::value<std::string>()->required(), "Path to JSON file for simulation parameters")
         ("observables", po::value<std::vector<std::string>>(&observables)->multitoken(),
-                        "List of observables to compute (e.g., MSD, Fs, U)");
+                        "List of observables to compute (e.g., MSD Fs U; separated by spaces)");
 
     // Parse the command-line arguments
     po::variables_map vm;
     try {
         po::store(po::parse_command_line(argc, argv, desc), vm);
+        // Handle the help option
+        if (vm.count("help")) {
+            std::cout << desc << std::endl;
+            return 0;
+        }
         po::notify(vm);
     } catch (const po::error &ex) {
         std::cerr << ex.what() << std::endl;
         return 1;
     }
-    // Handle the help option
-    if (vm.count("help")) {
-        std::cout << desc << std::endl;
-        return 0;
+
+    // Loading params from json file
+    json params;
+    std::ifstream input_file(vm["params"].as<std::string>());
+
+    // Check if the file is open
+    if (!input_file.is_open()) {
+        std::cerr << "Error opening file.\n";
+        return 1;
     }
 
-    // Recalculating user-defined parameters
+    // Parse the JSON file
+    input_file >> params;
+    rootdir = params["rootdir"];
+    N = params["N"];
+    T = params["T"];
+    tau = params["tau"];
+    tw = params["tw"];
+    cycles = params["cycles"];
+    logPoints = params["logPoints"];
+    linPoints = params["linPoints"];
+    p_flip = params["p_flip"];
+
+    // Recalculating size
     Size = pow(N/density, 1./3.);
 
     // Creating outdir if not existing
-    fs::path out_path = outdir;
+    fs::path out_path = rootdir;
     if(!fs::is_directory(out_path)){
-        fs::create_directory(outdir);
+        fs::create_directory(rootdir);
     }
-    
-     // Writing params.json file
-    json params;
-    params["rootdir"] = outdir;
-    params["N"] = N;
-    params["T"] = T;
-    params["tau"] = tau;
-    params["tw"] = tw;
-    params["cycles"] = cycles;
-    params["logPoints"] = logPoints;
-    params["linPoints"] = linPoints;
-    params["p_flip"] = p_flip;
 
-    std::ofstream file(outdir + "params.json");
+    std::ofstream file(rootdir + "params.json");
     if (file.is_open()) {
         file << params.dump(4); // Pretty-print JSON with 4 spaces of indentation
         file.close();
@@ -105,8 +108,7 @@ int main(int argc, const char * argv[]) {
 
     // Do simulation with timer
     double t0 = time(NULL); // Timer
-    MC(initconf, T, tau, cycles, tw, p_flip, 
-       observables, outdir, logPoints, linPoints); 
+    MC(initconf, T, tau, cycles, tw, p_flip, observables, rootdir, logPoints, linPoints); 
     std::cout << "Time taken: " << (time(NULL) - t0) << "s" << std::endl; 
     std::cout << "Done" << std::endl;
 
