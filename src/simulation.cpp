@@ -133,6 +133,26 @@ void TryDisp(configuration& cfg, int j, double T){
     }
 }
 
+//  Tries swapping two particles diameters in the molecule containing particle j
+void TryFlip(configuration& cfg, int j, double T){
+    int a = rand() % 2; int k = cfg.BN[j][a]; 
+    // Energy of the two clusters before the move attempt
+    double V_old = V(cfg, j) + V(cfg, k);
+    // Temporarily saving old configurations
+    double Sj_old = cfg.S[j]; double Sk_old = cfg.S[k];
+    cfg.S[j] = Sk_old; cfg.S[k] = Sj_old;
+    // Energy of the two clusters after the move attempt
+    double V_new = V(cfg, j) + V(cfg, k);
+
+    double deltaE = V_new - V_old;
+    if (deltaE < 0){
+        // pass
+    }
+    else if (exp(-deltaE/T) < ranf()){
+        cfg.S[j] = Sj_old; cfg.S[k] = Sk_old;
+    }
+}
+
 // Observables-only run
 void ComputeObservables(int tau, int cycles, int tw,  
         std::vector <std::string>& observables, std::string& out, int n_log){
@@ -160,10 +180,11 @@ void ComputeObservables(int tau, int cycles, int tw,
 
     // Looping over the saved snapshots
     for(int t: logpoints){
-
+        // std::cout << out_cfg + "cfg_" + std::to_string(t) + ".xy" << std::endl;
         cfg = ReadTrimCFG(out_cfg + "cfg_" + std::to_string(t) + ".xy");
-        cfg.UpdateNL();
+        cfg.GetBonds(); cfg.UpdateNL();
         cfg.UpdateCM_coord();
+        // std::cout << cfg.Xfull[125] << " " << cfg.X[125] << std::endl;
         // std::cout << t << std::endl;
         // Updating reference observables
         if((t-1)%tw == 0 && cycleCounter < cycles){
@@ -183,24 +204,3 @@ void ComputeObservables(int tau, int cycles, int tw,
     };
     log_obs.close();
 }
-
-//  Tries swapping two particles diameters in the molecule containing particle j
-void TryFlip(configuration& cfg, int j, double T){
-    int a = rand() % 2; int k = cfg.BN[j][a]; 
-    // Energy of the two clusters before the move attempt
-    double V_old = V(cfg, j) + V(cfg, k);
-    // Temporarily saving old configurations
-    double Sj_old = cfg.S[j]; double Sk_old = cfg.S[k];
-    cfg.S[j] = Sk_old; cfg.S[k] = Sj_old;
-    // Energy of the two clusters after the move attempt
-    double V_new = V(cfg, j) + V(cfg, k);
-
-    double deltaE = V_new - V_old;
-    if (deltaE < 0){
-        // pass
-    }
-    else if (exp(-deltaE/T) < ranf()){
-        cfg.S[j] = Sj_old; cfg.S[k] = Sk_old;
-    }
-}
-

@@ -28,7 +28,7 @@ double p_flip = 0.2;
 int main(int argc, const char * argv[]) {
 
     // Random number seed
-    srand(31);
+    srand(40);
 
     // Define the command-line options
     std::string input;
