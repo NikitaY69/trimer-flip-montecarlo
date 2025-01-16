@@ -101,8 +101,14 @@ configuration ReadTrimCFG(std::string input){
             // mol_index[i] = cfg[i][0];
             // type = cfg[i][1]-1; 
             // C.S[i] = (diameters[type]);
-            C.S[i] = cfg[i][1];
-            C.Xfull[i] = cfg[i][2]; C.Yfull[i] = cfg[i][3]; C.Zfull[i] = cfg[i][4];
+            if (cfg[i].size() == 5){
+                C.S[i] = cfg[i][1];
+                C.Xfull[i] = cfg[i][2]; C.Yfull[i] = cfg[i][3]; C.Zfull[i] = cfg[i][4];
+            } else{
+                C.S[i] = cfg[i][0];
+                C.Xfull[i] = cfg[i][1]; C.Yfull[i] = cfg[i][2]; C.Zfull[i] = cfg[i][3];
+            }
+            
             C.X[i] = Pshift(C.Xfull[i]); C.X0[i] = C.X[i]; 
             C.Y[i] = Pshift(C.Yfull[i]); C.Y0[i] = C.Y[i];
             C.Z[i] = Pshift(C.Zfull[i]); C.Z0[i] = C.Z[i];
