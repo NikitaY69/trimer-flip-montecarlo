@@ -1,18 +1,15 @@
 #include <cmath>
 #include <vector>
 #include <string>
-#include <fstream>
 #include <iostream>
 #include <ctime>
 #include <experimental/filesystem>
-#include <boost/program_options.hpp>
 #include "globals.hpp"
 #include "particles.hpp"
-#include "io.hpp"
+#include "utils.hpp"
 #include "montecarlo.hpp"
 
 namespace fs = std::experimental::filesystem;
-namespace po = boost::program_options;
 
 // Default run parameters
 const double density = 1.2;
@@ -35,70 +32,43 @@ int main(int argc, const char * argv[]) {
 
     // Define the command-line options
     std::string input;
-    std::string outdir;
-    po::options_description desc("Allowed options");
-    desc.add_options()
-        ("help,h", "produce help message")
-        ("input", po::value<std::string>(&input)->required(), "set input file")
-        ("outdir", po::value<std::string>(&outdir)->required(), "set out directory")
-        ("N", po::value<int>(&N)->default_value(N), "set system size")
-        ("T", po::value<double>(&T)->default_value(T), "set temperature")
-        ("tau", po::value<int>(&tau)->default_value(tau), "set single-run time")
-        ("tw", po::value<int>(&tw)->default_value(tw), "set waiting time")
-        ("cycles", po::value<int>(&cycles)->default_value(cycles), "set number of cycles")
-        ("lin", po::value<int>(&linPoints)->default_value(linPoints), "set number of lin-spaced snapshots")
-        ("log", po::value<int>(&logPoints)->default_value(logPoints), "set number of log-spaced snapshots")
-        ("p_flip", po::value<double>(&p_flip)->default_value(p_flip), "set flip-attempt probability")
-        ("MSD", "Flag to compute MSD")
-        ("Fs", "Flag to compute Fs")
-        ("U", "Flag to compute U");
+    std::string params_path;
+    std::string rootdir;
+    std::vector <std::string> observables;
 
-    // Parse the command-line arguments
-    po::variables_map vm;
-    try {
-        po::store(po::parse_command_line(argc, argv, desc), vm);
-        po::notify(vm);
-    } catch (const po::error &ex) {
-        std::cerr << ex.what() << std::endl;
+    // Parse command line arguments
+    if (!ParseCMDLine(argc, argv, input, params_path, observables)){
+        return 1;
+    };
+
+    // Loading params from json file
+    if (!ReadJSONParams(params_path, rootdir, N, T, tau, tw, cycles, logPoints, linPoints, p_flip)){
         return 1;
     }
-    // Handle the help option
-    if (vm.count("help")) {
-        std::cout << desc << std::endl;
-        return 0;
-    }
 
-    // Parsing the observables in order of appearance
-    std::vector < std::string > observables;
-    for (int i = 1; i < argc; ++i) {
-        std::string arg = argv[i];
-        if (arg == "--MSD") {
-            observables.push_back("MSD");
-        } else if (arg == "--Fs") {
-            observables.push_back("Fs");
-        } else if (arg == "--U") {
-            observables.push_back("U");
-        }
-    }
-
-    // Recalculating user-defined parameters
+    // Recalculating size
     Size = pow(N/density, 1./3.);
 
     // Creating outdir if not existing
-    fs::path out_path = outdir;
-    if(!fs::is_directory(out_path)){
-        fs::create_directory(outdir);
+    fs::path rootdir_path = rootdir;
+    if(!fs::is_directory(rootdir_path)){
+        fs::create_directory(rootdir);
     }
-    
-     // Writing params.txt file
-    std::ofstream params;
-    params.open(outdir + "params.txt");
-    params << "rootdir" << " " << "N" << " " << "T" << " " 
-           << "tau" << " " << "tw" << " " << "cycles" << " " 
-           << "logPoints" << " " << "linPoints" << " " << "p_flip" << std::endl;
-    params << outdir << " " << N << " " << T << " " << tau << " " << tw << " "
-           << cycles << " " << logPoints << " " << linPoints << " " << p_flip << std::endl;
-    params.close();
+
+    // Checking if the json file is present in rootdir
+    fs::path json_file(params_path);
+    fs::path target_path = rootdir_path / json_file.filename();
+
+    if (fs::exists(target_path)) {
+        // pass
+    } else {
+        // Copy the file to the target directory
+        try {
+            fs::copy(json_file, target_path);
+        } catch (const fs::filesystem_error& e) {
+            std::cerr << "Error copying file: " << e.what() << std::endl;
+        }
+    }
 
     // Read init config
     configuration initconf;
@@ -106,10 +76,12 @@ int main(int argc, const char * argv[]) {
 
     // Do simulation with timer
     double t0 = time(NULL); // Timer
-    MC(initconf, T, tau, cycles, tw, p_flip, 
-       observables, outdir, logPoints, linPoints); 
-    std::cout << "Time taken: " << (time(NULL) - t0) << "s" << std::endl; 
-    std::cout << "Done" << std::endl;
+    MC(initconf, T, tau, cycles, tw, p_flip, observables, rootdir, logPoints, linPoints); 
+    double time_elapsed = time(NULL) - t0;
+    std::cout << "Time taken: " << std::endl;
+    std::cout << time_elapsed << " seconds" << std::endl;
+    std::cout << time_elapsed/60 << " minutes" << std::endl;
+    std::cout << time_elapsed/3600 << " hours" << std::endl;
 
     return 0;
 }
