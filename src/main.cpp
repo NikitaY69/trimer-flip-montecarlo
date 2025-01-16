@@ -6,13 +6,15 @@
 #include <ctime>
 #include <experimental/filesystem>
 #include <boost/program_options.hpp>
+#include <nlohmann/json.hpp>
 #include "globals.hpp"
 #include "particles.hpp"
-#include "io.hpp"
+#include "utils.hpp"
 #include "montecarlo.hpp"
 
 namespace fs = std::experimental::filesystem;
 namespace po = boost::program_options;
+using json = nlohmann::json;
 
 // Default run parameters
 const double density = 1.2;
@@ -90,15 +92,25 @@ int main(int argc, const char * argv[]) {
         fs::create_directory(outdir);
     }
     
-     // Writing params.txt file
-    std::ofstream params;
-    params.open(outdir + "params.txt");
-    params << "rootdir" << " " << "N" << " " << "T" << " " 
-           << "tau" << " " << "tw" << " " << "cycles" << " " 
-           << "logPoints" << " " << "linPoints" << " " << "p_flip" << std::endl;
-    params << outdir << " " << N << " " << T << " " << tau << " " << tw << " "
-           << cycles << " " << logPoints << " " << linPoints << " " << p_flip << std::endl;
-    params.close();
+     // Writing params.json file
+    json params;
+    params["rootdir"] = outdir;
+    params["N"] = N;
+    params["T"] = T;
+    params["tau"] = tau;
+    params["tw"] = tw;
+    params["cycles"] = cycles;
+    params["logPoints"] = logPoints;
+    params["linPoints"] = linPoints;
+    params["p_flip"] = p_flip;
+
+    std::ofstream file(outdir + "params.json");
+    if (file.is_open()) {
+        file << params.dump(4); // Pretty-print JSON with 4 spaces of indentation
+        file.close();
+    } else {
+        std::cerr << "Unable to open file for writing." << std::endl;
+    }
 
     // Read init config
     configuration initconf;
