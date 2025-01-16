@@ -5,7 +5,7 @@
 #include <iostream>
 #include <indicators/progress_bar.hpp>
 #include "globals.hpp"
-#include "montecarlo.hpp"
+#include "simulation.hpp"
 #include "utils.hpp"
 #include "observables.hpp"
 
@@ -28,7 +28,7 @@ indicators::ProgressBar bar{
 };
 
 // Monte Carlo Simulation loop
-void MC(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip, 
+void MonteCarloRun(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip, 
         std::vector <std::string>& observables, std::string& out, int n_log, int n_lin){
             
     double steps = tw*(cycles-1)+tau;
@@ -151,4 +151,53 @@ void TryFlip(configuration& cfg, int j, double T){
     else if (exp(-deltaE/T) < ranf()){
         cfg.S[j] = Sj_old; cfg.S[k] = Sk_old;
     }
+}
+
+// Observables-only run
+void ComputeObservables(int tau, int cycles, int tw,  
+        std::vector <std::string>& observables, std::string& out, int n_log){
+    
+    double steps = tw*(cycles-1)+tau;
+    int dataCounter=0;
+    int cycle;
+    int cycleCounter = 0;
+    std::vector <configuration> cfgsCycles;
+    configuration cfg;
+    configuration* cfg0;
+
+    // Building snapshots list
+    std::vector <int> logpoints, twpoints;
+
+    // Logspaced
+    std::vector < std::pair <int, int>> log_and_tws = GetLogspacedSnapshots(cycles, tau, tw, n_log);
+    for (auto p: log_and_tws){
+        logpoints.push_back(p.first); twpoints.push_back(p.second);
+    }
+
+    // File writing
+    std::string out_cfg = out + "configs/";
+    std::ofstream log_obs = MakeObsFile(observables, out + "obs.txt");
+
+    // Looping over the saved snapshots
+    for(int t: logpoints){
+        cfg = ReadTrimCFG(out_cfg + "cfg_" + std::to_string(t) + ".xy");
+        cfg.GetBonds(); cfg.UpdateNL();
+        cfg.UpdateCM_coord();
+        
+        // Updating reference observables
+        if((t-1)%tw == 0 && cycleCounter < cycles){
+            cfgsCycles.push_back(cfg); cycleCounter++;
+        } 
+        
+        cycle = twpoints[dataCounter];
+        cfg0 = &cfgsCycles[cycle];
+
+        // Observables
+        WriteObs(cfg, *cfg0, t, cycle, observables, log_obs);
+
+        dataCounter++;
+        bar.tick();
+   
+    };
+    log_obs.close();
 }

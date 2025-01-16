@@ -7,6 +7,8 @@ const double pi = 3.14159265358979323846;
 
 //  Calculates the pairwise WCA potential between two particles
 double WCAPair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2){
+    // int idx1 = s1-1, idx2 = s2-1;
+    // double sigmaij = (diameters[idx1]+diameters[idx2])/2;
     double sigmaij = (s1+s2)/2;
     double sigma2 = sigmaij*sigmaij;
     double rc2 = pow(2., 1./3.) * sigma2;
@@ -21,6 +23,8 @@ double WCAPair(double x1, double y1, double z1, double s1, double x2, double y2,
 
 //  Calculates the pairwise FENE potential between two particles
 double FENEPair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2){
+    // int idx1 = s1-1, idx2 = s2-1;
+    // double sigmaij = (diameters[idx1]+diameters[idx2])/2;
     double sigmaij = (s1+s2)/2;
     double sigma2 = sigmaij*sigmaij;
     double kij = 30/sigma2;
@@ -35,14 +39,16 @@ double FENEPair(double x1, double y1, double z1, double s1, double x2, double y2
 
 //  Calculates potential associated to particle j
 double V(const configuration& cfg, int j){
-    double total = 0;
+    double total = 0, sj, sk;
     for (int k: cfg.NL[j]){
-        total += WCAPair(cfg.X[j], cfg.Y[j], cfg.Z[j], cfg.S[j], 
-                         cfg.X[k], cfg.Y[k], cfg.Z[k], cfg.S[k]);
+        sj = diameters[int(cfg.S[j]-1)]; sk = diameters[int(cfg.S[k]-1)];
+        total += WCAPair(cfg.X[j], cfg.Y[j], cfg.Z[j], sj, 
+                         cfg.X[k], cfg.Y[k], cfg.Z[k], sk);
     }
     for (int k: cfg.BN[j]){
-        total += FENEPair(cfg.X[j], cfg.Y[j], cfg.Z[j], cfg.S[j], 
-                          cfg.X[k], cfg.Y[k], cfg.Z[k], cfg.S[k]);
+        sj = diameters[int(cfg.S[j]-1)]; sk = diameters[int(cfg.S[k]-1)];
+        total += FENEPair(cfg.X[j], cfg.Y[j], cfg.Z[j], sj, 
+                          cfg.X[k], cfg.Y[k], cfg.Z[k], sk);
     } return total;
 }
 

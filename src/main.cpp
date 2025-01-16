@@ -7,7 +7,7 @@
 #include "globals.hpp"
 #include "particles.hpp"
 #include "utils.hpp"
-#include "montecarlo.hpp"
+#include "simulation.hpp"
 
 namespace fs = std::experimental::filesystem;
 
@@ -28,14 +28,14 @@ double p_flip = 0.2;
 int main(int argc, const char * argv[]) {
 
     // Random number seed
-    srand(time(NULL)*1.0);
+    srand(40);
 
     // Define the command-line options
     std::string input;
     std::string params_path;
     std::string rootdir;
     std::vector <std::string> observables;
-
+    bool norun;
     // Parse command line arguments
     if (!ParseCMDLine(argc, argv, input, params_path, observables)){
         return 1;
@@ -59,24 +59,33 @@ int main(int argc, const char * argv[]) {
     fs::path json_file(params_path);
     fs::path target_path = rootdir_path / json_file.filename();
 
-    if (fs::exists(target_path)) {
-        // pass
-    } else {
-        // Copy the file to the target directory
-        try {
-            fs::copy(json_file, target_path);
-        } catch (const fs::filesystem_error& e) {
-            std::cerr << "Error copying file: " << e.what() << std::endl;
-        }
+    // if (fs::exists(target_path)) {
+    //     // pass
+    // } else {
+    // Copy the file to the target directory
+    try {
+        fs::copy(json_file, target_path, fs::copy_options::overwrite_existing);
+    } catch (const fs::filesystem_error& e) {
+        std::cerr << e.what() << std::endl;
     }
+    
+    // Setting run mode
+    (input == "") ? norun = true : norun = false;
 
-    // Read init config
-    configuration initconf;
-    initconf = ReadTrimCFG(input);
-
-    // Do simulation with timer
     double t0 = time(NULL); // Timer
-    MC(initconf, T, tau, cycles, tw, p_flip, observables, rootdir, logPoints, linPoints); 
+
+    if (norun){
+        // Compute observables
+        ComputeObservables(tau, cycles, tw, observables, rootdir, logPoints);
+    } else{
+        // Read init config
+        configuration initconf;
+        initconf = ReadTrimCFG(input);
+
+        // Do simulation
+        MonteCarloRun(initconf, T, tau, cycles, tw, p_flip, observables, rootdir, logPoints, linPoints); 
+    }
+    
     double time_elapsed = time(NULL) - t0;
     std::cout << "Time taken: " << std::endl;
     std::cout << time_elapsed << " seconds" << std::endl;
