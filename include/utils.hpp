@@ -6,6 +6,11 @@
 #include <fstream>
 #include "particles.hpp"
 
+bool ParseCMDLine(int argc, const char* argv[],
+                        std::string& input,
+                        std::string& params,
+                        std::vector<std::string>& observables);
+
 configuration ReadTrimCFG(std::string input);
 
 void WriteTrimCFG(const configuration& cfg, std::string output);

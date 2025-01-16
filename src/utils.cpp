@@ -1,10 +1,48 @@
 #include <cmath>
+#include <iostream>
 #include <sstream>
 #include <iomanip>
 #include <algorithm>
+#include <boost/program_options.hpp>
 #include "globals.hpp"
 #include "utils.hpp"
 #include "observables.hpp"
+
+namespace po = boost::program_options;
+
+// Parse command line arguments
+bool ParseCMDLine(int argc, const char* argv[],
+                        std::string& input,
+                        std::string& params,
+                        std::vector<std::string>& observables) {
+    // Define the command-line options
+    po::options_description desc("Allowed options");
+    desc.add_options()
+        ("help,h", "Produce help message")
+        ("init", po::value<std::string>(&input), "Path to initial configuration file")
+        ("params", po::value<std::string>(&params)->required(), "Path to JSON file for simulation parameters")
+        ("observables", po::value<std::vector<std::string>>(&observables)->multitoken(),
+                        "List of observables to compute (e.g., MSD Fs U; separated by spaces)");
+
+    // Parse the command-line arguments
+    po::variables_map vm;
+    try {
+        po::store(po::parse_command_line(argc, argv, desc), vm);
+
+        // Handle the help option
+        if (vm.count("help")) {
+            std::cout << desc << std::endl;
+            return false; // Indicate that help was requested
+        }
+
+        po::notify(vm);
+    } catch (const po::error& ex) {
+        std::cerr << "Error: " << ex.what() << std::endl;
+        return false;
+    }
+
+    return true; // Successfully parsed arguments
+}
 
 // Read trimer configs
 configuration ReadTrimCFG(std::string input){

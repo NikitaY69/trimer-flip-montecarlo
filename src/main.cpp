@@ -5,7 +5,6 @@
 #include <iostream>
 #include <ctime>
 #include <experimental/filesystem>
-#include <boost/program_options.hpp>
 #include <nlohmann/json.hpp>
 #include "globals.hpp"
 #include "particles.hpp"
@@ -13,7 +12,6 @@
 #include "montecarlo.hpp"
 
 namespace fs = std::experimental::filesystem;
-namespace po = boost::program_options;
 using json = nlohmann::json;
 
 // Default run parameters
@@ -37,35 +35,18 @@ int main(int argc, const char * argv[]) {
 
     // Define the command-line options
     std::string input;
+    std::string params_path;
     std::string rootdir;
     std::vector <std::string> observables;
 
-    po::options_description desc("Allowed options");
-    desc.add_options()
-        ("help,h", "Produce help message")
-        ("init", po::value<std::string>(&input), "Path to initial configuration file")
-        ("params", po::value<std::string>()->required(), "Path to JSON file for simulation parameters")
-        ("observables", po::value<std::vector<std::string>>(&observables)->multitoken(),
-                        "List of observables to compute (e.g., MSD Fs U; separated by spaces)");
-
-    // Parse the command-line arguments
-    po::variables_map vm;
-    try {
-        po::store(po::parse_command_line(argc, argv, desc), vm);
-        // Handle the help option
-        if (vm.count("help")) {
-            std::cout << desc << std::endl;
-            return 0;
-        }
-        po::notify(vm);
-    } catch (const po::error &ex) {
-        std::cerr << ex.what() << std::endl;
+    // Parse command line arguments
+    if (!ParseCMDLine(argc, argv, input, params_path, observables)){
         return 1;
-    }
+    };
 
     // Loading params from json file
     json params;
-    std::ifstream input_file(vm["params"].as<std::string>());
+    std::ifstream input_file(params_path);
 
     // Check if the file is open
     if (!input_file.is_open()) {
