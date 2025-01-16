@@ -27,6 +27,7 @@ int cycles = 1;
 int linPoints = 50;
 int logPoints = 50;
 double p_flip = 0.2;
+std::vector < std::string > observables;
 
 //-----------------------------------------------------------------------------
 //  main.cpp
@@ -51,9 +52,8 @@ int main(int argc, const char * argv[]) {
         ("lin", po::value<int>(&linPoints)->default_value(linPoints), "set number of lin-spaced snapshots")
         ("log", po::value<int>(&logPoints)->default_value(logPoints), "set number of log-spaced snapshots")
         ("p_flip", po::value<double>(&p_flip)->default_value(p_flip), "set flip-attempt probability")
-        ("MSD", "Flag to compute MSD")
-        ("Fs", "Flag to compute Fs")
-        ("U", "Flag to compute U");
+        ("observables", po::value<std::vector<std::string>>(&observables)->multitoken(),
+                        "List of observables to compute (e.g., MSD, Fs, U)");
 
     // Parse the command-line arguments
     po::variables_map vm;
@@ -68,19 +68,6 @@ int main(int argc, const char * argv[]) {
     if (vm.count("help")) {
         std::cout << desc << std::endl;
         return 0;
-    }
-
-    // Parsing the observables in order of appearance
-    std::vector < std::string > observables;
-    for (int i = 1; i < argc; ++i) {
-        std::string arg = argv[i];
-        if (arg == "--MSD") {
-            observables.push_back("MSD");
-        } else if (arg == "--Fs") {
-            observables.push_back("Fs");
-        } else if (arg == "--U") {
-            observables.push_back("U");
-        }
     }
 
     // Recalculating user-defined parameters
