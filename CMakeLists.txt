@@ -41,3 +41,7 @@ target_link_libraries(TrimerFlipMC stdc++fs boost_program_options
 
 # Add compiler options
 target_compile_options(TrimerFlipMC PRIVATE -O3 -mfma -mbmi2 -flto)
+
+# Install the executable
+install(TARGETS TrimerFlipMC 
+        RUNTIME DESTINATION bin)

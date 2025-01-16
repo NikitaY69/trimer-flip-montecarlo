@@ -36,6 +36,7 @@ int main(int argc, const char * argv[]) {
     std::string rootdir;
     std::vector <std::string> observables;
     bool norun;
+    
     // Parse command line arguments
     if (!ParseCMDLine(argc, argv, input, params_path, observables)){
         return 1;
