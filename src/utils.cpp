@@ -3,7 +3,7 @@
 #include <iomanip>
 #include <algorithm>
 #include "globals.hpp"
-#include "io.hpp"
+#include "utils.hpp"
 #include "observables.hpp"
 
 // Read trimer configs

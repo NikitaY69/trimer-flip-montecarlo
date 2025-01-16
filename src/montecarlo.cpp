@@ -5,7 +5,7 @@
 #include <iostream>
 #include "globals.hpp"
 #include "montecarlo.hpp"
-#include "io.hpp"
+#include "utils.hpp"
 #include "observables.hpp"
 
 namespace fs = std::experimental::filesystem;
