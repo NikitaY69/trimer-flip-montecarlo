@@ -6,7 +6,8 @@
 
 // Structure to keep track of the evolution of configurations
 struct configuration {
-    std::vector <double> X, Y, Z, Xfull, Yfull, Zfull, X0, Y0, Z0, S;
+    std::vector <double> X, Y, Z, Xfull, Yfull, Zfull, X0, Y0, Z0;
+    std::vector <int> S;
     // X,Y,Z: size N vectors containing particles coordinates inside main box
     // Xfull, Yfull, Zfull: size N vectors containing particles 
     // X0, Y0, Z0: size N vectors containing particles coordinates at last neighbours update
