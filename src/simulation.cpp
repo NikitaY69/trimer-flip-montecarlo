@@ -180,15 +180,12 @@ void ComputeObservables(int tau, int cycles, int tw,
 
     // Looping over the saved snapshots
     for(int t: logpoints){
-        // std::cout << out_cfg + "cfg_" + std::to_string(t) + ".xy" << std::endl;
         cfg = ReadTrimCFG(out_cfg + "cfg_" + std::to_string(t) + ".xy");
         cfg.GetBonds(); cfg.UpdateNL();
         cfg.UpdateCM_coord();
-        // std::cout << cfg.Xfull[125] << " " << cfg.X[125] << std::endl;
-        // std::cout << t << std::endl;
+        
         // Updating reference observables
         if((t-1)%tw == 0 && cycleCounter < cycles){
-            // std::cout << "updating" << std::endl;
             cfgsCycles.push_back(cfg); cycleCounter++;
         } 
         
