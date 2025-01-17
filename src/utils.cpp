@@ -16,7 +16,8 @@ using json = nlohmann::json;
 bool ParseCMDLine(int argc, const char* argv[],
                         std::string& input,
                         std::string& params,
-                        std::vector<std::string>& observables) {
+                        std::vector<std::string>& observables,
+                        int& seed) {
     // Define the command-line options
     po::options_description desc("Allowed options");
     desc.add_options()
@@ -24,7 +25,8 @@ bool ParseCMDLine(int argc, const char* argv[],
         ("init", po::value<std::string>(&input)->default_value(""), "Path to initial configuration file")
         ("params", po::value<std::string>(&params)->required(), "Path to JSON file for simulation parameters")
         ("observables", po::value<std::vector<std::string>>(&observables)->multitoken(),
-                        "List of observables to compute (e.g., MSD Fs U; separated by spaces)");
+                        "List of observables to compute (e.g., MSD Fs U; separated by spaces)")
+        ("seed", po::value<int>(&seed)->default_value(static_cast<int>(time(NULL))), "random seed");
 
     // Parse the command-line arguments
     po::variables_map vm;

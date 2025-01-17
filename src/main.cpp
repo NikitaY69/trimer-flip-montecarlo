@@ -27,18 +27,16 @@ double p_flip = 0.2;
 //  main.cpp
 int main(int argc, const char * argv[]) {
 
-    // Random number seed
-    srand(time(NULL)*1.0);
-
     // Define the command-line options
     std::string input;
     std::string params_path;
     std::string rootdir;
     std::vector <std::string> observables;
+    int seed;
     bool norun;
     
     // Parse command line arguments
-    if (!ParseCMDLine(argc, argv, input, params_path, observables)){
+    if (!ParseCMDLine(argc, argv, input, params_path, observables, seed)){
         return 1;
     };
 
@@ -46,6 +44,9 @@ int main(int argc, const char * argv[]) {
     if (!ReadJSONParams(params_path, rootdir, N, T, tau, tw, cycles, logPoints, linPoints, p_flip)){
         return 1;
     }
+
+    // Random number seed
+    srand(seed);
 
     // Recalculating size
     Size = pow(N/density, 1./3.);

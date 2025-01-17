@@ -9,7 +9,8 @@
 bool ParseCMDLine(int argc, const char* argv[],
                         std::string& input,
                         std::string& params,
-                        std::vector<std::string>& observables);
+                        std::vector<std::string>& observables,
+                        int& seed);
 
 bool ReadJSONParams(const std::string& params_path, 
                     std::string& rootdir,
