@@ -12,7 +12,7 @@
 namespace fs = std::experimental::filesystem;
 
 // Constants
-const double deltaMax = 0.12; // Max particle displacement
+const double deltaMax = 0.17; // Max particle displacement
 
 // Progress bar
 indicators::ProgressBar bar{
