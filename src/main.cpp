@@ -12,7 +12,6 @@
 namespace fs = std::experimental::filesystem;
 
 // Default run parameters
-const double density = 1.2;
 int N = 5;
 double Size = pow(N/density, 1/3.);
 double T = 2.0; 

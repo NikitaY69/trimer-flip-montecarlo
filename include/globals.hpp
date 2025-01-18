@@ -5,6 +5,7 @@
 #include <cstdlib> // For dynamic memory and random numbers
 
 // Shared variables
+const double density = 1.2; // Density of the system
 extern int N; // Number of particles
 extern double Size; // Size of simulation box
 const double sigmaMax = 1.1; // Maximum diameter of particles
