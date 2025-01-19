@@ -66,10 +66,13 @@ install(TARGETS TFMC
 enable_testing()
 
 # Add tests
-file(GLOB TEST_FILES "tests/test_observables.cpp" "tests/test_utils.cpp" "tests/test_main.cpp")
+file(GLOB TEST_FILES "tests/test_main.cpp" "tests/test_utils.cpp" 
+                     "tests/test_particles.cpp" "tests/test_observables.cpp")
+
 add_executable(TFMC_tests ${TEST_FILES})
 target_link_libraries(TFMC_tests TFMC_lib Catch2::Catch2)
 
 # Register tests with ctest
-add_test(NAME test_utils COMMAND TFMC_tests [ParseCMDLine] -r compact)
-add_test(NAME test_observables COMMAND TFMC_tests [WCAPair] -r compact)
+add_test(NAME test_utils COMMAND TFMC_tests [test_utils] -r compact)
+add_test(NAME test_particles COMMAND TFMC_tests [test_particles] -r compact)
+add_test(NAME test_observables COMMAND TFMC_tests [test_observables] -r compact)

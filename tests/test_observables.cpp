@@ -1,5 +1,4 @@
 #include <catch2/catch.hpp>
-#include <iostream>
 #include <cmath>
 #include <vector>
 #include "globals.hpp"
