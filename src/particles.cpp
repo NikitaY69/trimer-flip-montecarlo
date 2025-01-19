@@ -72,5 +72,7 @@ double bcs(double a, double b) {return Size/2 - std::abs(std::abs(a-b)-Size/2);}
 
 // Shifts coordinate inside main box
 double Pshift(double a){
-    return fmod(a, Size);//- Size*floor((a+Size/2)/Size);
+    double shift = fmod(a, Size);//- Size*floor((a+Size/2)/Size);
+    if (shift < 0) {shift += Size;}
+    return shift;
 }
