@@ -90,39 +90,36 @@ configuration ReadTrimCFG(std::string input){
     int type;
     std::string line;
     std::ifstream input_file(input);
-    if (input_file.is_open()){
-        int i = 0; // particle index
-        std::vector<std::vector<double>> cfg; // array of configurations
-        while (std::getline(input_file, line)){
-            double value;
-            std::stringstream ss(line);
-
-            cfg.push_back(std::vector<double>());
-            while (ss >> value){
-                cfg[i].push_back(value);
-            }
-            // mol_index[i] = cfg[i][0];
-            // type = cfg[i][1]-1; 
-            // C.S[i] = (diameters[type]);
-            if (cfg[i].size() == 5){
-                C.S[i] = cfg[i][1];
-                C.Xfull[i] = cfg[i][2]; C.Yfull[i] = cfg[i][3]; C.Zfull[i] = cfg[i][4];
-            } else{
-                C.S[i] = cfg[i][0];
-                C.Xfull[i] = cfg[i][1]; C.Yfull[i] = cfg[i][2]; C.Zfull[i] = cfg[i][3];
-            }
-            
-            C.X[i] = Pshift(C.Xfull[i]); C.X0[i] = C.X[i]; 
-            C.Y[i] = Pshift(C.Yfull[i]); C.Y0[i] = C.Y[i];
-            C.Z[i] = Pshift(C.Zfull[i]); C.Z0[i] = C.Z[i];
-            i++;}
-        input_file.close();
-        return C;
-
-    } else {
-        std::string error = input + " not found";
-        throw error;
+    if (!input_file.is_open()){
+        throw std::runtime_error("Could not open file: " + input);
     }
+    int i = 0; // particle index
+    std::vector<std::vector<double>> cfg; // array of configurations
+    while (std::getline(input_file, line)){
+        double value;
+        std::stringstream ss(line);
+
+        cfg.push_back(std::vector<double>());
+        while (ss >> value){
+            cfg[i].push_back(value);
+        }
+        // mol_index[i] = cfg[i][0];
+        // type = cfg[i][1]-1; 
+        // C.S[i] = (diameters[type]);
+        if (cfg[i].size() == 5){
+            C.S[i] = cfg[i][1];
+            C.Xfull[i] = cfg[i][2]; C.Yfull[i] = cfg[i][3]; C.Zfull[i] = cfg[i][4];
+        } else{
+            C.S[i] = cfg[i][0];
+            C.Xfull[i] = cfg[i][1]; C.Yfull[i] = cfg[i][2]; C.Zfull[i] = cfg[i][3];
+        }
+        
+        C.X[i] = Pshift(C.Xfull[i]); C.X0[i] = C.X[i]; 
+        C.Y[i] = Pshift(C.Yfull[i]); C.Y0[i] = C.Y[i];
+        C.Z[i] = Pshift(C.Zfull[i]); C.Z0[i] = C.Z[i];
+        i++;}
+    input_file.close();
+    return C;
 }
 
 // Write trimer configs
