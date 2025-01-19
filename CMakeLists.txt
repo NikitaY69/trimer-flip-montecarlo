@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Include directories
-include_directories("include" "tests")
+include_directories("include")
 
 include(FetchContent)
 
@@ -62,7 +62,7 @@ install(TARGETS TFMC
 enable_testing()
 
 # Add tests
-file(GLOB TEST_FILES "tests/test_observables.cpp")
+file(GLOB TEST_FILES "tests/test_observables.cpp" "tests/test_utils.cpp" "tests/test_main.cpp")
 add_executable(TFMC_tests ${TEST_FILES})
 target_link_libraries(TFMC_tests TFMC_lib Catch2::Catch2)
 add_test(NAME TFMC_tests COMMAND TFMC_tests)

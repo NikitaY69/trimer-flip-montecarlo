@@ -1,9 +1,8 @@
-#define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>
 #include <iostream>
 #include <cmath>
 #include <vector>
-#include "test_mutuals.hpp"
+#include "globals.hpp"
 #include "particles.hpp"
 #include "observables.hpp"
 #include "utils.hpp"
