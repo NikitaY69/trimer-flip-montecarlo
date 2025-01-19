@@ -11,7 +11,7 @@
 std::string config_path = std::string(PROJECT_ROOT_DIR) + "/tests/config/initconf.xyz";
 configuration cfg = ReadTrimCFG(config_path);
 
-TEST_CASE("Test WCAPair function", "[WCAPair]") {
+TEST_CASE("Test WCAPair function", "[test_observables][WCAPair]") {
     
     SECTION("Check that dumb-particles very close to the cutoff give either 0 or non-zero energy") {
         double epsilon = 0.01; // Small perturbation to the cut-off radius

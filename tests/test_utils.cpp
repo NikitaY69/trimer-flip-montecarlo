@@ -4,7 +4,7 @@
 #include "globals.hpp"
 #include "utils.hpp"
 
-TEST_CASE("Test ParseCMDLine function", "[ParseCMDLine]") {
+TEST_CASE("Test ParseCMDLine function", "[test_utils][ParseCMDLine]") {
     const char* argv[] = {
         "program", 
         "--init", "input.cfg", 

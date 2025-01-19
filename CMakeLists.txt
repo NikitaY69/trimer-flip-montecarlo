@@ -4,9 +4,13 @@ project(TFMC
         VERSION 1.0
         LANGUAGES CXX)
 
+        
 # Set C++ Standard
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Define the project root directory
+add_definitions(-DPROJECT_ROOT_DIR=\"${CMAKE_SOURCE_DIR}\")
 
 # Include directories
 include_directories("include")
@@ -65,7 +69,7 @@ enable_testing()
 file(GLOB TEST_FILES "tests/test_observables.cpp" "tests/test_utils.cpp" "tests/test_main.cpp")
 add_executable(TFMC_tests ${TEST_FILES})
 target_link_libraries(TFMC_tests TFMC_lib Catch2::Catch2)
-add_test(NAME TFMC_tests COMMAND TFMC_tests)
 
-# Define the project root directory
-add_definitions(-DPROJECT_ROOT_DIR=\"${CMAKE_SOURCE_DIR}\")
+# Register tests with ctest
+add_test(NAME test_utils COMMAND TFMC_tests [ParseCMDLine] -r compact)
+add_test(NAME test_observables COMMAND TFMC_tests [WCAPair] -r compact)
