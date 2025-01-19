@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Include directories
-include_directories("include")
+include_directories("include" "tests")
 
 include(FetchContent)
 
@@ -66,3 +66,6 @@ file(GLOB TEST_FILES "tests/test_observables.cpp")
 add_executable(TFMC_tests ${TEST_FILES})
 target_link_libraries(TFMC_tests TFMC_lib Catch2::Catch2)
 add_test(NAME TFMC_tests COMMAND TFMC_tests)
+
+# Define the project root directory
+add_definitions(-DPROJECT_ROOT_DIR=\"${CMAKE_SOURCE_DIR}\")
