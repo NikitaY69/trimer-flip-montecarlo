@@ -27,6 +27,13 @@ FetchContent_Declare(
     GIT_TAG master  # You can specify a specific commit or branch if necessary
 )
 
+# Fetch Catch2
+FetchContent_Declare(
+  Catch2
+  GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+  GIT_TAG v2.13.7 # Specify the version you want to use
+)
+
 FetchContent_MakeAvailable(json indicators Catch2)
 
 # Source files
@@ -50,3 +57,12 @@ target_compile_options(TFMC PRIVATE -O3 -mfma -mbmi2 -flto)
 # Install the executable
 install(TARGETS TFMC 
         RUNTIME DESTINATION bin)
+
+# Enable testing
+enable_testing()
+
+# Add tests
+file(GLOB TEST_FILES "tests/test_observables.cpp")
+add_executable(TrimerFlipMC_tests ${TEST_FILES})
+target_link_libraries(TrimerFlipMC_tests TrimerFlipMC_lib Catch2::Catch2)
+add_test(NAME TrimerFlipMC_tests COMMAND TrimerFlipMC_tests)
