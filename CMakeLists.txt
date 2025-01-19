@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.30)
+cmake_minimum_required(VERSION 3.10)
 
-project(TrimerFlipMC 
+project(TFMC 
         VERSION 1.0
         LANGUAGES CXX)
 
@@ -8,7 +8,7 @@ project(TrimerFlipMC
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Add include directory
+# Include directories
 include_directories("include")
 
 include(FetchContent)
@@ -27,21 +27,24 @@ FetchContent_Declare(
     GIT_TAG master  # You can specify a specific commit or branch if necessary
 )
 
-FetchContent_MakeAvailable(json indicators)
-
 # Source files
-file(GLOB SRC_FILES "src/*.cpp")
+file(GLOB SRC_FILES "src/particles.cpp" "src/observables.cpp" "src/simulation.cpp"
+                    "src/utils.cpp")
 
-# Add executable
-add_executable(TrimerFlipMC ${SRC_FILES})
+# Create a static library for the common source files
+add_library(TFMC_lib STATIC ${SRC_FILES})
 
-# Link libraries
-target_link_libraries(TrimerFlipMC stdc++fs boost_program_options 
+# Link libraries to the static library
+target_link_libraries(TFMC_lib stdc++fs boost_program_options 
                       nlohmann_json::nlohmann_json indicators::indicators)
 
+# Add executable for the main application
+add_executable(TFMC src/main.cpp)
+target_link_libraries(TFMC TFMC_lib)
+
 # Add compiler options
-target_compile_options(TrimerFlipMC PRIVATE -O3 -mfma -mbmi2 -flto)
+target_compile_options(TFMC PRIVATE -O3 -mfma -mbmi2 -flto)
 
 # Install the executable
-install(TARGETS TrimerFlipMC 
+install(TARGETS TFMC 
         RUNTIME DESTINATION bin)
