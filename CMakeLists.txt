@@ -63,6 +63,6 @@ enable_testing()
 
 # Add tests
 file(GLOB TEST_FILES "tests/test_observables.cpp")
-add_executable(TrimerFlipMC_tests ${TEST_FILES})
-target_link_libraries(TrimerFlipMC_tests TrimerFlipMC_lib Catch2::Catch2)
-add_test(NAME TrimerFlipMC_tests COMMAND TrimerFlipMC_tests)
+add_executable(TFMC_tests ${TEST_FILES})
+target_link_libraries(TFMC_tests TFMC_lib Catch2::Catch2)
+add_test(NAME TFMC_tests COMMAND TFMC_tests)
