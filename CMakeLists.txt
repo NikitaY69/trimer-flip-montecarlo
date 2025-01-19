@@ -27,6 +27,8 @@ FetchContent_Declare(
     GIT_TAG master  # You can specify a specific commit or branch if necessary
 )
 
+FetchContent_MakeAvailable(json indicators Catch2)
+
 # Source files
 file(GLOB SRC_FILES "src/particles.cpp" "src/observables.cpp" "src/simulation.cpp"
                     "src/utils.cpp")
