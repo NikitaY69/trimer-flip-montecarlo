@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - 31-set-continuous-integration
+  pull_request:
+    branches:
+      - 31-set-continuous-integration
+
+jobs:
+  build-and-test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        cpp_version: [11, 14, 17]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install dependencies on Ubuntu
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libboost-all-dev
+
+    - name: Install dependencies on macOS
+      if: matrix.os == 'macos-latest'
+      run: |
+        brew update
+        brew install boost
+
+    - name: Set up CMake
+      uses: lukka/get-cmake@v3
+
+    - name: Configure CMake
+      run: cmake -S . -B build -DCMAKE_CXX_STANDARD=${{ matrix.cpp_version }}
+
+    - name: Build
+      run: cmake --build build
+
+    - name: Run tests
+      run: ctest --test-dir build --output-on-failure
