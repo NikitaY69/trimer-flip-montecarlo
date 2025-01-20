@@ -38,6 +38,7 @@ FetchContent_Declare(
 FetchContent_Declare(
   Catch2
   GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+  GIT_TAG master
 )
 
 FetchContent_MakeAvailable(ghc_filesystem json indicators Catch2)
