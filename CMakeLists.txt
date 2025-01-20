@@ -4,7 +4,6 @@ project(TFMC
         VERSION 1.0
         LANGUAGES CXX)
 
-        
 # Set C++ Standard
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -27,24 +26,30 @@ FetchContent_Declare(
 FetchContent_Declare(
     json
     GIT_REPOSITORY https://github.com/nlohmann/json.git
-    GIT_TAG v3.11.2
 )
 
 # Fetch the indicators library
 FetchContent_Declare(
     indicators
     GIT_REPOSITORY https://github.com/p-ranav/indicators.git
-    GIT_TAG master  # You can specify a specific commit or branch if necessary
 )
 
 # Fetch Catch2
 FetchContent_Declare(
   Catch2
   GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-  GIT_TAG v2.13.7 # Specify the version you want to use
 )
 
 FetchContent_MakeAvailable(ghc_filesystem json indicators Catch2)
+
+# Find Boost
+find_package(Boost REQUIRED COMPONENTS program_options)
+
+if(Boost_FOUND)
+    message(STATUS "Boost found: ${Boost_INCLUDE_DIRS}")
+else()
+    message(FATAL_ERROR "Boost not found")
+endif()
 
 # Source files
 file(GLOB SRC_FILES "src/particles.cpp" "src/observables.cpp" "src/simulation.cpp"
