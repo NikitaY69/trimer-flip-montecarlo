@@ -20,25 +20,28 @@ include(FetchContent)
 FetchContent_Declare(
   ghc_filesystem
   GIT_REPOSITORY https://github.com/gulrak/filesystem.git
+  GIT_TAG v1.5.14
 )
 
 # Fetch json library
 FetchContent_Declare(
     json
     GIT_REPOSITORY https://github.com/nlohmann/json.git
+    GIT_TAG v3.11.3
 )
 
 # Fetch the indicators library
 FetchContent_Declare(
     indicators
     GIT_REPOSITORY https://github.com/p-ranav/indicators.git
+    GIT_TAG v2.3
 )
 
 # Fetch Catch2
 FetchContent_Declare(
   Catch2
   GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-  GIT_TAG v2.13.7
+  GIT_TAG v3.8.0
 )
 
 FetchContent_MakeAvailable(ghc_filesystem json indicators Catch2)
