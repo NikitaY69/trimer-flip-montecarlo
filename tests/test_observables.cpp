@@ -6,10 +6,6 @@
 #include "observables.hpp"
 #include "utils.hpp"
 
-// Reference configuration
-std::string config_path = std::string(PROJECT_ROOT_DIR) + "/tests/config/initconf.xyz";
-configuration cfg = ReadTrimCFG(config_path);
-
 TEST_CASE("Test WCAPair function", "[test_observables][WCAPair]") {
     
     SECTION("Check that dumb-particles very close to the cutoff give either 0 or non-zero energy") {
@@ -26,6 +22,9 @@ TEST_CASE("Test WCAPair function", "[test_observables][WCAPair]") {
     }
 
     SECTION("Check that real particles (loaded) give the expected energy") {
+        // Reference configuration
+        std::string config_path = std::string(PROJECT_ROOT_DIR) + "/tests/config/initconf.xyz";
+        configuration cfg = ReadTrimCFG(config_path);
         int i1 = 135, i2 = 137, i3 = 453, i4 = 456;
         double s1, s2, s3, s4;
         s1 = diameters[int(cfg.S[i1]-1)]; s2 = diameters[int(cfg.S[i2]-1)];
