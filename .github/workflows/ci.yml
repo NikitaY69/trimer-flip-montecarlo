@@ -14,8 +14,8 @@ jobs:
     
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
-        cpp_version: [11]
+        os: [ubuntu-latest]
+        cpp_version: [11, 14, 17]
 
     continue-on-error: true
     
@@ -41,7 +41,7 @@ jobs:
     - name: Configure CMake
       run: |
         if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
-        cmake -S . -B build -DCMAKE_CXX_STANDARD=${{ matrix.cpp_version }} -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake/Boost
+        cmake -S . -B build -DCMAKE_CXX_STANDARD=${{ matrix.cpp_version }}
         else
         export BOOST_ROOT=$(brew --prefix boost)
         cmake -S . -B build -DCMAKE_CXX_STANDARD=${{ matrix.cpp_version }} -DBOOST_ROOT=$BOOST_ROOT -DCMAKE_PREFIX_PATH=$BOOST_ROOT
