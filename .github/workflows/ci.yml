@@ -9,17 +9,15 @@ on:
       - 31-set-continuous-integration
 
 jobs:
-  build-and-test:
+  setup-environment:
     runs-on: ${{ matrix.os }}
-
     strategy:
       matrix:
-        os: [ubuntu-latest]
-        cpp_version: [11]
+        os: [ubuntu-latest, macos-latest]
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
 
     - name: Install dependencies on Ubuntu
       if: matrix.os == 'ubuntu-latest'
@@ -33,8 +31,21 @@ jobs:
         brew update
         brew install boost
 
+  build-and-test:
+    needs: setup-environment
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        cpp_version: [11, 14, 17]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
     - name: Set up CMake
-      uses: lukka/get-cmake@latest
+      uses: lukka/get-cmake@v3.21.3
 
     - name: Configure CMake
       run: cmake -S . -B build -DCMAKE_CXX_STANDARD=${{ matrix.cpp_version }}
