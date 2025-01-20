@@ -50,13 +50,8 @@ int main(int argc, const char * argv[]) {
     // Recalculating size
     Size = pow(N/density, 1./3.);
 
-    // Creating outdir if not existing
-    fs::path rootdir_path = rootdir;
-    if(!fs::is_directory(rootdir_path)){
-        fs::create_directory(rootdir);
-    }
-
     // Checking if the json file is present in rootdir
+    fs::path rootdir_path(rootdir);
     fs::path json_file(params_path);
     fs::path target_path = rootdir_path / json_file.filename();
 
