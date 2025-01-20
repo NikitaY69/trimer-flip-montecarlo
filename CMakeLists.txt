@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.30)
 
 project(TFMC 
         VERSION 1.0
@@ -16,6 +16,12 @@ add_definitions(-DPROJECT_ROOT_DIR=\"${CMAKE_SOURCE_DIR}\")
 include_directories("include")
 
 include(FetchContent)
+
+# Fetch Gulrak/filesystem
+FetchContent_Declare(
+  ghc_filesystem
+  GIT_REPOSITORY https://github.com/gulrak/filesystem.git
+)
 
 # Fetch json library
 FetchContent_Declare(
@@ -38,7 +44,7 @@ FetchContent_Declare(
   GIT_TAG v2.13.7 # Specify the version you want to use
 )
 
-FetchContent_MakeAvailable(json indicators Catch2)
+FetchContent_MakeAvailable(ghc_filesystem json indicators Catch2)
 
 # Source files
 file(GLOB SRC_FILES "src/particles.cpp" "src/observables.cpp" "src/simulation.cpp"
@@ -48,7 +54,7 @@ file(GLOB SRC_FILES "src/particles.cpp" "src/observables.cpp" "src/simulation.cp
 add_library(TFMC_lib STATIC ${SRC_FILES})
 
 # Link libraries to the static library
-target_link_libraries(TFMC_lib stdc++fs boost_program_options 
+target_link_libraries(TFMC_lib ghc_filesystem boost_program_options 
                       nlohmann_json::nlohmann_json indicators::indicators)
 
 # Add executable for the main application

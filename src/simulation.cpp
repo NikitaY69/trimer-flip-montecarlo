@@ -1,6 +1,6 @@
 #include <cmath>
 #include <fstream>
-#include <experimental/filesystem>
+#include <ghc/filesystem.hpp>
 #include <algorithm>
 #include <iostream>
 #include <indicators/progress_bar.hpp>
@@ -9,7 +9,7 @@
 #include "utils.hpp"
 #include "observables.hpp"
 
-namespace fs = std::experimental::filesystem;
+namespace fs = ghc::filesystem;
 
 // Constants
 const double deltaMax = 0.17; // Max particle displacement

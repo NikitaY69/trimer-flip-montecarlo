@@ -3,13 +3,13 @@
 #include <string>
 #include <iostream>
 #include <ctime>
-#include <experimental/filesystem>
+#include <ghc/filesystem.hpp>
 #include "globals.hpp"
 #include "particles.hpp"
 #include "utils.hpp"
 #include "simulation.hpp"
 
-namespace fs = std::experimental::filesystem;
+namespace fs = ghc::filesystem;
 
 // Default run parameters
 int N = 5;

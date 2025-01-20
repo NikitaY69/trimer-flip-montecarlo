@@ -2,12 +2,12 @@
 #include <string>
 #include <vector>
 #include <fstream>
-#include <experimental/filesystem>
+#include <ghc/filesystem.hpp>
 #include "globals.hpp"
 #include "utils.hpp"
 #include "simulation.hpp"
 
-namespace fs = std::experimental::filesystem;
+namespace fs = ghc::filesystem;
 
 // Function to check if two files are identical
 bool AreFilesIdentical(const std::string& file1, const std::string& file2) {
