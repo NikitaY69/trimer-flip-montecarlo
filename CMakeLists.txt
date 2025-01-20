@@ -47,13 +47,15 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(ghc_filesystem json indicators Catch2)
 
 # Find Boost
-find_package(Boost REQUIRED COMPONENTS program_options)
-
-if(Boost_FOUND)
-    message(STATUS "Boost found: ${Boost_INCLUDE_DIRS}")
-else()
-    message(FATAL_ERROR "Boost not found")
-endif()
+# set(Boost_NO_BOOST_CMAKE ON)
+# find_package(Boost REQUIRED COMPONENTS program_options)
+# if(Boost_FOUND)
+#     include_directories(${Boost_INCLUDE_DIRS})
+#     link_directories(${Boost_LIBRARY_DIRS})
+#     message(STATUS "Boost found: ${Boost_INCLUDE_DIRS}")
+# else()
+#     message(FATAL_ERROR "Boost not found")
+# endif()
 
 # Source files
 file(GLOB SRC_FILES "src/particles.cpp" "src/observables.cpp" "src/simulation.cpp"
