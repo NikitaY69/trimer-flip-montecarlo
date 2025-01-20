@@ -5,13 +5,31 @@
 #include <cstdlib> // For dynamic memory and random numbers
 
 // Shared variables
-extern int N; // Number of particles
-extern double Size; // Size of simulation box
-const double sigmaMax = 1.1; // Maximum diameter of particles
+
+/**
+ * @brief Number of particles.
+ */
+extern int N;
+
+/**
+ * @brief Size of the simulation box.
+ */
+extern double Size;
+
+/**
+ * @brief Maximum diameter of particles.
+ */
+const double sigmaMax = 1.1;
+
+/**
+ * @brief Array of particle diameters.
+ */
 const double diameters[3] = {0.9, 1.0, 1.1};
 
-//  Random number between 0 and 1
+/**
+ * @brief Generates a random number between 0 and 1.
+ */
 #define ranf() \
     ((double)rand()/(1.0+RAND_MAX))
-    
-#endif
+
+#endif // GLOBALS_H
