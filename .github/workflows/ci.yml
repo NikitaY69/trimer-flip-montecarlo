@@ -39,7 +39,13 @@ jobs:
       uses: lukka/get-cmake@latest
 
     - name: Configure CMake
-      run: cmake -S . -B build -DCMAKE_CXX_STANDARD=${{ matrix.cpp_version }}
+      run: |
+        if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
+        cmake -S . -B build -DCMAKE_CXX_STANDARD=${{ matrix.cpp_version }} -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake/Boost
+        else
+        export BOOST_ROOT=$(brew --prefix boost)
+        cmake -S . -B build -DCMAKE_CXX_STANDARD=${{ matrix.cpp_version }} -DCMAKE_PREFIX_PATH=$BOOST_ROOT
+        fi
 
     - name: Build
       run: cmake --build build
