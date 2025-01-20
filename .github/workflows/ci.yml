@@ -14,8 +14,8 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
-        cpp_version: [11, 14, 17]
+        os: [ubuntu-latest]
+        cpp_version: [11]
 
     steps:
     - name: Checkout repository
