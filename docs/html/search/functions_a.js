@@ -1,0 +1,6 @@
+var searchData=
+[
+  ['wcapair_0',['WCAPair',['../observables_8hpp.html#ae525dc7622ce18191825f4d0a9e799ef',1,'WCAPair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2):&#160;observables.cpp'],['../observables_8cpp.html#ae525dc7622ce18191825f4d0a9e799ef',1,'WCAPair(double x1, double y1, double z1, double s1, double x2, double y2, double z2, double s2):&#160;observables.cpp']]],
+  ['writeobs_1',['WriteObs',['../utils_8hpp.html#a7768eab2db6156fbf3bed2f0ebf26f92',1,'WriteObs(const configuration &amp;cfg, const configuration &amp;cfg0, int t, int cycle, std::vector&lt; std::string &gt; &amp;observables, std::ofstream &amp;log_obs):&#160;utils.cpp'],['../utils_8cpp.html#a7768eab2db6156fbf3bed2f0ebf26f92',1,'WriteObs(const configuration &amp;cfg, const configuration &amp;cfg0, int t, int cycle, std::vector&lt; std::string &gt; &amp;observables, std::ofstream &amp;log_obs):&#160;utils.cpp']]],
+  ['writetrimcfg_2',['WriteTrimCFG',['../utils_8hpp.html#a07e3bb41d44803bfba7484314696c3ba',1,'WriteTrimCFG(const configuration &amp;cfg, std::string output):&#160;utils.cpp'],['../utils_8cpp.html#a07e3bb41d44803bfba7484314696c3ba',1,'WriteTrimCFG(const configuration &amp;cfg, std::string output):&#160;utils.cpp']]]
+];
