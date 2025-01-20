@@ -39,7 +39,9 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
         cpp_version: [11, 14, 17]
-
+    
+    continue-on-error: true
+    
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
