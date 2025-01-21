@@ -16,20 +16,6 @@ include_directories("include")
 
 include(FetchContent)
 
-# # Fetch Gulrak/filesystem
-# FetchContent_Declare(
-#   ghc_filesystem
-#   GIT_REPOSITORY https://github.com/gulrak/filesystem.git
-#   GIT_TAG v1.5.14
-# )
-
-# # Fetch json library
-# FetchContent_Declare(
-#     json
-#     GIT_REPOSITORY https://github.com/nlohmann/json.git
-#     GIT_TAG v3.11.3
-# )
-
 # Fetch the indicators library
 FetchContent_Declare(
     indicators
@@ -57,6 +43,7 @@ set(BOOST_INCLUDEDIR "~/usr/include")
 set(BOOST_LIBRARYDIR "~/usr/lib")
 
 find_package(Boost REQUIRED COMPONENTS program_options json filesystem)
+
 # Find Boost
 # set(Boost_NO_BOOST_CMAKE ON)
 # find_package(Boost REQUIRED COMPONENTS program_options)
@@ -68,42 +55,42 @@ find_package(Boost REQUIRED COMPONENTS program_options json filesystem)
 #     message(FATAL_ERROR "Boost not found")
 # endif()
 
-# Source files
+# Ensure the GCC LTO-friendly archiver and ranlib are used
+set(CMAKE_AR "gcc-ar")
+set(CMAKE_RANLIB "gcc-ranlib")
+
+# Source files for the library
 file(GLOB SRC_FILES "src/particles.cpp" "src/observables.cpp" "src/simulation.cpp"
                     "src/utils.cpp")
 
-# Create a static library for the common source files
+# Create a static library
 add_library(TFMC_lib STATIC ${SRC_FILES})
 
 # Link libraries to the static library
 target_link_libraries(TFMC_lib Boost::program_options Boost::json Boost::filesystem indicators::indicators)
 
+# Add compiler options for the library
+target_compile_options(TFMC_lib PUBLIC -O3 -mfma -mbmi2 -flto)
+
 # Add executable for the main application
 add_executable(TFMC src/main.cpp)
 target_link_libraries(TFMC TFMC_lib)
-
-# Add compiler options
-target_compile_options(TFMC PRIVATE -O3 -mfma -mbmi2 -flto)
 
 # Install the executable
 install(TARGETS TFMC 
         RUNTIME DESTINATION bin)
 
 # Enable testing
-# enable_testing()
+enable_testing()
 
 # Add tests
-# file(GLOB TEST_FILES "tests/test_main.cpp" "tests/test_utils.cpp" 
-#                      "tests/test_particles.cpp" "tests/test_observables.cpp"
-#                      "tests/test_simulation.cpp")
+file(GLOB TEST_FILES "tests/*.cpp")
 
-# add_executable(TFMC_tests ${TEST_FILES})
-# target_link_libraries(TFMC_tests TFMC_lib Catch2::Catch2)
-# target_compile_options(TFMC_tests PRIVATE -O3 -mfma -mbmi2 -flto)
-
+add_executable(TFMC_tests ${TEST_FILES})
+target_link_libraries(TFMC_tests TFMC_lib Catch2::Catch2)
 
 # Register tests with ctest
-# add_test(NAME test_utils COMMAND TFMC_tests [test_utils] -r compact)
-# add_test(NAME test_particles COMMAND TFMC_tests [test_particles] -r compact)
-# add_test(NAME test_observables COMMAND TFMC_tests [test_observables] -r compact)
-# add_test(NAME test_simulation COMMAND TFMC_tests [test_simulation] -r compact)
+add_test(NAME test_utils COMMAND TFMC_tests [test_utils] -r compact)
+add_test(NAME test_particles COMMAND TFMC_tests [test_particles] -r compact)
+add_test(NAME test_observables COMMAND TFMC_tests [test_observables] -r compact)
+add_test(NAME test_simulation COMMAND TFMC_tests [test_simulation] -r compact)
