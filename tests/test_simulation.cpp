@@ -2,12 +2,12 @@
 #include <string>
 #include <vector>
 #include <fstream>
-#include <ghc/filesystem.hpp>
+#include <boost/filesystem.hpp>
 #include "globals.hpp"
 #include "utils.hpp"
 #include "simulation.hpp"
 
-namespace fs = ghc::filesystem;
+namespace fs = boost::filesystem;
 
 // Function to check if two files are identical
 bool AreFilesIdentical(const std::string& file1, const std::string& file2) {
@@ -56,6 +56,7 @@ TEST_CASE("Test Monte Carlo Run", "[test_simulation][MonteCarloRun]") {
     int seed = 12345; // Specific seed for reproducibility
 
     srand(seed);
+    MakeOutDir(out, params_path);
     MonteCarloRun(cfg, T, tau, cycles, tw, p_flip, observables, out, n_log, n_lin);
 
     SECTION("Check if the dynamics is correct") {
