@@ -4,15 +4,15 @@
 #include <iomanip>
 #include <algorithm>
 #include <boost/program_options.hpp>
-#include <nlohmann/json.hpp>
-#include <ghc/filesystem.hpp>
+#include <boost/json.hpp>
+#include <boost/filesystem.hpp>
 #include "globals.hpp"
 #include "utils.hpp"
 #include "observables.hpp"
 
-namespace fs = ghc::filesystem;
+namespace fs = boost::filesystem;
 namespace po = boost::program_options;
-using json = nlohmann::json;
+namespace json = boost::json;
 
 // Parse command line arguments
 bool ParseCMDLine(int argc, const char* argv[],
@@ -60,8 +60,7 @@ bool ReadJSONParams(const std::string& params_path,
                     int& cycles,
                     int& logPoints,
                     int& linPoints,
-                    double& p_flip){
-    json params;
+                    double& p_flip) {
     std::ifstream json_file(params_path);
 
     // Check if the file is open
@@ -70,19 +69,23 @@ bool ReadJSONParams(const std::string& params_path,
         return false;
     }
 
-    // Parse the JSON file
-    json_file >> params;
-    rootdir = params["rootdir"];
-    N = params["N"];
-    T = params["T"];
-    tau = params["tau"];
-    tw = params["tw"];
-    cycles = params["cycles"];
-    logPoints = params["logPoints"];
-    linPoints = params["linPoints"];
-    p_flip = params["p_flip"];
+    // Read and parse the JSON file
+    std::stringstream buffer;
+    buffer << json_file.rdbuf();
+    json::value parsed_json = json::parse(buffer.str());
 
-    json_file.close();
+    // Access JSON fields
+    const auto& obj = parsed_json.as_object();
+    rootdir = obj["rootdir"].as_string().c_str();
+    N = obj["N"].as_int64();
+    T = obj["T"].as_double();
+    tau = obj["tau"].as_int64();
+    tw = obj["tw"].as_int64();
+    cycles = obj["cycles"].as_int64();
+    logPoints = obj["logPoints"].as_int64();
+    linPoints = obj["linPoints"].as_int64();
+    p_flip = obj["p_flip"].as_double();
+
     return true;
 }
 
@@ -135,24 +138,22 @@ void WriteTrimCFG(const configuration& cfg, std::string output){
     log_cfg.close();
 }
 
-// Make out directory
-void MakeOutDir(std::string rootdir, std::string params_path){
-
-    // Creating outdir if not existing
+// Make output directory
+void MakeOutDir(std::string rootdir, std::string params_path) {
     fs::path rootdir_path = rootdir;
-    if(!fs::is_directory(rootdir_path)){
+    if (!fs::is_directory(rootdir_path)) {
         fs::create_directory(rootdir);
     }
 
-    // Configs dir
+    // Configs directory
     std::string out_cfg = rootdir + "configs/";
-    fs::create_directory(out_cfg); 
+    fs::create_directory(out_cfg);
 
-    // Copy the params file in rootdir
+    // Copy the params file into the root directory
     fs::path json_file(params_path);
     fs::path target_path = rootdir_path / json_file.filename();
     try {
-        fs::copy(json_file, target_path, fs::copy_options::update_existing);
+        fs::copy_file(json_file, target_path, fs::copy_options::overwrite_existing);
     } catch (const fs::filesystem_error& e) {
         std::cerr << e.what() << std::endl;
     }

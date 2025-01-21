@@ -16,19 +16,19 @@ include_directories("include")
 
 include(FetchContent)
 
-# Fetch Gulrak/filesystem
-FetchContent_Declare(
-  ghc_filesystem
-  GIT_REPOSITORY https://github.com/gulrak/filesystem.git
-  GIT_TAG v1.5.14
-)
+# # Fetch Gulrak/filesystem
+# FetchContent_Declare(
+#   ghc_filesystem
+#   GIT_REPOSITORY https://github.com/gulrak/filesystem.git
+#   GIT_TAG v1.5.14
+# )
 
-# Fetch json library
-FetchContent_Declare(
-    json
-    GIT_REPOSITORY https://github.com/nlohmann/json.git
-    GIT_TAG v3.11.3
-)
+# # Fetch json library
+# FetchContent_Declare(
+#     json
+#     GIT_REPOSITORY https://github.com/nlohmann/json.git
+#     GIT_TAG v3.11.3
+# )
 
 # Fetch the indicators library
 FetchContent_Declare(
@@ -44,8 +44,19 @@ FetchContent_Declare(
   GIT_TAG v2.13.7
 )
 
-FetchContent_MakeAvailable(ghc_filesystem json indicators Catch2)
+FetchContent_MakeAvailable(indicators Catch2)
 
+# Find Boost
+set(Boost_USE_STATIC_LIBS ON) # Use static libraries
+set(Boost_USE_MULTITHREADED ON) # Use multithreaded libraries
+set(Boost_USE_STATIC_RUNTIME OFF) # Use dynamic runtime
+
+# Specify the path to the Boost installation
+set(BOOST_ROOT "~/usr")
+set(BOOST_INCLUDEDIR "~/usr/include")
+set(BOOST_LIBRARYDIR "~/usr/lib")
+
+find_package(Boost REQUIRED COMPONENTS program_options json filesystem)
 # Find Boost
 # set(Boost_NO_BOOST_CMAKE ON)
 # find_package(Boost REQUIRED COMPONENTS program_options)
@@ -65,8 +76,7 @@ file(GLOB SRC_FILES "src/particles.cpp" "src/observables.cpp" "src/simulation.cp
 add_library(TFMC_lib STATIC ${SRC_FILES})
 
 # Link libraries to the static library
-target_link_libraries(TFMC_lib ghc_filesystem boost_program_options 
-                      nlohmann_json::nlohmann_json indicators::indicators)
+target_link_libraries(TFMC_lib Boost::program_options Boost::json Boost::filesystem indicators::indicators)
 
 # Add executable for the main application
 add_executable(TFMC src/main.cpp)
