@@ -38,11 +38,6 @@ set(Boost_USE_STATIC_LIBS ON) # Use static libraries
 set(Boost_USE_MULTITHREADED ON) # Use multithreaded libraries
 set(Boost_USE_STATIC_RUNTIME OFF) # Use dynamic runtime
 
-# Specify the path to the Boost installation
-set(BOOST_ROOT "~/usr")
-set(BOOST_INCLUDEDIR "~/usr/include")
-set(BOOST_LIBRARYDIR "~/usr/lib")
-
 find_package(Boost REQUIRED COMPONENTS program_options json filesystem)
 
 # Find Boost
