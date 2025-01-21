@@ -75,7 +75,7 @@ bool ReadJSONParams(const std::string& params_path,
     json::value parsed_json = json::parse(buffer.str());
 
     // Access JSON fields
-    const auto& obj = parsed_json.as_object();
+    auto& obj = parsed_json.as_object();
     rootdir = obj["rootdir"].as_string().c_str();
     N = obj["N"].as_int64();
     T = obj["T"].as_double();
