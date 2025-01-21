@@ -3,10 +3,10 @@ name: CI
 on:
   push:
     branches:
-      - 31-set-continuous-integration
+      - main
   pull_request:
     branches:
-      - 31-set-continuous-integration
+      - main
 
 jobs:
   setup-environment:
