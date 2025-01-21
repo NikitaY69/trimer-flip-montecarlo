@@ -71,7 +71,7 @@ TEST_CASE("Test Monte Carlo Run", "[test_simulation][MonteCarloRun]") {
 
     SECTION("Check if the dynamics is correct") {
         std::string last_cfg = out + "configs/cfg_500.xy";
-        std::string ref_cfg = std::string(PROJECT_ROOT_DIR) + "/tests/reference/cfg_100.xy";
+        std::string ref_cfg = std::string(PROJECT_ROOT_DIR) + "/tests/reference/cfg_500.xy";
         REQUIRE(AreFilesIdentical(last_cfg, ref_cfg)==true);
     }
     
