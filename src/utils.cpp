@@ -4,13 +4,15 @@
 #include <iomanip>
 #include <algorithm>
 #include <boost/program_options.hpp>
-#include <nlohmann/json.hpp>
+#include <boost/json.hpp>
+#include <boost/filesystem.hpp>
 #include "globals.hpp"
 #include "utils.hpp"
 #include "observables.hpp"
 
+namespace fs = boost::filesystem;
 namespace po = boost::program_options;
-using json = nlohmann::json;
+namespace json = boost::json;
 
 // Parse command line arguments
 bool ParseCMDLine(int argc, const char* argv[],
@@ -58,8 +60,7 @@ bool ReadJSONParams(const std::string& params_path,
                     int& cycles,
                     int& logPoints,
                     int& linPoints,
-                    double& p_flip){
-    json params;
+                    double& p_flip) {
     std::ifstream json_file(params_path);
 
     // Check if the file is open
@@ -68,19 +69,23 @@ bool ReadJSONParams(const std::string& params_path,
         return false;
     }
 
-    // Parse the JSON file
-    json_file >> params;
-    rootdir = params["rootdir"];
-    N = params["N"];
-    T = params["T"];
-    tau = params["tau"];
-    tw = params["tw"];
-    cycles = params["cycles"];
-    logPoints = params["logPoints"];
-    linPoints = params["linPoints"];
-    p_flip = params["p_flip"];
+    // Read and parse the JSON file
+    std::stringstream buffer;
+    buffer << json_file.rdbuf();
+    json::value parsed_json = json::parse(buffer.str());
 
-    json_file.close();
+    // Access JSON fields
+    auto& obj = parsed_json.as_object();
+    rootdir = obj["rootdir"].as_string().c_str();
+    N = obj["N"].as_int64();
+    T = obj["T"].as_double();
+    tau = obj["tau"].as_int64();
+    tw = obj["tw"].as_int64();
+    cycles = obj["cycles"].as_int64();
+    logPoints = obj["logPoints"].as_int64();
+    linPoints = obj["linPoints"].as_int64();
+    p_flip = obj["p_flip"].as_double();
+
     return true;
 }
 
@@ -90,39 +95,36 @@ configuration ReadTrimCFG(std::string input){
     int type;
     std::string line;
     std::ifstream input_file(input);
-    if (input_file.is_open()){
-        int i = 0; // particle index
-        std::vector<std::vector<double>> cfg; // array of configurations
-        while (std::getline(input_file, line)){
-            double value;
-            std::stringstream ss(line);
-
-            cfg.push_back(std::vector<double>());
-            while (ss >> value){
-                cfg[i].push_back(value);
-            }
-            // mol_index[i] = cfg[i][0];
-            // type = cfg[i][1]-1; 
-            // C.S[i] = (diameters[type]);
-            if (cfg[i].size() == 5){
-                C.S[i] = cfg[i][1];
-                C.Xfull[i] = cfg[i][2]; C.Yfull[i] = cfg[i][3]; C.Zfull[i] = cfg[i][4];
-            } else{
-                C.S[i] = cfg[i][0];
-                C.Xfull[i] = cfg[i][1]; C.Yfull[i] = cfg[i][2]; C.Zfull[i] = cfg[i][3];
-            }
-            
-            C.X[i] = Pshift(C.Xfull[i]); C.X0[i] = C.X[i]; 
-            C.Y[i] = Pshift(C.Yfull[i]); C.Y0[i] = C.Y[i];
-            C.Z[i] = Pshift(C.Zfull[i]); C.Z0[i] = C.Z[i];
-            i++;}
-        input_file.close();
-        return C;
-
-    } else {
-        std::string error = input + " not found";
-        throw error;
+    if (!input_file.is_open()){
+        throw std::runtime_error("Could not open file: " + input);
     }
+    int i = 0; // particle index
+    std::vector<std::vector<double>> cfg; // array of configurations
+    while (std::getline(input_file, line)){
+        double value;
+        std::stringstream ss(line);
+
+        cfg.push_back(std::vector<double>());
+        while (ss >> value){
+            cfg[i].push_back(value);
+        }
+        // mol_index[i] = cfg[i][0];
+        // type = cfg[i][1]-1; 
+        // C.S[i] = (diameters[type]);
+        if (cfg[i].size() == 5){
+            C.S[i] = cfg[i][1];
+            C.Xfull[i] = cfg[i][2]; C.Yfull[i] = cfg[i][3]; C.Zfull[i] = cfg[i][4];
+        } else{
+            C.S[i] = cfg[i][0];
+            C.Xfull[i] = cfg[i][1]; C.Yfull[i] = cfg[i][2]; C.Zfull[i] = cfg[i][3];
+        }
+        
+        C.X[i] = Pshift(C.Xfull[i]); C.X0[i] = C.X[i]; 
+        C.Y[i] = Pshift(C.Yfull[i]); C.Y0[i] = C.Y[i];
+        C.Z[i] = Pshift(C.Zfull[i]); C.Z0[i] = C.Z[i];
+        i++;}
+    input_file.close();
+    return C;
 }
 
 // Write trimer configs
@@ -134,6 +136,27 @@ void WriteTrimCFG(const configuration& cfg, std::string output){
         log_cfg << cfg.S[i] << " " << cfg.Xfull[i] << " " << cfg.Yfull[i] << " " << cfg.Zfull[i] << std::endl;
     }
     log_cfg.close();
+}
+
+// Make output directory
+void MakeOutDir(std::string rootdir, std::string params_path) {
+    fs::path rootdir_path = rootdir;
+    if (!fs::is_directory(rootdir_path)) {
+        fs::create_directory(rootdir);
+    }
+
+    // Configs directory
+    std::string out_cfg = rootdir + "configs/";
+    fs::create_directory(out_cfg);
+
+    // Copy the params file into the root directory
+    fs::path json_file(params_path);
+    fs::path target_path = rootdir_path / json_file.filename();
+    try {
+        fs::copy_file(json_file, target_path, fs::copy_options::overwrite_existing);
+    } catch (const fs::filesystem_error& e) {
+        std::cerr << e.what() << std::endl;
+    }
 }
 
 // Create observables file
