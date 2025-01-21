@@ -1,0 +1,11 @@
+{
+    "N": 3000,
+    "T": 2.0,
+    "cycles": 1,
+    "linPoints": 1,
+    "logPoints": 10,
+    "p_flip": 0.2,
+    "rootdir": "@PROJECT_ROOT_DIR@/tests/output/",
+    "tau": 500,
+    "tw": 1
+}

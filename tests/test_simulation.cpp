@@ -44,23 +44,33 @@ TEST_CASE("Test Monte Carlo Run", "[test_simulation][MonteCarloRun]") {
     std::string config_path = std::string(PROJECT_ROOT_DIR) + "/tests/config/initconf.xyz";
     configuration cfg = ReadTrimCFG(config_path);
 
-    double T = 2.0;
-    int tau = 100;
-    int cycles = 1;
-    int tw = 1;
-    double p_flip = 0.2;
+    // Params 
+    double T;
+    int tau;
+    int cycles;
+    int tw;
+    double p_flip;
     std::vector<std::string> observables = {"U", "MSD", "Fs"};
-    std::string out = std::string(PROJECT_ROOT_DIR) + "/tests/output/";
-    int n_log = 20;
-    int n_lin = 1;
-    int seed = 12345; // Specific seed for reproducibility
+    std::string out;
+    int n_log;
+    int n_lin;
+    std::string params_path = std::string(PROJECT_ROOT_DIR) + "/tests/params/params.json";
 
+    ReadJSONParams(
+        params_path, out, N, T, tau, tw, cycles, n_log, n_lin, p_flip
+    );
+
+    int seed = 12345; // Specific seed for reproducibility
     srand(seed);
+
+    // Making the out directory
     MakeOutDir(out, params_path);
+
+    // Running
     MonteCarloRun(cfg, T, tau, cycles, tw, p_flip, observables, out, n_log, n_lin);
 
     SECTION("Check if the dynamics is correct") {
-        std::string last_cfg = out + "configs/cfg_100.xy";
+        std::string last_cfg = out + "configs/cfg_500.xy";
         std::string ref_cfg = std::string(PROJECT_ROOT_DIR) + "/tests/reference/cfg_100.xy";
         REQUIRE(AreFilesIdentical(last_cfg, ref_cfg)==true);
     }

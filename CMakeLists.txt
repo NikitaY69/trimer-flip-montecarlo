@@ -10,6 +10,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Define the project root directory
 add_definitions(-DPROJECT_ROOT_DIR=\"${CMAKE_SOURCE_DIR}\")
+set(PROJECT_ROOT_DIR "${CMAKE_SOURCE_DIR}")
 
 # Include directories
 include_directories("include")
@@ -82,6 +83,13 @@ install(TARGETS TFMC
 
 # Enable testing
 enable_testing()
+
+# Configure the params file
+configure_file(
+    ${CMAKE_SOURCE_DIR}/tests/params/params_template.json
+    ${CMAKE_SOURCE_DIR}/tests/params/params.json
+    @ONLY
+)
 
 # Add tests
 file(GLOB TEST_FILES "tests/*.cpp")
