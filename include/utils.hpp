@@ -27,6 +27,8 @@ configuration ReadTrimCFG(std::string input);
 
 void WriteTrimCFG(const configuration& cfg, std::string output);
 
+void MakeOutDir(std::string rootdir, std::string params_path);
+
 std::ofstream MakeObsFile(std::vector <std::string>& observables, std::string output);
 
 void WriteObs(const configuration& cfg, const configuration& cfg0, 

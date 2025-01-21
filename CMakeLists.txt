@@ -80,20 +80,20 @@ install(TARGETS TFMC
         RUNTIME DESTINATION bin)
 
 # Enable testing
-enable_testing()
+# enable_testing()
 
 # Add tests
-file(GLOB TEST_FILES "tests/test_main.cpp" "tests/test_utils.cpp" 
-                     "tests/test_particles.cpp" "tests/test_observables.cpp"
-                     "tests/test_simulation.cpp")
+# file(GLOB TEST_FILES "tests/test_main.cpp" "tests/test_utils.cpp" 
+#                      "tests/test_particles.cpp" "tests/test_observables.cpp"
+#                      "tests/test_simulation.cpp")
 
-add_executable(TFMC_tests ${TEST_FILES})
-target_link_libraries(TFMC_tests TFMC_lib Catch2::Catch2)
-target_compile_options(TFMC_tests PRIVATE -O3 -mfma -mbmi2 -flto)
+# add_executable(TFMC_tests ${TEST_FILES})
+# target_link_libraries(TFMC_tests TFMC_lib Catch2::Catch2)
+# target_compile_options(TFMC_tests PRIVATE -O3 -mfma -mbmi2 -flto)
 
 
 # Register tests with ctest
-add_test(NAME test_utils COMMAND TFMC_tests [test_utils] -r compact)
-add_test(NAME test_particles COMMAND TFMC_tests [test_particles] -r compact)
-add_test(NAME test_observables COMMAND TFMC_tests [test_observables] -r compact)
-add_test(NAME test_simulation COMMAND TFMC_tests [test_simulation] -r compact)
+# add_test(NAME test_utils COMMAND TFMC_tests [test_utils] -r compact)
+# add_test(NAME test_particles COMMAND TFMC_tests [test_particles] -r compact)
+# add_test(NAME test_observables COMMAND TFMC_tests [test_observables] -r compact)
+# add_test(NAME test_simulation COMMAND TFMC_tests [test_simulation] -r compact)

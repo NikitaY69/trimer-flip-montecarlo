@@ -5,10 +5,12 @@
 #include <algorithm>
 #include <boost/program_options.hpp>
 #include <nlohmann/json.hpp>
+#include <ghc/filesystem.hpp>
 #include "globals.hpp"
 #include "utils.hpp"
 #include "observables.hpp"
 
+namespace fs = ghc::filesystem;
 namespace po = boost::program_options;
 using json = nlohmann::json;
 
@@ -131,6 +133,29 @@ void WriteTrimCFG(const configuration& cfg, std::string output){
         log_cfg << cfg.S[i] << " " << cfg.Xfull[i] << " " << cfg.Yfull[i] << " " << cfg.Zfull[i] << std::endl;
     }
     log_cfg.close();
+}
+
+// Make out directory
+void MakeOutDir(std::string rootdir, std::string params_path){
+
+    // Creating outdir if not existing
+    fs::path rootdir_path = rootdir;
+    if(!fs::is_directory(rootdir_path)){
+        fs::create_directory(rootdir);
+    }
+
+    // Configs dir
+    std::string out_cfg = rootdir + "configs/";
+    fs::create_directory(out_cfg); 
+
+    // Copy the params file in rootdir
+    fs::path json_file(params_path);
+    fs::path target_path = rootdir_path / json_file.filename();
+    try {
+        fs::copy(json_file, target_path, fs::copy_options::update_existing);
+    } catch (const fs::filesystem_error& e) {
+        std::cerr << e.what() << std::endl;
+    }
 }
 
 // Create observables file

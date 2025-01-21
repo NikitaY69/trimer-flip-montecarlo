@@ -49,18 +49,10 @@ void MonteCarloRun(configuration& cfg, double T, int tau, int cycles, int tw, do
     // Linspaced
     linpoints = GetLinspacedSnapshots(cycles, tau, tw, n_lin);
 
-    // Creating outdir if not existing
-    fs::path rootdir_path = out;
-    if(!fs::is_directory(rootdir_path)){
-        fs::create_directory(out);
-    }
-    // Configs dir
-    std::string out_cfg = out + "configs/";
-    fs::create_directory(out_cfg); 
     // Observables file
     std::ofstream log_obs = MakeObsFile(observables, out + "obs.txt");
-
-
+    std::string out_cfg = out + "configs/";
+    
     // First neighbours
     cfg.GetBonds(); cfg.UpdateNL();
 
