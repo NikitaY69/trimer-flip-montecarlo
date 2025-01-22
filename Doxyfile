@@ -3,6 +3,7 @@ PROJECT_NAME           = "Trimer Flip Monte Carlo"
 PROJECT_BRIEF          = "A C++ library performing Monte Carlo simulations of glassy trimer-mixtures."
 INPUT                  = include README.md
 USE_MDFILE_AS_MAINPAGE = README.md
+GENERATE_LATEX         = NO
 OUTPUT_DIRECTORY       = docs
 CREATE_SUBDIRS         = NO
 ALLOW_UNICODE_NAMES    = NO
