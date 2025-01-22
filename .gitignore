@@ -1,2 +1,5 @@
-*test*
 build/
+Testing/
+tests/test.py
+tests/output/
+tests/params/params.json

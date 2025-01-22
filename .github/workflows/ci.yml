@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  setup-environment:
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        cpp_version: [11, 14, 17]
+
+    continue-on-error: true
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install dependencies on Ubuntu
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libboost-all-dev
+
+    - name: Install dependencies on macOS
+      if: matrix.os == 'macos-latest'
+      run: |
+        brew update
+        brew install boost
+
+    - name: Set up CMake
+      uses: lukka/get-cmake@latest
+
+    - name: Configure CMake
+      run: |
+        if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
+        cmake -S . -B build -DCMAKE_CXX_STANDARD=${{ matrix.cpp_version }}
+        else
+        export BOOST_ROOT=$(brew --prefix boost)
+        cmake -S . -B build -DCMAKE_CXX_STANDARD=${{ matrix.cpp_version }} -DBOOST_ROOT=$BOOST_ROOT -DCMAKE_PREFIX_PATH=$BOOST_ROOT
+        fi
+
+    - name: Build
+      run: cmake --build build
+
+    - name: Run tests
+      run: ctest --test-dir build --output-on-failure

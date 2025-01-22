@@ -1,3 +1,14 @@
+/**
+ * @file utils.hpp
+ * @brief Utility functions for parsing input, reading/writing configuration files,
+ *        handling simulation parameters, and managing observables.
+ *
+ * This module provides helper functions to parse command-line arguments,
+ * read/write JSON configuration files, handle trimer configurations, and
+ * manage simulation observables. It is designed to streamline the setup and
+ * execution of simulations involving particles and their properties.
+ */
+
 #ifndef UTILS_H
 #define UTILS_H
 
@@ -66,11 +77,19 @@ configuration ReadTrimCFG(std::string input);
 void WriteTrimCFG(const configuration& cfg, std::string output);
 
 /**
- * @brief Creates an observables file.
+ * @brief Creates output directory for storing results.
  * 
- * @param observables List of observables.
+ * @param rootdir Root directory for output files.
+ * @param params_path Path to the parameter file (used for naming).
+ */
+void MakeOutDir(std::string rootdir, std::string params_path);
+
+/**
+ * @brief Creates an output file for storing observable data.
+ * 
+ * @param observables List of observables to log.
  * @param output Path to the output file.
- * @return Output file stream.
+ * @return An open output file stream for logging observables.
  */
 std::ofstream MakeObsFile(std::vector <std::string>& observables, std::string output);
 

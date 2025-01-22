@@ -1,6 +1,6 @@
 #include <cmath>
 #include <fstream>
-#include <experimental/filesystem>
+#include <boost/filesystem.hpp>
 #include <algorithm>
 #include <iostream>
 #include <indicators/progress_bar.hpp>
@@ -9,7 +9,7 @@
 #include "utils.hpp"
 #include "observables.hpp"
 
-namespace fs = std::experimental::filesystem;
+namespace fs = boost::filesystem;
 
 // Constants
 const double deltaMax = 0.17; // Max particle displacement
@@ -49,12 +49,10 @@ void MonteCarloRun(configuration& cfg, double T, int tau, int cycles, int tw, do
     // Linspaced
     linpoints = GetLinspacedSnapshots(cycles, tau, tw, n_lin);
 
-    // File writing
-    std::string out_cfg = out + "configs/";
+    // Observables file
     std::ofstream log_obs = MakeObsFile(observables, out + "obs.txt");
-    // creating configs dir
-    fs::create_directory(out_cfg); 
-
+    std::string out_cfg = out + "configs/";
+    
     // First neighbours
     cfg.GetBonds(); cfg.UpdateNL();
 

@@ -3,16 +3,12 @@
 #include <string>
 #include <iostream>
 #include <ctime>
-#include <experimental/filesystem>
 #include "globals.hpp"
 #include "particles.hpp"
 #include "utils.hpp"
 #include "simulation.hpp"
 
-namespace fs = std::experimental::filesystem;
-
 // Default run parameters
-const double density = 1.2;
 int N = 5;
 double Size = pow(N/density, 1/3.);
 double T = 2.0; 
@@ -51,25 +47,10 @@ int main(int argc, const char * argv[]) {
     // Recalculating size
     Size = pow(N/density, 1./3.);
 
-    // Creating outdir if not existing
-    fs::path rootdir_path = rootdir;
-    if(!fs::is_directory(rootdir_path)){
-        fs::create_directory(rootdir);
-    }
-
-    // Checking if the json file is present in rootdir
-    fs::path json_file(params_path);
-    fs::path target_path = rootdir_path / json_file.filename();
-
     // if (fs::exists(target_path)) {
     //     // pass
     // } else {
     // Copy the file to the target directory
-    try {
-        fs::copy(json_file, target_path, fs::copy_options::overwrite_existing);
-    } catch (const fs::filesystem_error& e) {
-        std::cerr << e.what() << std::endl;
-    }
     
     // Setting run mode
     (input == "") ? norun = true : norun = false;
@@ -83,7 +64,8 @@ int main(int argc, const char * argv[]) {
         // Read init config
         configuration initconf;
         initconf = ReadTrimCFG(input);
-
+        // Make outdir and copy json file
+        MakeOutDir(rootdir, params_path);
         // Do simulation
         MonteCarloRun(initconf, T, tau, cycles, tw, p_flip, observables, rootdir, logPoints, linPoints); 
     }
