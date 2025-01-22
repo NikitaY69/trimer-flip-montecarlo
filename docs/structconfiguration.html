@@ -164,14 +164,14 @@ Public Attributes</h2></td></tr>
 <tr class="memdesc:a97a2760c4ebb644d1d08d0fe387f46b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Particles' Z coordinates at last neighbors update.  <br /></td></tr>
 <tr class="separator:a97a2760c4ebb644d1d08d0fe387f46b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39ee221c9a136c0893af577c5160e4f1" id="r_a39ee221c9a136c0893af577c5160e4f1"><td class="memItemLeft" align="right" valign="top">std::vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a39ee221c9a136c0893af577c5160e4f1">S</a></td></tr>
-<tr class="memdesc:a39ee221c9a136c0893af577c5160e4f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Particles' diameters.  <br /></td></tr>
+<tr class="memdesc:a39ee221c9a136c0893af577c5160e4f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Particles' types (NOT DIAMETERS)  <br /></td></tr>
 <tr class="separator:a39ee221c9a136c0893af577c5160e4f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ea814a437e46ef9d90a59f397c10d61" id="r_a6ea814a437e46ef9d90a59f397c10d61"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6ea814a437e46ef9d90a59f397c10d61">NL</a></td></tr>
-<tr class="memdesc:a6ea814a437e46ef9d90a59f397c10d61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verlet lists for each particle.  <br /></td></tr>
-<tr class="separator:a6ea814a437e46ef9d90a59f397c10d61"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c5556fd2b6c547a12a852b3138c47b4" id="r_a9c5556fd2b6c547a12a852b3138c47b4"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9c5556fd2b6c547a12a852b3138c47b4">BN</a></td></tr>
-<tr class="memdesc:a9c5556fd2b6c547a12a852b3138c47b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bonded particles for each particle.  <br /></td></tr>
-<tr class="separator:a9c5556fd2b6c547a12a852b3138c47b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acef6ef2aacc19b3b478a405422ebec04" id="r_acef6ef2aacc19b3b478a405422ebec04"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acef6ef2aacc19b3b478a405422ebec04">neighbours_list</a></td></tr>
+<tr class="memdesc:acef6ef2aacc19b3b478a405422ebec04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verlet lists for each particle.  <br /></td></tr>
+<tr class="separator:acef6ef2aacc19b3b478a405422ebec04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af72396e397cace3c7501e56a6a5904f0" id="r_af72396e397cace3c7501e56a6a5904f0"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af72396e397cace3c7501e56a6a5904f0">bonded_neighbours</a></td></tr>
+<tr class="memdesc:af72396e397cace3c7501e56a6a5904f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bonded particles for each particle.  <br /></td></tr>
+<tr class="separator:af72396e397cace3c7501e56a6a5904f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91552f0f57e6dfb6c7021d128d419efe" id="r_a91552f0f57e6dfb6c7021d128d419efe"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a91552f0f57e6dfb6c7021d128d419efe">XCM</a></td></tr>
 <tr class="memdesc:a91552f0f57e6dfb6c7021d128d419efe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Center of mass X coordinate.  <br /></td></tr>
 <tr class="separator:a91552f0f57e6dfb6c7021d128d419efe"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -290,14 +290,14 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a9c5556fd2b6c547a12a852b3138c47b4" name="a9c5556fd2b6c547a12a852b3138c47b4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9c5556fd2b6c547a12a852b3138c47b4">&#9670;&#160;</a></span>BN</h2>
+<a id="af72396e397cace3c7501e56a6a5904f0" name="af72396e397cace3c7501e56a6a5904f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af72396e397cace3c7501e56a6a5904f0">&#9670;&#160;</a></span>bonded_neighbours</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;std::vector&lt;int&gt; &gt; configuration::BN</td>
+          <td class="memname">std::vector&lt;std::vector&lt;int&gt; &gt; configuration::bonded_neighbours</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -306,14 +306,14 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a6ea814a437e46ef9d90a59f397c10d61" name="a6ea814a437e46ef9d90a59f397c10d61"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ea814a437e46ef9d90a59f397c10d61">&#9670;&#160;</a></span>NL</h2>
+<a id="acef6ef2aacc19b3b478a405422ebec04" name="acef6ef2aacc19b3b478a405422ebec04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acef6ef2aacc19b3b478a405422ebec04">&#9670;&#160;</a></span>neighbours_list</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;std::vector&lt;int&gt; &gt; configuration::NL</td>
+          <td class="memname">std::vector&lt;std::vector&lt;int&gt; &gt; configuration::neighbours_list</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -334,7 +334,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Particles' diameters. </p>
+<p>Particles' types (NOT DIAMETERS) </p>
 
 </div>
 </div>

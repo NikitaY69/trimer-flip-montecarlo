@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['thermalization_0',['Thermalization',['../index.html#autotoc_md3',1,'']]],
-  ['to_20use_20it_1',['How to use it ?',['../index.html#autotoc_md2',1,'']]],
-  ['trimer_20mixtures_2',['Flip Monte Carlo algorithm for 3-dimensional trimer-mixtures',['../index.html',1,'']]],
-  ['trydisp_3',['TryDisp',['../simulation_8hpp.html#af779a027fa1a897c451415431e8f1dc2',1,'simulation.hpp']]],
-  ['tryflip_4',['TryFlip',['../simulation_8hpp.html#a6be0997dbba59ee27fb781af658bdcd9',1,'simulation.hpp']]]
+  ['x_0',['X',['../structconfiguration.html#ab4f0f4b15c94ba25f06ac00cf6dc2b00',1,'configuration']]],
+  ['x0_1',['X0',['../structconfiguration.html#aa5a3a7113e5df010551ab96fb973f68c',1,'configuration']]],
+  ['xcm_2',['XCM',['../structconfiguration.html#a91552f0f57e6dfb6c7021d128d419efe',1,'configuration']]],
+  ['xfull_3',['Xfull',['../structconfiguration.html#ad2b0a0faa9d27227730feef847a2421c',1,'configuration']]]
 ];

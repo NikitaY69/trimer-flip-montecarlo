@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['how_20to_20use_20it_0',['How to use it ?',['../index.html#autotoc_md2',1,'']]]
+  ['observables_2ehpp_0',['observables.hpp',['../observables_8hpp.html',1,'']]],
+  ['outputs_1',['Outputs',['../index.html#autotoc_md3',1,'']]],
+  ['overview_2',['Scientific overview',['../index.html#autotoc_md1',1,'']]]
 ];

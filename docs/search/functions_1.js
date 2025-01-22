@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['checknl_0',['CheckNL',['../structconfiguration.html#a0bc88a6b78207477ac4be2fa7772fdfa',1,'configuration']]],
-  ['computeobservables_1',['ComputeObservables',['../simulation_8hpp.html#aacfff81aa8c86033a4902c07c435f6e1',1,'simulation.hpp']]],
-  ['configuration_2',['configuration',['../structconfiguration.html#ad4446282343ce7dd8a67ffbc15f1d575',1,'configuration']]]
+  ['fenepair_0',['FENEPair',['../observables_8hpp.html#a4ff4a352d71824e379ffede2507b9c92',1,'observables.hpp']]],
+  ['fs_1',['FS',['../observables_8hpp.html#a72bf73b9539e69395e8dfb537672edc4',1,'observables.hpp']]]
 ];

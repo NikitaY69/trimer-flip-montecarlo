@@ -1,6 +1,6 @@
 var particles_8hpp =
 [
     [ "configuration", "structconfiguration.html", "structconfiguration" ],
-    [ "bcs", "particles_8hpp.html#a8bb592fb8a85e8a9b20a1ab90c9e2214", null ],
-    [ "Pshift", "particles_8hpp.html#a9ce6cfd638d2b6d9143f5d29996af495", null ]
+    [ "MinimumImageDistance", "particles_8hpp.html#a0c124805ed7ed616666777abbc4eb010", null ],
+    [ "ShiftInMainBox", "particles_8hpp.html#a0b15d5d6a099a85a84f7451454b4b95a", null ]
 ];

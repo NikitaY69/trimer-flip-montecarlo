@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['updatecm_5fcoord_0',['UpdateCM_coord',['../structconfiguration.html#a8a3199bcede53776a27ee2fd6aae1d59',1,'configuration']]],
-  ['updatenl_1',['UpdateNL',['../structconfiguration.html#ac5ea48165d42afc5854dd0df88c49094',1,'configuration']]],
-  ['use_20it_2',['How to use it ?',['../index.html#autotoc_md2',1,'']]],
-  ['utils_2ehpp_3',['utils.hpp',['../utils_8hpp.html',1,'']]]
+  ['y_0',['Y',['../structconfiguration.html#a19a64ec899893529f9ebdd1a6f66cd9e',1,'configuration']]],
+  ['y0_1',['Y0',['../structconfiguration.html#af56ca36d59ecb4cfec46dcd3e2222ba3',1,'configuration']]],
+  ['ycm_2',['YCM',['../structconfiguration.html#a5024b54b3430ebe77baf923419a7c1a7',1,'configuration']]],
+  ['yfull_3',['Yfull',['../structconfiguration.html#ab11f87b077ade6264b012284896d65a1',1,'configuration']]]
 ];

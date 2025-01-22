@@ -125,32 +125,32 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a8bb592fb8a85e8a9b20a1ab90c9e2214" id="r_a8bb592fb8a85e8a9b20a1ab90c9e2214"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8bb592fb8a85e8a9b20a1ab90c9e2214">bcs</a> (double a, double b)</td></tr>
-<tr class="memdesc:a8bb592fb8a85e8a9b20a1ab90c9e2214"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates difference of a and b while applying periodic boundary conditions.  <br /></td></tr>
-<tr class="separator:a8bb592fb8a85e8a9b20a1ab90c9e2214"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ce6cfd638d2b6d9143f5d29996af495" id="r_a9ce6cfd638d2b6d9143f5d29996af495"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ce6cfd638d2b6d9143f5d29996af495">Pshift</a> (double a)</td></tr>
-<tr class="memdesc:a9ce6cfd638d2b6d9143f5d29996af495"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shifts coordinate inside main box.  <br /></td></tr>
-<tr class="separator:a9ce6cfd638d2b6d9143f5d29996af495"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c124805ed7ed616666777abbc4eb010" id="r_a0c124805ed7ed616666777abbc4eb010"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0c124805ed7ed616666777abbc4eb010">MinimumImageDistance</a> (double coord1, double coord2)</td></tr>
+<tr class="memdesc:a0c124805ed7ed616666777abbc4eb010"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates difference of a and b while applying periodic boundary conditions.  <br /></td></tr>
+<tr class="separator:a0c124805ed7ed616666777abbc4eb010"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b15d5d6a099a85a84f7451454b4b95a" id="r_a0b15d5d6a099a85a84f7451454b4b95a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0b15d5d6a099a85a84f7451454b4b95a">ShiftInMainBox</a> (double coord)</td></tr>
+<tr class="memdesc:a0b15d5d6a099a85a84f7451454b4b95a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shifts coordinate inside main box.  <br /></td></tr>
+<tr class="separator:a0b15d5d6a099a85a84f7451454b4b95a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Structures and functions for particle configurations and interactions. </p>
 <p>This module defines the <code>configuration</code> structure to represent the state of particles in a simulation, including their positions, bonded interactions, and Verlet lists. It also provides utility functions for handling periodic boundary conditions and managing particle coordinates. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a8bb592fb8a85e8a9b20a1ab90c9e2214" name="a8bb592fb8a85e8a9b20a1ab90c9e2214"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8bb592fb8a85e8a9b20a1ab90c9e2214">&#9670;&#160;</a></span>bcs()</h2>
+<a id="a0c124805ed7ed616666777abbc4eb010" name="a0c124805ed7ed616666777abbc4eb010"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c124805ed7ed616666777abbc4eb010">&#9670;&#160;</a></span>MinimumImageDistance()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double bcs </td>
+          <td class="memname">double MinimumImageDistance </td>
           <td>(</td>
-          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>a</em></span>, </td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>coord1</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>b</em></span>&#160;)</td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>coord2</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -158,8 +158,8 @@ Functions</h2></td></tr>
 <p>Calculates difference of a and b while applying periodic boundary conditions. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">a</td><td>First coordinate </td></tr>
-    <tr><td class="paramname">b</td><td>Second coordinate </td></tr>
+    <tr><td class="paramname">coord1</td><td>First coordinate </td></tr>
+    <tr><td class="paramname">coord2</td><td>Second coordinate </td></tr>
   </table>
   </dd>
 </dl>
@@ -167,16 +167,16 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a9ce6cfd638d2b6d9143f5d29996af495" name="a9ce6cfd638d2b6d9143f5d29996af495"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9ce6cfd638d2b6d9143f5d29996af495">&#9670;&#160;</a></span>Pshift()</h2>
+<a id="a0b15d5d6a099a85a84f7451454b4b95a" name="a0b15d5d6a099a85a84f7451454b4b95a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b15d5d6a099a85a84f7451454b4b95a">&#9670;&#160;</a></span>ShiftInMainBox()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double Pshift </td>
+          <td class="memname">double ShiftInMainBox </td>
           <td>(</td>
-          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>a</em></span></td><td>)</td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>coord</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -185,7 +185,7 @@ Functions</h2></td></tr>
 <p>Shifts coordinate inside main box. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">a</td><td>Coordinate to be shifted </td></tr>
+    <tr><td class="paramname">coord</td><td>Coordinate to be shifted </td></tr>
   </table>
   </dd>
 </dl>

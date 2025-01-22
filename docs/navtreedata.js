@@ -25,7 +25,7 @@
 var NAVTREE =
 [
   [ "Trimer Flip Monte Carlo", "index.html", [
-    [ "Flip Monte Carlo algorithm for 3-dimensional trimer-mixtures", "index.html", "index" ],
+    [ "TFMC", "index.html", "index" ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],

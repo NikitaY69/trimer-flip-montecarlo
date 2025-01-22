@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['s_0',['S',['../structconfiguration.html#a39ee221c9a136c0893af577c5160e4f1',1,'configuration']]],
-  ['sigmamax_1',['sigmaMax',['../globals_8hpp.html#acae0b2fe4b7f9e8c509465fe3651f5e8',1,'globals.hpp']]],
-  ['simulation_2ehpp_2',['simulation.hpp',['../simulation_8hpp.html',1,'']]],
-  ['size_3',['Size',['../globals_8hpp.html#a5c5531274bcf52c2af806b72982187dd',1,'globals.hpp']]]
+  ['wcapair_0',['WCAPair',['../observables_8hpp.html#ae525dc7622ce18191825f4d0a9e799ef',1,'observables.hpp']]],
+  ['what_20tfmc_20is_20not_1',['What TFMC is not ?',['../index.html#autotoc_md5',1,'']]],
+  ['writeobs_2',['WriteObs',['../utils_8hpp.html#a7768eab2db6156fbf3bed2f0ebf26f92',1,'utils.hpp']]],
+  ['writetrimcfg_3',['WriteTrimCFG',['../utils_8hpp.html#a07e3bb41d44803bfba7484314696c3ba',1,'utils.hpp']]]
 ];
