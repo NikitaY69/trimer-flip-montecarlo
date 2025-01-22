@@ -66,18 +66,18 @@ struct configuration {
 /**
  * @brief Calculates difference of a and b while applying periodic boundary conditions.
  * 
- * @param a First coordinate
- * @param b Second coordinate
+ * @param coord1 First coordinate
+ * @param coord2 Second coordinate
  * @return Adjusted coordinate difference
  */
-double bcs(double a, double b);
+double MinimumImageDistance(double coord1, double coord2);
 
 /**
  * @brief Shifts coordinate inside main box.
  * 
- * @param a Coordinate to be shifted
+ * @param coord Coordinate to be shifted
  * @return Shifted coordinate
  */
-double Pshift(double a);
+double ShiftInMainBox(double coord);
 
 #endif // PARTICLES_H

@@ -12,7 +12,9 @@ double WCAPair(double x1, double y1, double z1, double s1, double x2, double y2,
     double sigmaij = (s1+s2)/2;
     double sigma2 = sigmaij*sigmaij;
     double rc2 = pow(2., 1./3.) * sigma2;
-    double xij = bcs(x1, x2); double yij = bcs(y1, y2); double zij = bcs(z1, z2);
+    double xij = MinimumImageDistance(x1, x2); 
+    double yij = MinimumImageDistance(y1, y2); 
+    double zij = MinimumImageDistance(z1, z2);
     double rij2 = (xij*xij) + (yij*yij) + (zij*zij);
     if (rij2 > rc2) return 0;
     else {
@@ -29,7 +31,9 @@ double FENEPair(double x1, double y1, double z1, double s1, double x2, double y2
     double sigma2 = sigmaij*sigmaij;
     double kij = 30/sigma2;
     double R02 = 1.5*1.5*sigma2;
-    double xij = bcs(x1, x2); double yij = bcs(y1, y2); double zij = bcs(z1, z2);
+    double xij = MinimumImageDistance(x1, x2); 
+    double yij = MinimumImageDistance(y1, y2); 
+    double zij = MinimumImageDistance(z1, z2);
     double rij2 = (xij*xij) + (yij*yij) + (zij*zij);
     if (rij2 > R02) return 0;
     else {

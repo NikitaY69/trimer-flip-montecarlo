@@ -111,9 +111,9 @@ void TryDisp(configuration& cfg, int j, double T){
     double dx = (ranf()-0.5)*maximum_displacement;
     double dy = (ranf()-0.5)*maximum_displacement;
     double dz = (ranf()-0.5)*maximum_displacement;
-    double Xold = cfg.X[j], Xnew = Pshift(cfg.X[j]+dx); 
-    double Yold = cfg.Y[j], Ynew = Pshift(cfg.Y[j]+dy);
-    double Zold = cfg.Z[j], Znew = Pshift(cfg.Z[j]+dz);
+    double Xold = cfg.X[j], Xnew = ShiftInMainBox(cfg.X[j]+dx); 
+    double Yold = cfg.Y[j], Ynew = ShiftInMainBox(cfg.Y[j]+dy);
+    double Zold = cfg.Z[j], Znew = ShiftInMainBox(cfg.Z[j]+dz);
     // Energy before the displacement
     double V_old = V(cfg, j);
     // Energy after the displacement

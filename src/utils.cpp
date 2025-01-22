@@ -119,9 +119,9 @@ configuration ReadTrimCFG(std::string input){
             C.Xfull[i] = cfg[i][1]; C.Yfull[i] = cfg[i][2]; C.Zfull[i] = cfg[i][3];
         }
         
-        C.X[i] = Pshift(C.Xfull[i]); C.X0[i] = C.X[i]; 
-        C.Y[i] = Pshift(C.Yfull[i]); C.Y0[i] = C.Y[i];
-        C.Z[i] = Pshift(C.Zfull[i]); C.Z0[i] = C.Z[i];
+        C.X[i] = ShiftInMainBox(C.Xfull[i]); C.X0[i] = C.X[i]; 
+        C.Y[i] = ShiftInMainBox(C.Yfull[i]); C.Y0[i] = C.Y[i];
+        C.Z[i] = ShiftInMainBox(C.Zfull[i]); C.Z0[i] = C.Z[i];
         i++;}
     input_file.close();
     return C;

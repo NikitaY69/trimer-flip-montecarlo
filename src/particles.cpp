@@ -27,9 +27,9 @@ void configuration::UpdateNL(){
     neighbours_list.clear(); neighbours_list = std::vector < std::vector <int> > (N);
     for (int j=0; j<N-1; j++){
         for (int i=j+1; i<N; i++){
-            double xij = bcs(X[i], X[j]); 
-            double yij = bcs(Y[i], Y[j]); 
-            double zij = bcs(Z[i], Z[j]);
+            double xij = MinimumImageDistance(X[i], X[j]); 
+            double yij = MinimumImageDistance(Y[i], Y[j]); 
+            double zij = MinimumImageDistance(Z[i], Z[j]);
             double rij2 = (xij*xij)+(yij*yij)+(zij*zij);
             if (rij2 < neighbours_radius_squared && i != j){
                 neighbours_list[j].push_back(i);
@@ -55,9 +55,9 @@ void configuration::CheckNL(){
     double deltaX, deltaY, deltaZ, maximum_displacement = 0;
     std::vector <double> deltaR2(N);
     for (int i = 0; i < N; i++){
-        deltaX = bcs(X[i],X0[i]);
-        deltaY = bcs(Y[i],Y0[i]);
-        deltaZ = bcs(Z[i],Z0[i]);
+        deltaX = MinimumImageDistance(X[i],X0[i]);
+        deltaY = MinimumImageDistance(Y[i],Y0[i]);
+        deltaZ = MinimumImageDistance(Z[i],Z0[i]);
         deltaR2[i] = deltaX*deltaX + deltaY*deltaY + deltaZ*deltaZ;
     } maximum_displacement = *(std::max_element(deltaR2.begin(), deltaR2.end()));
     if(maximum_displacement > maximum_displacement_before_update_squared){
@@ -68,11 +68,11 @@ void configuration::CheckNL(){
     }
 }
 //  Calculates difference of a and b while applying periodic boundary conditions
-double bcs(double a, double b) {return Size/2 - std::abs(std::abs(a-b)-Size/2);}
+double MinimumImageDistance(double coord1, double coord2) {return Size/2 - std::abs(std::abs(coord1-coord2)-Size/2);}
 
 // Shifts coordinate inside main box
-double Pshift(double a){
-    double shift = fmod(a, Size);//- Size*floor((a+Size/2)/Size);
+double ShiftInMainBox(double coord){
+    double shift = fmod(coord, Size);//- Size*floor((a+Size/2)/Size);
     if (shift < 0) {shift += Size;}
     return shift;
 }
