@@ -1,0 +1,50 @@
+\doxysection{utils.\+hpp}
+\hypertarget{utils_8hpp_source}{}\label{utils_8hpp_source}\index{include/utils.hpp@{include/utils.hpp}}
+\mbox{\hyperlink{utils_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#ifndef\ UTILS\_H}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ UTILS\_H}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{particles_8hpp}{particles.hpp}}"{}}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00031\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{utils_8hpp_abad29af191437a453c1adcef6e650a02}{ParseCMDLine}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ argv[],}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\&\ input,}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\&\ params,}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::string>\&\ observables,}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\&\ seed);}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00052\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{utils_8hpp_a00af87d0fcb39e7a9f84caaa8759665f}{ReadJSONParams}}(\textcolor{keyword}{const}\ std::string\&\ params\_path,\ }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\&\ rootdir,}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\&\ \mbox{\hyperlink{globals_8hpp_a7722c8ecbb62d99aee7ce68b1752f337}{N}},\ }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\&\ T,}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\&\ tau,}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\&\ tw,}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\&\ cycles,}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\&\ logPoints,}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\&\ linPoints,}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\&\ p\_flip);}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00069\ \mbox{\hyperlink{structconfiguration}{configuration}}\ \mbox{\hyperlink{utils_8hpp_ade63ac6a6bf2e230f580fd8519c60cd1}{ReadTrimCFG}}(std::string\ input);}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00077\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8hpp_a07e3bb41d44803bfba7484314696c3ba}{WriteTrimCFG}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structconfiguration}{configuration}}\&\ cfg,\ std::string\ output);}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00085\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8hpp_a74e2743766c55198c4be49c58f7ec867}{MakeOutDir}}(std::string\ rootdir,\ std::string\ params\_path);}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00094\ std::ofstream\ \mbox{\hyperlink{utils_8hpp_a770a2b4d9ce26300920f9266b926d808}{MakeObsFile}}(std::vector\ <std::string>\&\ observables,\ std::string\ output);}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00106\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{utils_8hpp_a7768eab2db6156fbf3bed2f0ebf26f92}{WriteObs}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structconfiguration}{configuration}}\&\ cfg,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structconfiguration}{configuration}}\&\ cfg0,\ }
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ t,\ \textcolor{keywordtype}{int}\ cycle,\ std::vector\ <std::string>\&\ observables,\ }
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::ofstream\&\ log\_obs);}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00119\ std::vector\ <std::pair\ <int,int>>\ \mbox{\hyperlink{utils_8hpp_af887ffbf8cb00951f26e9ad99ee474ac}{GetLogspacedSnapshots}}(\textcolor{keywordtype}{int}\ cycles,\ \textcolor{keywordtype}{int}\ tau,\ \textcolor{keywordtype}{int}\ tw,\ \textcolor{keywordtype}{int}\ n\_log);}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00130\ std::vector\ <int>\ \mbox{\hyperlink{utils_8hpp_aeb025083574391d715cd82d2d144be1e}{GetLinspacedSnapshots}}(\textcolor{keywordtype}{int}\ cycles,\ \textcolor{keywordtype}{int}\ tau,\ \textcolor{keywordtype}{int}\ tw,\ \textcolor{keywordtype}{int}\ n\_lin);}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ UTILS\_H}}
+
+\end{DoxyCode}

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['carlo_20algorithm_20for_203_20dimensional_20trimer_20mixtures_0',['Flip Monte Carlo algorithm for 3-dimensional trimer-mixtures',['../md__r_e_a_d_m_e.html',1,'']]],
-  ['compilation_20and_20execution_1',['Compilation and execution',['../md__r_e_a_d_m_e.html#autotoc_md1',1,'']]]
+  ['bcs_0',['bcs',['../particles_8hpp.html#a8bb592fb8a85e8a9b20a1ab90c9e2214',1,'particles.hpp']]],
+  ['bn_1',['BN',['../structconfiguration.html#a9c5556fd2b6c547a12a852b3138c47b4',1,'configuration']]]
 ];

@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['updatecm_5fcoord_0',['UpdateCM_coord',['../structconfiguration.html#a8a3199bcede53776a27ee2fd6aae1d59',1,'configuration']]],
-  ['updatenl_1',['UpdateNL',['../structconfiguration.html#ac5ea48165d42afc5854dd0df88c49094',1,'configuration']]],
-  ['utils_2ecpp_2',['utils.cpp',['../utils_8cpp.html',1,'']]],
-  ['utils_2ehpp_3',['utils.hpp',['../utils_8hpp.html',1,'']]]
+  ['ranf_0',['ranf',['../globals_8hpp.html#aa581661786d218568cbaea38061987cd',1,'globals.hpp']]],
+  ['readjsonparams_1',['ReadJSONParams',['../utils_8hpp.html#a00af87d0fcb39e7a9f84caaa8759665f',1,'utils.hpp']]],
+  ['readme_2emd_2',['README.md',['../_r_e_a_d_m_e_8md.html',1,'']]],
+  ['readtrimcfg_3',['ReadTrimCFG',['../utils_8hpp.html#ade63ac6a6bf2e230f580fd8519c60cd1',1,'utils.hpp']]]
 ];

@@ -1,0 +1,274 @@
+\doxysection{configuration Struct Reference}
+\hypertarget{structconfiguration}{}\label{structconfiguration}\index{configuration@{configuration}}
+
+
+Structure to keep track of the evolution of configurations.  
+
+
+
+
+{\ttfamily \#include $<$particles.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structconfiguration_ad4446282343ce7dd8a67ffbc15f1d575}{configuration}} ()
+\begin{DoxyCompactList}\small\item\em Constructor to initialize vectors. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{structconfiguration_a8a3199bcede53776a27ee2fd6aae1d59}{Update\+CM\+\_\+coord}} ()
+\begin{DoxyCompactList}\small\item\em Method to calculate center of mass coordinates. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{structconfiguration_ac5ea48165d42afc5854dd0df88c49094}{Update\+NL}} ()
+\begin{DoxyCompactList}\small\item\em Method to update the verlet lists for each particle. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{structconfiguration_aba8f2c2a9d98f2873c28faacf94971a5}{Get\+Bonds}} ()
+\begin{DoxyCompactList}\small\item\em Method to retrieve bonded particles for all particles. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{structconfiguration_a0bc88a6b78207477ac4be2fa7772fdfa}{Check\+NL}} ()
+\begin{DoxyCompactList}\small\item\em Method to check whether or not to update the neighbors list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{structconfiguration_ab4f0f4b15c94ba25f06ac00cf6dc2b00}{X}}
+\begin{DoxyCompactList}\small\item\em Particles\textquotesingle{} X coordinates inside main box. \end{DoxyCompactList}\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{structconfiguration_a19a64ec899893529f9ebdd1a6f66cd9e}{Y}}
+\begin{DoxyCompactList}\small\item\em Particles\textquotesingle{} Y coordinates inside main box. \end{DoxyCompactList}\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{structconfiguration_a7ab4969249313a8f851502da06e93d39}{Z}}
+\begin{DoxyCompactList}\small\item\em Particles\textquotesingle{} Z coordinates inside main box. \end{DoxyCompactList}\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{structconfiguration_ad2b0a0faa9d27227730feef847a2421c}{Xfull}}
+\begin{DoxyCompactList}\small\item\em Particles\textquotesingle{} real X coordinates (for dynamical purposes) \end{DoxyCompactList}\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{structconfiguration_ab11f87b077ade6264b012284896d65a1}{Yfull}}
+\begin{DoxyCompactList}\small\item\em Particles\textquotesingle{} real Y coordinates (for dynamical purposes) \end{DoxyCompactList}\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{structconfiguration_ae7f38bfbba00ac402ceffd3e68a79d4f}{Zfull}}
+\begin{DoxyCompactList}\small\item\em Particles\textquotesingle{} real Z coordinates (for dynamical purposes) \end{DoxyCompactList}\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{structconfiguration_aa5a3a7113e5df010551ab96fb973f68c}{X0}}
+\begin{DoxyCompactList}\small\item\em Particles\textquotesingle{} X coordinates at last neighbors update. \end{DoxyCompactList}\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{structconfiguration_af56ca36d59ecb4cfec46dcd3e2222ba3}{Y0}}
+\begin{DoxyCompactList}\small\item\em Particles\textquotesingle{} Y coordinates at last neighbors update. \end{DoxyCompactList}\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{structconfiguration_a97a2760c4ebb644d1d08d0fe387f46b7}{Z0}}
+\begin{DoxyCompactList}\small\item\em Particles\textquotesingle{} Z coordinates at last neighbors update. \end{DoxyCompactList}\item 
+std\+::vector$<$ int $>$ \mbox{\hyperlink{structconfiguration_a39ee221c9a136c0893af577c5160e4f1}{S}}
+\begin{DoxyCompactList}\small\item\em Particles\textquotesingle{} diameters. \end{DoxyCompactList}\item 
+std\+::vector$<$ std\+::vector$<$ int $>$ $>$ \mbox{\hyperlink{structconfiguration_a6ea814a437e46ef9d90a59f397c10d61}{NL}}
+\begin{DoxyCompactList}\small\item\em Verlet lists for each particle. \end{DoxyCompactList}\item 
+std\+::vector$<$ std\+::vector$<$ int $>$ $>$ \mbox{\hyperlink{structconfiguration_a9c5556fd2b6c547a12a852b3138c47b4}{BN}}
+\begin{DoxyCompactList}\small\item\em Bonded particles for each particle. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{structconfiguration_a91552f0f57e6dfb6c7021d128d419efe}{XCM}}
+\begin{DoxyCompactList}\small\item\em Center of mass X coordinate. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{structconfiguration_a5024b54b3430ebe77baf923419a7c1a7}{YCM}}
+\begin{DoxyCompactList}\small\item\em Center of mass Y coordinate. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{structconfiguration_aed5568b7042d359ae00decde23e67a29}{ZCM}}
+\begin{DoxyCompactList}\small\item\em Center of mass Z coordinate. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Structure to keep track of the evolution of configurations. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{structconfiguration_ad4446282343ce7dd8a67ffbc15f1d575}\index{configuration@{configuration}!configuration@{configuration}}
+\index{configuration@{configuration}!configuration@{configuration}}
+\doxysubsubsection{\texorpdfstring{configuration()}{configuration()}}
+{\footnotesize\ttfamily \label{structconfiguration_ad4446282343ce7dd8a67ffbc15f1d575} 
+configuration\+::configuration (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor to initialize vectors. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structconfiguration_a0bc88a6b78207477ac4be2fa7772fdfa}\index{configuration@{configuration}!CheckNL@{CheckNL}}
+\index{CheckNL@{CheckNL}!configuration@{configuration}}
+\doxysubsubsection{\texorpdfstring{CheckNL()}{CheckNL()}}
+{\footnotesize\ttfamily \label{structconfiguration_a0bc88a6b78207477ac4be2fa7772fdfa} 
+void configuration\+::\+Check\+NL (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Method to check whether or not to update the neighbors list. 
+
+\Hypertarget{structconfiguration_aba8f2c2a9d98f2873c28faacf94971a5}\index{configuration@{configuration}!GetBonds@{GetBonds}}
+\index{GetBonds@{GetBonds}!configuration@{configuration}}
+\doxysubsubsection{\texorpdfstring{GetBonds()}{GetBonds()}}
+{\footnotesize\ttfamily \label{structconfiguration_aba8f2c2a9d98f2873c28faacf94971a5} 
+void configuration\+::\+Get\+Bonds (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Method to retrieve bonded particles for all particles. 
+
+\Hypertarget{structconfiguration_a8a3199bcede53776a27ee2fd6aae1d59}\index{configuration@{configuration}!UpdateCM\_coord@{UpdateCM\_coord}}
+\index{UpdateCM\_coord@{UpdateCM\_coord}!configuration@{configuration}}
+\doxysubsubsection{\texorpdfstring{UpdateCM\_coord()}{UpdateCM\_coord()}}
+{\footnotesize\ttfamily \label{structconfiguration_a8a3199bcede53776a27ee2fd6aae1d59} 
+void configuration\+::\+Update\+CM\+\_\+coord (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Method to calculate center of mass coordinates. 
+
+\Hypertarget{structconfiguration_ac5ea48165d42afc5854dd0df88c49094}\index{configuration@{configuration}!UpdateNL@{UpdateNL}}
+\index{UpdateNL@{UpdateNL}!configuration@{configuration}}
+\doxysubsubsection{\texorpdfstring{UpdateNL()}{UpdateNL()}}
+{\footnotesize\ttfamily \label{structconfiguration_ac5ea48165d42afc5854dd0df88c49094} 
+void configuration\+::\+Update\+NL (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Method to update the verlet lists for each particle. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structconfiguration_a9c5556fd2b6c547a12a852b3138c47b4}\index{configuration@{configuration}!BN@{BN}}
+\index{BN@{BN}!configuration@{configuration}}
+\doxysubsubsection{\texorpdfstring{BN}{BN}}
+{\footnotesize\ttfamily \label{structconfiguration_a9c5556fd2b6c547a12a852b3138c47b4} 
+std\+::vector$<$std\+::vector$<$int$>$ $>$ configuration\+::\+BN}
+
+
+
+Bonded particles for each particle. 
+
+\Hypertarget{structconfiguration_a6ea814a437e46ef9d90a59f397c10d61}\index{configuration@{configuration}!NL@{NL}}
+\index{NL@{NL}!configuration@{configuration}}
+\doxysubsubsection{\texorpdfstring{NL}{NL}}
+{\footnotesize\ttfamily \label{structconfiguration_a6ea814a437e46ef9d90a59f397c10d61} 
+std\+::vector$<$std\+::vector$<$int$>$ $>$ configuration\+::\+NL}
+
+
+
+Verlet lists for each particle. 
+
+\Hypertarget{structconfiguration_a39ee221c9a136c0893af577c5160e4f1}\index{configuration@{configuration}!S@{S}}
+\index{S@{S}!configuration@{configuration}}
+\doxysubsubsection{\texorpdfstring{S}{S}}
+{\footnotesize\ttfamily \label{structconfiguration_a39ee221c9a136c0893af577c5160e4f1} 
+std\+::vector$<$int$>$ configuration\+::S}
+
+
+
+Particles\textquotesingle{} diameters. 
+
+\Hypertarget{structconfiguration_ab4f0f4b15c94ba25f06ac00cf6dc2b00}\index{configuration@{configuration}!X@{X}}
+\index{X@{X}!configuration@{configuration}}
+\doxysubsubsection{\texorpdfstring{X}{X}}
+{\footnotesize\ttfamily \label{structconfiguration_ab4f0f4b15c94ba25f06ac00cf6dc2b00} 
+std\+::vector$<$double$>$ configuration\+::X}
+
+
+
+Particles\textquotesingle{} X coordinates inside main box. 
+
+\Hypertarget{structconfiguration_aa5a3a7113e5df010551ab96fb973f68c}\index{configuration@{configuration}!X0@{X0}}
+\index{X0@{X0}!configuration@{configuration}}
+\doxysubsubsection{\texorpdfstring{X0}{X0}}
+{\footnotesize\ttfamily \label{structconfiguration_aa5a3a7113e5df010551ab96fb973f68c} 
+std\+::vector$<$double$>$ configuration\+::\+X0}
+
+
+
+Particles\textquotesingle{} X coordinates at last neighbors update. 
+
+\Hypertarget{structconfiguration_a91552f0f57e6dfb6c7021d128d419efe}\index{configuration@{configuration}!XCM@{XCM}}
+\index{XCM@{XCM}!configuration@{configuration}}
+\doxysubsubsection{\texorpdfstring{XCM}{XCM}}
+{\footnotesize\ttfamily \label{structconfiguration_a91552f0f57e6dfb6c7021d128d419efe} 
+double configuration\+::\+XCM}
+
+
+
+Center of mass X coordinate. 
+
+\Hypertarget{structconfiguration_ad2b0a0faa9d27227730feef847a2421c}\index{configuration@{configuration}!Xfull@{Xfull}}
+\index{Xfull@{Xfull}!configuration@{configuration}}
+\doxysubsubsection{\texorpdfstring{Xfull}{Xfull}}
+{\footnotesize\ttfamily \label{structconfiguration_ad2b0a0faa9d27227730feef847a2421c} 
+std\+::vector$<$double$>$ configuration\+::\+Xfull}
+
+
+
+Particles\textquotesingle{} real X coordinates (for dynamical purposes) 
+
+\Hypertarget{structconfiguration_a19a64ec899893529f9ebdd1a6f66cd9e}\index{configuration@{configuration}!Y@{Y}}
+\index{Y@{Y}!configuration@{configuration}}
+\doxysubsubsection{\texorpdfstring{Y}{Y}}
+{\footnotesize\ttfamily \label{structconfiguration_a19a64ec899893529f9ebdd1a6f66cd9e} 
+std\+::vector$<$double$>$ configuration\+::Y}
+
+
+
+Particles\textquotesingle{} Y coordinates inside main box. 
+
+\Hypertarget{structconfiguration_af56ca36d59ecb4cfec46dcd3e2222ba3}\index{configuration@{configuration}!Y0@{Y0}}
+\index{Y0@{Y0}!configuration@{configuration}}
+\doxysubsubsection{\texorpdfstring{Y0}{Y0}}
+{\footnotesize\ttfamily \label{structconfiguration_af56ca36d59ecb4cfec46dcd3e2222ba3} 
+std\+::vector$<$double$>$ configuration\+::\+Y0}
+
+
+
+Particles\textquotesingle{} Y coordinates at last neighbors update. 
+
+\Hypertarget{structconfiguration_a5024b54b3430ebe77baf923419a7c1a7}\index{configuration@{configuration}!YCM@{YCM}}
+\index{YCM@{YCM}!configuration@{configuration}}
+\doxysubsubsection{\texorpdfstring{YCM}{YCM}}
+{\footnotesize\ttfamily \label{structconfiguration_a5024b54b3430ebe77baf923419a7c1a7} 
+double configuration\+::\+YCM}
+
+
+
+Center of mass Y coordinate. 
+
+\Hypertarget{structconfiguration_ab11f87b077ade6264b012284896d65a1}\index{configuration@{configuration}!Yfull@{Yfull}}
+\index{Yfull@{Yfull}!configuration@{configuration}}
+\doxysubsubsection{\texorpdfstring{Yfull}{Yfull}}
+{\footnotesize\ttfamily \label{structconfiguration_ab11f87b077ade6264b012284896d65a1} 
+std\+::vector$<$double$>$ configuration\+::\+Yfull}
+
+
+
+Particles\textquotesingle{} real Y coordinates (for dynamical purposes) 
+
+\Hypertarget{structconfiguration_a7ab4969249313a8f851502da06e93d39}\index{configuration@{configuration}!Z@{Z}}
+\index{Z@{Z}!configuration@{configuration}}
+\doxysubsubsection{\texorpdfstring{Z}{Z}}
+{\footnotesize\ttfamily \label{structconfiguration_a7ab4969249313a8f851502da06e93d39} 
+std\+::vector$<$double$>$ configuration\+::Z}
+
+
+
+Particles\textquotesingle{} Z coordinates inside main box. 
+
+\Hypertarget{structconfiguration_a97a2760c4ebb644d1d08d0fe387f46b7}\index{configuration@{configuration}!Z0@{Z0}}
+\index{Z0@{Z0}!configuration@{configuration}}
+\doxysubsubsection{\texorpdfstring{Z0}{Z0}}
+{\footnotesize\ttfamily \label{structconfiguration_a97a2760c4ebb644d1d08d0fe387f46b7} 
+std\+::vector$<$double$>$ configuration\+::\+Z0}
+
+
+
+Particles\textquotesingle{} Z coordinates at last neighbors update. 
+
+\Hypertarget{structconfiguration_aed5568b7042d359ae00decde23e67a29}\index{configuration@{configuration}!ZCM@{ZCM}}
+\index{ZCM@{ZCM}!configuration@{configuration}}
+\doxysubsubsection{\texorpdfstring{ZCM}{ZCM}}
+{\footnotesize\ttfamily \label{structconfiguration_aed5568b7042d359ae00decde23e67a29} 
+double configuration\+::\+ZCM}
+
+
+
+Center of mass Z coordinate. 
+
+\Hypertarget{structconfiguration_ae7f38bfbba00ac402ceffd3e68a79d4f}\index{configuration@{configuration}!Zfull@{Zfull}}
+\index{Zfull@{Zfull}!configuration@{configuration}}
+\doxysubsubsection{\texorpdfstring{Zfull}{Zfull}}
+{\footnotesize\ttfamily \label{structconfiguration_ae7f38bfbba00ac402ceffd3e68a79d4f} 
+std\+::vector$<$double$>$ configuration\+::\+Zfull}
+
+
+
+Particles\textquotesingle{} real Z coordinates (for dynamical purposes) 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{particles_8hpp}{particles.\+hpp}}\end{DoxyCompactItemize}

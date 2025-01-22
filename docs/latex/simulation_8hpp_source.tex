@@ -1,0 +1,26 @@
+\doxysection{simulation.\+hpp}
+\hypertarget{simulation_8hpp_source}{}\label{simulation_8hpp_source}\index{include/simulation.hpp@{include/simulation.hpp}}
+\mbox{\hyperlink{simulation_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#ifndef\ SIMULATION\_H}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ SIMULATION\_H}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{particles_8hpp}{particles.hpp}}"{}}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00032\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{simulation_8hpp_a70235deeac918b2fc9a91f6ec9b065bd}{MonteCarloRun}}(\mbox{\hyperlink{structconfiguration}{configuration}}\&\ cfg,\ \textcolor{keywordtype}{double}\ T,\ \textcolor{keywordtype}{int}\ tau,\ \textcolor{keywordtype}{int}\ cycles,\ \textcolor{keywordtype}{int}\ tw,\ \textcolor{keywordtype}{double}\ p\_flip,\ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ std::vector\ <std::string>\&\ observables,\ std::string\&\ out,\ \textcolor{keywordtype}{int}\ n\_log,\ \textcolor{keywordtype}{int}\ n\_lin);}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00042\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{simulation_8hpp_af779a027fa1a897c451415431e8f1dc2}{TryDisp}}(\mbox{\hyperlink{structconfiguration}{configuration}}\&\ cfg,\ \textcolor{keywordtype}{int}\ j,\ \textcolor{keywordtype}{double}\ T);}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00051\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{simulation_8hpp_a6be0997dbba59ee27fb781af658bdcd9}{TryFlip}}(\mbox{\hyperlink{structconfiguration}{configuration}}\&\ cfg,\ \textcolor{keywordtype}{int}\ j,\ \textcolor{keywordtype}{double}\ T);}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00063\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{simulation_8hpp_aacfff81aa8c86033a4902c07c435f6e1}{ComputeObservables}}(\textcolor{keywordtype}{int}\ tau,\ \textcolor{keywordtype}{int}\ cycles,\ \textcolor{keywordtype}{int}\ tw,\ }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ std::vector\ <std::string>\&\ observables,\ std::string\&\ out,\ \textcolor{keywordtype}{int}\ n\_log);}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ SIMULATION\_H}}
+
+\end{DoxyCode}

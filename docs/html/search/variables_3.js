@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['linpoints_0',['linPoints',['../main_8cpp.html#ab64849657ae6bf8afd80e65dd1234bab',1,'main.cpp']]],
-  ['logpoints_1',['logPoints',['../main_8cpp.html#a9e3763adb0508614417be3c0b703ea38',1,'main.cpp']]]
+  ['s_0',['S',['../structconfiguration.html#a39ee221c9a136c0893af577c5160e4f1',1,'configuration']]],
+  ['sigmamax_1',['sigmaMax',['../globals_8hpp.html#acae0b2fe4b7f9e8c509465fe3651f5e8',1,'globals.hpp']]],
+  ['size_2',['Size',['../globals_8hpp.html#a5c5531274bcf52c2af806b72982187dd',1,'globals.hpp']]]
 ];

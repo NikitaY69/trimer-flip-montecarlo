@@ -34,7 +34,7 @@
   <td id="projectalign">
    <div id="projectname">Trimer Flip Monte Carlo
    </div>
-   <div id="projectbrief">A Monte Carlo simulation for trimer flip dynamics</div>
+   <div id="projectbrief">A C++ library performing Monte Carlo simulations of glassy trimer-mixtures.</div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -106,32 +106,34 @@ $(function(){initNavTree('globals_8hpp_source.html',''); initResizable(true); })
   <div class="headertitle"><div class="title">globals.hpp</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="globals_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef GLOBALS_H</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define GLOBALS_H</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment">// Libraries</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;cstdlib&gt;</span> <span class="comment">// For dynamic memory and random numbers</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment">// Shared variables</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">extern</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="globals_8hpp.html#a7722c8ecbb62d99aee7ce68b1752f337">N</a>;</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">extern</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="globals_8hpp.html#a5c5531274bcf52c2af806b72982187dd">Size</a>;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="globals_8hpp.html#acae0b2fe4b7f9e8c509465fe3651f5e8">   22</a></span><span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="globals_8hpp.html#acae0b2fe4b7f9e8c509465fe3651f5e8">sigmaMax</a> = 1.1;</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="globals_8hpp.html#a80afd6aaaafa09686a91f2c42fb5c85b">   27</a></span><span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="globals_8hpp.html#a80afd6aaaafa09686a91f2c42fb5c85b">diameters</a>[3] = {0.9, 1.0, 1.1};</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span></div>
-<div class="foldopen" id="foldopen00032" data-start="" data-end="">
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="globals_8hpp.html#aa581661786d218568cbaea38061987cd">   32</a></span><span class="preprocessor">#define ranf() \</span></div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">    ((double)rand()/(1.0+RAND_MAX))</span></div>
+<a href="globals_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#ifndef GLOBALS_H</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#define GLOBALS_H</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment">// Libraries</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &lt;cstdlib&gt;</span> <span class="comment">// For dynamic memory and random numbers</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment">// Shared variables</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">extern</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="globals_8hpp.html#a7722c8ecbb62d99aee7ce68b1752f337">N</a>;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">extern</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="globals_8hpp.html#a5c5531274bcf52c2af806b72982187dd">Size</a>;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="globals_8hpp.html#acae0b2fe4b7f9e8c509465fe3651f5e8">   34</a></span><span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="globals_8hpp.html#acae0b2fe4b7f9e8c509465fe3651f5e8">sigmaMax</a> = 1.1;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="globals_8hpp.html#a80afd6aaaafa09686a91f2c42fb5c85b">   39</a></span><span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="globals_8hpp.html#a80afd6aaaafa09686a91f2c42fb5c85b">diameters</a>[3] = {0.9, 1.0, 1.1};</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span></div>
+<div class="foldopen" id="foldopen00044" data-start="" data-end="">
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="globals_8hpp.html#aa581661786d218568cbaea38061987cd">   44</a></span><span class="preprocessor">#define ranf() \</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">    ((double)rand()/(1.0+RAND_MAX))</span></div>
 </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#endif </span><span class="comment">// GLOBALS_H</span></div>
-<div class="ttc" id="aglobals_8hpp_html_a5c5531274bcf52c2af806b72982187dd"><div class="ttname"><a href="globals_8hpp.html#a5c5531274bcf52c2af806b72982187dd">Size</a></div><div class="ttdeci">double Size</div><div class="ttdoc">Size of the simulation box.</div><div class="ttdef"><b>Definition</b> main.cpp:17</div></div>
-<div class="ttc" id="aglobals_8hpp_html_a7722c8ecbb62d99aee7ce68b1752f337"><div class="ttname"><a href="globals_8hpp.html#a7722c8ecbb62d99aee7ce68b1752f337">N</a></div><div class="ttdeci">int N</div><div class="ttdoc">Number of particles.</div><div class="ttdef"><b>Definition</b> main.cpp:16</div></div>
-<div class="ttc" id="aglobals_8hpp_html_a80afd6aaaafa09686a91f2c42fb5c85b"><div class="ttname"><a href="globals_8hpp.html#a80afd6aaaafa09686a91f2c42fb5c85b">diameters</a></div><div class="ttdeci">const double diameters[3]</div><div class="ttdoc">Array of particle diameters.</div><div class="ttdef"><b>Definition</b> globals.hpp:27</div></div>
-<div class="ttc" id="aglobals_8hpp_html_acae0b2fe4b7f9e8c509465fe3651f5e8"><div class="ttname"><a href="globals_8hpp.html#acae0b2fe4b7f9e8c509465fe3651f5e8">sigmaMax</a></div><div class="ttdeci">const double sigmaMax</div><div class="ttdoc">Maximum diameter of particles.</div><div class="ttdef"><b>Definition</b> globals.hpp:22</div></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">#endif </span><span class="comment">// GLOBALS_H</span></div>
+<div class="ttc" id="aglobals_8hpp_html_a5c5531274bcf52c2af806b72982187dd"><div class="ttname"><a href="globals_8hpp.html#a5c5531274bcf52c2af806b72982187dd">Size</a></div><div class="ttdeci">double Size</div><div class="ttdoc">Size of the simulation box.</div></div>
+<div class="ttc" id="aglobals_8hpp_html_a7722c8ecbb62d99aee7ce68b1752f337"><div class="ttname"><a href="globals_8hpp.html#a7722c8ecbb62d99aee7ce68b1752f337">N</a></div><div class="ttdeci">int N</div><div class="ttdoc">Number of particles.</div></div>
+<div class="ttc" id="aglobals_8hpp_html_a80afd6aaaafa09686a91f2c42fb5c85b"><div class="ttname"><a href="globals_8hpp.html#a80afd6aaaafa09686a91f2c42fb5c85b">diameters</a></div><div class="ttdeci">const double diameters[3]</div><div class="ttdoc">Array of particle diameters.</div><div class="ttdef"><b>Definition</b> globals.hpp:39</div></div>
+<div class="ttc" id="aglobals_8hpp_html_acae0b2fe4b7f9e8c509465fe3651f5e8"><div class="ttname"><a href="globals_8hpp.html#acae0b2fe4b7f9e8c509465fe3651f5e8">sigmaMax</a></div><div class="ttdeci">const double sigmaMax</div><div class="ttdoc">Maximum diameter of particles.</div><div class="ttdef"><b>Definition</b> globals.hpp:34</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

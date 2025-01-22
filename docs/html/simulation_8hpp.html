@@ -34,7 +34,7 @@
   <td id="projectalign">
    <div id="projectname">Trimer Flip Monte Carlo
    </div>
-   <div id="projectbrief">A Monte Carlo simulation for trimer flip dynamics</div>
+   <div id="projectbrief">A C++ library performing Monte Carlo simulations of glassy trimer-mixtures.</div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -108,6 +108,9 @@ $(function(){initNavTree('simulation_8hpp.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">simulation.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Core simulation functions for Monte Carlo methods.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &quot;<a class="el" href="particles_8hpp_source.html">particles.hpp</a>&quot;</code><br />
@@ -116,20 +119,23 @@ $(function(){initNavTree('simulation_8hpp.html',''); initResizable(true); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a70235deeac918b2fc9a91f6ec9b065bd" id="r_a70235deeac918b2fc9a91f6ec9b065bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a70235deeac918b2fc9a91f6ec9b065bd">MonteCarloRun</a> (<a class="el" href="structconfiguration.html">configuration</a> &amp;cfg, double <a class="el" href="main_8cpp.html#ac94a6e5794c2d7b59588b14025cfba20">T</a>, int <a class="el" href="main_8cpp.html#a7fa06cdb75e1230558069a9859860d3b">tau</a>, int <a class="el" href="main_8cpp.html#acede2ae039ab03f7ea6b1a1dced82098">cycles</a>, int <a class="el" href="main_8cpp.html#a364a3fb8bb380a508314aac0fef90bf4">tw</a>, double <a class="el" href="main_8cpp.html#aa7fcc2d14e5ed7e5d86d8faffc394a12">p_flip</a>, std::vector&lt; std::string &gt; &amp;observables, std::string &amp;out, int n_log, int n_lin)</td></tr>
+<tr class="memitem:a70235deeac918b2fc9a91f6ec9b065bd" id="r_a70235deeac918b2fc9a91f6ec9b065bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a70235deeac918b2fc9a91f6ec9b065bd">MonteCarloRun</a> (<a class="el" href="structconfiguration.html">configuration</a> &amp;cfg, double T, int tau, int cycles, int tw, double p_flip, std::vector&lt; std::string &gt; &amp;observables, std::string &amp;out, int n_log, int n_lin)</td></tr>
 <tr class="memdesc:a70235deeac918b2fc9a91f6ec9b065bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs the Monte Carlo simulation.  <br /></td></tr>
 <tr class="separator:a70235deeac918b2fc9a91f6ec9b065bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af779a027fa1a897c451415431e8f1dc2" id="r_af779a027fa1a897c451415431e8f1dc2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af779a027fa1a897c451415431e8f1dc2">TryDisp</a> (<a class="el" href="structconfiguration.html">configuration</a> &amp;cfg, int j, double <a class="el" href="main_8cpp.html#ac94a6e5794c2d7b59588b14025cfba20">T</a>)</td></tr>
+<tr class="memitem:af779a027fa1a897c451415431e8f1dc2" id="r_af779a027fa1a897c451415431e8f1dc2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af779a027fa1a897c451415431e8f1dc2">TryDisp</a> (<a class="el" href="structconfiguration.html">configuration</a> &amp;cfg, int j, double T)</td></tr>
 <tr class="memdesc:af779a027fa1a897c451415431e8f1dc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries displacing one particle.  <br /></td></tr>
 <tr class="separator:af779a027fa1a897c451415431e8f1dc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6be0997dbba59ee27fb781af658bdcd9" id="r_a6be0997dbba59ee27fb781af658bdcd9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6be0997dbba59ee27fb781af658bdcd9">TryFlip</a> (<a class="el" href="structconfiguration.html">configuration</a> &amp;cfg, int j, double <a class="el" href="main_8cpp.html#ac94a6e5794c2d7b59588b14025cfba20">T</a>)</td></tr>
+<tr class="memitem:a6be0997dbba59ee27fb781af658bdcd9" id="r_a6be0997dbba59ee27fb781af658bdcd9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6be0997dbba59ee27fb781af658bdcd9">TryFlip</a> (<a class="el" href="structconfiguration.html">configuration</a> &amp;cfg, int j, double T)</td></tr>
 <tr class="memdesc:a6be0997dbba59ee27fb781af658bdcd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries swapping two particles' diameters.  <br /></td></tr>
 <tr class="separator:a6be0997dbba59ee27fb781af658bdcd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aacfff81aa8c86033a4902c07c435f6e1" id="r_aacfff81aa8c86033a4902c07c435f6e1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aacfff81aa8c86033a4902c07c435f6e1">ComputeObservables</a> (int <a class="el" href="main_8cpp.html#a7fa06cdb75e1230558069a9859860d3b">tau</a>, int <a class="el" href="main_8cpp.html#acede2ae039ab03f7ea6b1a1dced82098">cycles</a>, int <a class="el" href="main_8cpp.html#a364a3fb8bb380a508314aac0fef90bf4">tw</a>, std::vector&lt; std::string &gt; &amp;observables, std::string &amp;out, int n_log)</td></tr>
+<tr class="memitem:aacfff81aa8c86033a4902c07c435f6e1" id="r_aacfff81aa8c86033a4902c07c435f6e1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aacfff81aa8c86033a4902c07c435f6e1">ComputeObservables</a> (int tau, int cycles, int tw, std::vector&lt; std::string &gt; &amp;observables, std::string &amp;out, int n_log)</td></tr>
 <tr class="memdesc:aacfff81aa8c86033a4902c07c435f6e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes observables without running the simulation.  <br /></td></tr>
 <tr class="separator:aacfff81aa8c86033a4902c07c435f6e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Core simulation functions for Monte Carlo methods. </p>
+<p>This module provides the main functions for running Monte Carlo simulations, including particle displacement, diameter swapping, and observable computations. These functions are the building blocks for simulations involving particle interactions and dynamics at various temperatures and configurations. </p>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="aacfff81aa8c86033a4902c07c435f6e1" name="aacfff81aa8c86033a4902c07c435f6e1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aacfff81aa8c86033a4902c07c435f6e1">&#9670;&#160;</a></span>ComputeObservables()</h2>
 

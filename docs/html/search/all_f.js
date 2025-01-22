@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['v_0',['V',['../observables_8hpp.html#a908571e52bc4565b7f4141c3ee76def2',1,'V(const configuration &amp;cfg, int j):&#160;observables.cpp'],['../observables_8cpp.html#a908571e52bc4565b7f4141c3ee76def2',1,'V(const configuration &amp;cfg, int j):&#160;observables.cpp']]],
-  ['vtotal_1',['VTotal',['../observables_8hpp.html#acd0235512bf388baf11dcc78a8f22399',1,'VTotal(const configuration &amp;cfg):&#160;observables.cpp'],['../observables_8cpp.html#acd0235512bf388baf11dcc78a8f22399',1,'VTotal(const configuration &amp;cfg):&#160;observables.cpp']]]
+  ['s_0',['S',['../structconfiguration.html#a39ee221c9a136c0893af577c5160e4f1',1,'configuration']]],
+  ['sigmamax_1',['sigmaMax',['../globals_8hpp.html#acae0b2fe4b7f9e8c509465fe3651f5e8',1,'globals.hpp']]],
+  ['simulation_2ehpp_2',['simulation.hpp',['../simulation_8hpp.html',1,'']]],
+  ['size_3',['Size',['../globals_8hpp.html#a5c5531274bcf52c2af806b72982187dd',1,'globals.hpp']]]
 ];

@@ -34,7 +34,7 @@
   <td id="projectalign">
    <div id="projectname">Trimer Flip Monte Carlo
    </div>
-   <div id="projectbrief">A Monte Carlo simulation for trimer flip dynamics</div>
+   <div id="projectbrief">A C++ library performing Monte Carlo simulations of glassy trimer-mixtures.</div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -108,6 +108,9 @@ $(function(){initNavTree('utils_8hpp.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">utils.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Utility functions for parsing input, reading/writing configuration files, handling simulation parameters, and managing observables.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;string&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;fstream&gt;</code><br />
@@ -120,7 +123,7 @@ Functions</h2></td></tr>
 <tr class="memitem:abad29af191437a453c1adcef6e650a02" id="r_abad29af191437a453c1adcef6e650a02"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abad29af191437a453c1adcef6e650a02">ParseCMDLine</a> (int argc, const char *argv[], std::string &amp;input, std::string &amp;params, std::vector&lt; std::string &gt; &amp;observables, int &amp;seed)</td></tr>
 <tr class="memdesc:abad29af191437a453c1adcef6e650a02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses command line arguments.  <br /></td></tr>
 <tr class="separator:abad29af191437a453c1adcef6e650a02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00af87d0fcb39e7a9f84caaa8759665f" id="r_a00af87d0fcb39e7a9f84caaa8759665f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a00af87d0fcb39e7a9f84caaa8759665f">ReadJSONParams</a> (const std::string &amp;params_path, std::string &amp;rootdir, int &amp;<a class="el" href="globals_8hpp.html#a7722c8ecbb62d99aee7ce68b1752f337">N</a>, double &amp;<a class="el" href="main_8cpp.html#ac94a6e5794c2d7b59588b14025cfba20">T</a>, int &amp;<a class="el" href="main_8cpp.html#a7fa06cdb75e1230558069a9859860d3b">tau</a>, int &amp;<a class="el" href="main_8cpp.html#a364a3fb8bb380a508314aac0fef90bf4">tw</a>, int &amp;<a class="el" href="main_8cpp.html#acede2ae039ab03f7ea6b1a1dced82098">cycles</a>, int &amp;<a class="el" href="main_8cpp.html#a9e3763adb0508614417be3c0b703ea38">logPoints</a>, int &amp;<a class="el" href="main_8cpp.html#ab64849657ae6bf8afd80e65dd1234bab">linPoints</a>, double &amp;<a class="el" href="main_8cpp.html#aa7fcc2d14e5ed7e5d86d8faffc394a12">p_flip</a>)</td></tr>
+<tr class="memitem:a00af87d0fcb39e7a9f84caaa8759665f" id="r_a00af87d0fcb39e7a9f84caaa8759665f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a00af87d0fcb39e7a9f84caaa8759665f">ReadJSONParams</a> (const std::string &amp;params_path, std::string &amp;rootdir, int &amp;<a class="el" href="globals_8hpp.html#a7722c8ecbb62d99aee7ce68b1752f337">N</a>, double &amp;T, int &amp;tau, int &amp;tw, int &amp;cycles, int &amp;logPoints, int &amp;linPoints, double &amp;p_flip)</td></tr>
 <tr class="memdesc:a00af87d0fcb39e7a9f84caaa8759665f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads parameters from a JSON file.  <br /></td></tr>
 <tr class="separator:a00af87d0fcb39e7a9f84caaa8759665f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade63ac6a6bf2e230f580fd8519c60cd1" id="r_ade63ac6a6bf2e230f580fd8519c60cd1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structconfiguration.html">configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ade63ac6a6bf2e230f580fd8519c60cd1">ReadTrimCFG</a> (std::string input)</td></tr>
@@ -129,20 +132,26 @@ Functions</h2></td></tr>
 <tr class="memitem:a07e3bb41d44803bfba7484314696c3ba" id="r_a07e3bb41d44803bfba7484314696c3ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a07e3bb41d44803bfba7484314696c3ba">WriteTrimCFG</a> (const <a class="el" href="structconfiguration.html">configuration</a> &amp;cfg, std::string output)</td></tr>
 <tr class="memdesc:a07e3bb41d44803bfba7484314696c3ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes trimer configuration to a file.  <br /></td></tr>
 <tr class="separator:a07e3bb41d44803bfba7484314696c3ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74e2743766c55198c4be49c58f7ec867" id="r_a74e2743766c55198c4be49c58f7ec867"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a74e2743766c55198c4be49c58f7ec867">MakeOutDir</a> (std::string rootdir, std::string params_path)</td></tr>
+<tr class="memdesc:a74e2743766c55198c4be49c58f7ec867"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates output directory for storing results.  <br /></td></tr>
+<tr class="separator:a74e2743766c55198c4be49c58f7ec867"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a770a2b4d9ce26300920f9266b926d808" id="r_a770a2b4d9ce26300920f9266b926d808"><td class="memItemLeft" align="right" valign="top">std::ofstream&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a770a2b4d9ce26300920f9266b926d808">MakeObsFile</a> (std::vector&lt; std::string &gt; &amp;observables, std::string output)</td></tr>
-<tr class="memdesc:a770a2b4d9ce26300920f9266b926d808"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an observables file.  <br /></td></tr>
+<tr class="memdesc:a770a2b4d9ce26300920f9266b926d808"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an output file for storing observable data.  <br /></td></tr>
 <tr class="separator:a770a2b4d9ce26300920f9266b926d808"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7768eab2db6156fbf3bed2f0ebf26f92" id="r_a7768eab2db6156fbf3bed2f0ebf26f92"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7768eab2db6156fbf3bed2f0ebf26f92">WriteObs</a> (const <a class="el" href="structconfiguration.html">configuration</a> &amp;cfg, const <a class="el" href="structconfiguration.html">configuration</a> &amp;cfg0, int t, int cycle, std::vector&lt; std::string &gt; &amp;observables, std::ofstream &amp;log_obs)</td></tr>
 <tr class="memdesc:a7768eab2db6156fbf3bed2f0ebf26f92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes observables at a specific timestep.  <br /></td></tr>
 <tr class="separator:a7768eab2db6156fbf3bed2f0ebf26f92"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af887ffbf8cb00951f26e9ad99ee474ac" id="r_af887ffbf8cb00951f26e9ad99ee474ac"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; int, int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af887ffbf8cb00951f26e9ad99ee474ac">GetLogspacedSnapshots</a> (int <a class="el" href="main_8cpp.html#acede2ae039ab03f7ea6b1a1dced82098">cycles</a>, int <a class="el" href="main_8cpp.html#a7fa06cdb75e1230558069a9859860d3b">tau</a>, int <a class="el" href="main_8cpp.html#a364a3fb8bb380a508314aac0fef90bf4">tw</a>, int n_log)</td></tr>
+<tr class="memitem:af887ffbf8cb00951f26e9ad99ee474ac" id="r_af887ffbf8cb00951f26e9ad99ee474ac"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; int, int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af887ffbf8cb00951f26e9ad99ee474ac">GetLogspacedSnapshots</a> (int cycles, int tau, int tw, int n_log)</td></tr>
 <tr class="memdesc:af887ffbf8cb00951f26e9ad99ee474ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets log-spaced snapshots.  <br /></td></tr>
 <tr class="separator:af887ffbf8cb00951f26e9ad99ee474ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb025083574391d715cd82d2d144be1e" id="r_aeb025083574391d715cd82d2d144be1e"><td class="memItemLeft" align="right" valign="top">std::vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeb025083574391d715cd82d2d144be1e">GetLinspacedSnapshots</a> (int <a class="el" href="main_8cpp.html#acede2ae039ab03f7ea6b1a1dced82098">cycles</a>, int <a class="el" href="main_8cpp.html#a7fa06cdb75e1230558069a9859860d3b">tau</a>, int <a class="el" href="main_8cpp.html#a364a3fb8bb380a508314aac0fef90bf4">tw</a>, int n_lin)</td></tr>
+<tr class="memitem:aeb025083574391d715cd82d2d144be1e" id="r_aeb025083574391d715cd82d2d144be1e"><td class="memItemLeft" align="right" valign="top">std::vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeb025083574391d715cd82d2d144be1e">GetLinspacedSnapshots</a> (int cycles, int tau, int tw, int n_lin)</td></tr>
 <tr class="memdesc:aeb025083574391d715cd82d2d144be1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets linear-spaced snapshots.  <br /></td></tr>
 <tr class="separator:aeb025083574391d715cd82d2d144be1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Utility functions for parsing input, reading/writing configuration files, handling simulation parameters, and managing observables. </p>
+<p>This module provides helper functions to parse command-line arguments, read/write JSON configuration files, handle trimer configurations, and manage simulation observables. It is designed to streamline the setup and execution of simulations involving particles and their properties. </p>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="aeb025083574391d715cd82d2d144be1e" name="aeb025083574391d715cd82d2d144be1e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aeb025083574391d715cd82d2d144be1e">&#9670;&#160;</a></span>GetLinspacedSnapshots()</h2>
 
@@ -248,15 +257,45 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Creates an observables file. </p>
+<p>Creates an output file for storing observable data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">observables</td><td>List of observables. </td></tr>
+    <tr><td class="paramname">observables</td><td>List of observables to log. </td></tr>
     <tr><td class="paramname">output</td><td>Path to the output file. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Output file stream. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>An open output file stream for logging observables. </dd></dl>
+
+</div>
+</div>
+<a id="a74e2743766c55198c4be49c58f7ec867" name="a74e2743766c55198c4be49c58f7ec867"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74e2743766c55198c4be49c58f7ec867">&#9670;&#160;</a></span>MakeOutDir()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MakeOutDir </td>
+          <td>(</td>
+          <td class="paramtype">std::string</td>          <td class="paramname"><span class="paramname"><em>rootdir</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string</td>          <td class="paramname"><span class="paramname"><em>params_path</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates output directory for storing results. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rootdir</td><td>Root directory for output files. </td></tr>
+    <tr><td class="paramname">params_path</td><td>Path to the parameter file (used for naming). </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

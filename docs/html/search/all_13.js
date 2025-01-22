@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['z_0',['Z',['../structconfiguration.html#a7ab4969249313a8f851502da06e93d39',1,'configuration']]],
-  ['z0_1',['Z0',['../structconfiguration.html#a97a2760c4ebb644d1d08d0fe387f46b7',1,'configuration']]],
-  ['zcm_2',['ZCM',['../structconfiguration.html#aed5568b7042d359ae00decde23e67a29',1,'configuration']]],
-  ['zfull_3',['Zfull',['../structconfiguration.html#ae7f38bfbba00ac402ceffd3e68a79d4f',1,'configuration']]]
+  ['wcapair_0',['WCAPair',['../observables_8hpp.html#ae525dc7622ce18191825f4d0a9e799ef',1,'observables.hpp']]],
+  ['writeobs_1',['WriteObs',['../utils_8hpp.html#a7768eab2db6156fbf3bed2f0ebf26f92',1,'utils.hpp']]],
+  ['writetrimcfg_2',['WriteTrimCFG',['../utils_8hpp.html#a07e3bb41d44803bfba7484314696c3ba',1,'utils.hpp']]]
 ];

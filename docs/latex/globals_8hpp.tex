@@ -1,0 +1,92 @@
+\doxysection{include/globals.hpp File Reference}
+\hypertarget{globals_8hpp}{}\label{globals_8hpp}\index{include/globals.hpp@{include/globals.hpp}}
+
+
+Global variables and macros used across the simulation.  
+
+
+{\ttfamily \#include $<$cstdlib$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{globals_8hpp_aa581661786d218568cbaea38061987cd}{ranf}}()
+\begin{DoxyCompactList}\small\item\em Generates a random number between 0 and 1. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{globals_8hpp_a7722c8ecbb62d99aee7ce68b1752f337}{N}}
+\begin{DoxyCompactList}\small\item\em Number of particles. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{globals_8hpp_a5c5531274bcf52c2af806b72982187dd}{Size}}
+\begin{DoxyCompactList}\small\item\em Size of the simulation box. \end{DoxyCompactList}\item 
+const double \mbox{\hyperlink{globals_8hpp_acae0b2fe4b7f9e8c509465fe3651f5e8}{sigma\+Max}} = 1.\+1
+\begin{DoxyCompactList}\small\item\em Maximum diameter of particles. \end{DoxyCompactList}\item 
+const double \mbox{\hyperlink{globals_8hpp_a80afd6aaaafa09686a91f2c42fb5c85b}{diameters}} \mbox{[}3\mbox{]} = \{0.\+9, 1.\+0, 1.\+1\}
+\begin{DoxyCompactList}\small\item\em Array of particle diameters. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Global variables and macros used across the simulation. 
+
+This module defines shared global variables and constants, such as the number of particles, simulation box size, and particle diameters. It also includes a macro for generating random numbers within the range \mbox{[}0, 1\mbox{]}.
+
+The constants and globals defined here are used to configure and manage simulation parameters at a global scope. 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{globals_8hpp_aa581661786d218568cbaea38061987cd}\index{globals.hpp@{globals.hpp}!ranf@{ranf}}
+\index{ranf@{ranf}!globals.hpp@{globals.hpp}}
+\doxysubsubsection{\texorpdfstring{ranf}{ranf}}
+{\footnotesize\ttfamily \label{globals_8hpp_aa581661786d218568cbaea38061987cd} 
+\#define ranf(\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ ((double)rand()/(1.0+RAND\_MAX))}
+
+\end{DoxyCode}
+
+
+Generates a random number between 0 and 1. 
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{globals_8hpp_a80afd6aaaafa09686a91f2c42fb5c85b}\index{globals.hpp@{globals.hpp}!diameters@{diameters}}
+\index{diameters@{diameters}!globals.hpp@{globals.hpp}}
+\doxysubsubsection{\texorpdfstring{diameters}{diameters}}
+{\footnotesize\ttfamily \label{globals_8hpp_a80afd6aaaafa09686a91f2c42fb5c85b} 
+const double diameters\mbox{[}3\mbox{]} = \{0.\+9, 1.\+0, 1.\+1\}}
+
+
+
+Array of particle diameters. 
+
+\Hypertarget{globals_8hpp_a7722c8ecbb62d99aee7ce68b1752f337}\index{globals.hpp@{globals.hpp}!N@{N}}
+\index{N@{N}!globals.hpp@{globals.hpp}}
+\doxysubsubsection{\texorpdfstring{N}{N}}
+{\footnotesize\ttfamily \label{globals_8hpp_a7722c8ecbb62d99aee7ce68b1752f337} 
+int N\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Number of particles. 
+
+\Hypertarget{globals_8hpp_acae0b2fe4b7f9e8c509465fe3651f5e8}\index{globals.hpp@{globals.hpp}!sigmaMax@{sigmaMax}}
+\index{sigmaMax@{sigmaMax}!globals.hpp@{globals.hpp}}
+\doxysubsubsection{\texorpdfstring{sigmaMax}{sigmaMax}}
+{\footnotesize\ttfamily \label{globals_8hpp_acae0b2fe4b7f9e8c509465fe3651f5e8} 
+const double sigma\+Max = 1.\+1}
+
+
+
+Maximum diameter of particles. 
+
+\Hypertarget{globals_8hpp_a5c5531274bcf52c2af806b72982187dd}\index{globals.hpp@{globals.hpp}!Size@{Size}}
+\index{Size@{Size}!globals.hpp@{globals.hpp}}
+\doxysubsubsection{\texorpdfstring{Size}{Size}}
+{\footnotesize\ttfamily \label{globals_8hpp_a5c5531274bcf52c2af806b72982187dd} 
+double Size\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Size of the simulation box. 
+
