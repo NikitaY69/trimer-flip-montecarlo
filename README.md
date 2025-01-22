@@ -16,6 +16,10 @@ we use a purely attractive _Finitely Extensible Nonlinear Elastic_ (FENE) potent
 For more informations about the scientific background and particularly our package dynamical speedup compared to standard simulation methods, the reader is invited to consult `docs/report.pdf`.
 
 ## Installation
+Our project is guaranteed to run on linux-based systems as we personally use it 
+on a cluster running a very old version of Debian. Moreover, we tested it for C++ 11, 14 and 17 on the latest version of Ubuntu using
+github CI workflows and it works just as fine. The build tests for macos systems
+did not pass. We are currently investigating the problem and we hope to address this issue very soon. The procedure to install our project is described next.
 
 1. Clone the repository:
    ```bash
