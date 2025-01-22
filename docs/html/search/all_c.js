@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['s_0',['S',['../structconfiguration.html#a39ee221c9a136c0893af577c5160e4f1',1,'configuration']]],
-  ['sigmamax_1',['sigmaMax',['../globals_8hpp.html#acae0b2fe4b7f9e8c509465fe3651f5e8',1,'globals.hpp']]],
-  ['simulation_2ecpp_2',['simulation.cpp',['../simulation_8cpp.html',1,'']]],
-  ['simulation_2ehpp_3',['simulation.hpp',['../simulation_8hpp.html',1,'']]],
-  ['size_4',['Size',['../globals_8hpp.html#a5c5531274bcf52c2af806b72982187dd',1,'Size:&#160;main.cpp'],['../main_8cpp.html#a5c5531274bcf52c2af806b72982187dd',1,'Size:&#160;main.cpp']]]
+  ['thermalization_0',['Thermalization',['../md__r_e_a_d_m_e.html#autotoc_md3',1,'']]],
+  ['to_20use_20it_1',['How to use it ?',['../md__r_e_a_d_m_e.html#autotoc_md2',1,'']]],
+  ['trimer_20mixtures_2',['Flip Monte Carlo algorithm for 3-dimensional trimer-mixtures',['../md__r_e_a_d_m_e.html',1,'']]]
 ];

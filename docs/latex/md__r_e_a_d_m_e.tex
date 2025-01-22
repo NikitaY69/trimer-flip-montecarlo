@@ -1,0 +1,56 @@
+\chapter{Flip Monte Carlo algorithm for 3-\/dimensional trimer-\/mixtures}
+\hypertarget{md__r_e_a_d_m_e}{}\label{md__r_e_a_d_m_e}\index{Flip Monte Carlo algorithm for 3-\/dimensional trimer-\/mixtures@{Flip Monte Carlo algorithm for 3-\/dimensional trimer-\/mixtures}}
+\label{md__r_e_a_d_m_e_autotoc_md0}%
+\Hypertarget{md__r_e_a_d_m_e_autotoc_md0}%
+
+
+This repository provides a C++ package to run Flip Monte Carlo (FMC) simulations of 3-\/dimensional trimer-\/mixtures.
+
+FMC was written as a continuation of our \href{https://github.com/NikitaY69/swap-montecarlo}{\texttt{ Swap Monte Carlo package for 2-\/dimensional polydisperse liquids}}. The latter was originally created during a Master 1 internship done at the {\itshape Laboratoire de Physique de l\textquotesingle{}École Normale Supérieure} under the supervision of Camille Scalliet. We decided to separate the two projects to highlight its evolution and novel contributions.\hypertarget{md__r_e_a_d_m_e_autotoc_md1}{}\doxysection{\texorpdfstring{Compilation and execution}{Compilation and execution}}\label{md__r_e_a_d_m_e_autotoc_md1}
+On each branch, the module can be compiled with 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cd\ src/}
+\DoxyCodeLine{g++\ *.cpp\ -\/o\ EXEC\_NAME\ -\/lstdc++fs\ -\/O2\ -\/mfma\ -\/mbmi2\ -\/flto\ -\/lboost\_program\_options}
+
+\end{DoxyCode}
+ The executable is then parsed as follows 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{EXEC\_NAME\ -\/-\/input\ INPUT\_FILE\ -\/-\/outdir\ OUT\_DIRECTORY\ -\/-\/N\ 5\ -\/-\/T\ 0.04\ -\/-\/tau\ 100000\ -\/-\/tw\ 1\ -\/-\/cycles\ 1\ -\/-\/lin\ 50\ -\/-\/log\ 50\ -\/-\/p\_swap\ 0.2\ [-\/-\/MSD\ -\/-\/Cb\ -\/-\/Fs\ -\/-\/U]}
+
+\end{DoxyCode}
+
+\begin{DoxyItemize}
+\item {\ttfamily input}\+: path to starting configuration with data structure {\ttfamily X Y SIGMA} repeated {\ttfamily N} times (see {\ttfamily tutorial/cfg.\+xy} for example)
+\item {\ttfamily outdir}\+: path of output directory
+\item {\ttfamily N}\+: number of interacting particles
+\item {\ttfamily T}\+: temperature in reduced units
+\item {\ttfamily tau}\+: single-\/run time (as in aging plots, time after which observables are reset)
+\item {\ttfamily tw}\+: waiting-\/time between each cycle (as in aging plots, time after which a new cycle is measured)
+\item {\ttfamily cycles}\+: number of cycles of decorrelation tours
+\item {\ttfamily lin}\+: number of lin-\/spaced checkpoints (configurations)
+\item {\ttfamily log}\+: number of log-\/spaced checkpoints (configurations AND observables)
+\item {\ttfamily p\+\_\+swap}\+: SWAP probability
+\item {\ttfamily MSD}, {\ttfamily Cb}, {\ttfamily Fs}, {\ttfamily U}\+: flags to compute the {\itshape Mean-\/\+Squared Displacement}, the {\itshape bond-\/breaking correlation function}, the {\itshape self-\/part of the intermediate scattering function} and the {\itshape average potential energy}
+\end{DoxyItemize}
+
+Because the model has a density of one, the size of the system is simply taken as \$L=\textbackslash{}sqrt\{N\}\$. Particles then interact with each other in a box \$\mbox{[}-\/L/2,L/2\mbox{]}\textbackslash{}times \mbox{[}-\/L/2,L/2\mbox{]}\$ with the minimum image convention. ~\newline
+ The chosen unit of time is one monte-\/carlo {\bfseries{sweep}} (that is \$\+N\$ consecutive displacement/swap trials). The total number of steps is calculated as in \$n\+\_\+\textbackslash{}texttt\{steps\}=\textbackslash{}texttt\{tw\}\texorpdfstring{$\ast$}{*}(\textbackslash{}texttt\{cycles\}-\/1)+\textbackslash{}tau\$.\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysection{\texorpdfstring{How to use it ?}{How to use it ?}}\label{md__r_e_a_d_m_e_autotoc_md2}
+Our SMC module is usable for different purposes as can testify the various branches avalailable. The {\ttfamily master} branch can be used for both thermalization and production runs. The {\ttfamily observables-\/only} branch is made to compute observables AFTER a simulation has finished. A {\ttfamily continue} branch finally manages to carry on finished runs.
+
+P.\+S. once you have compiled an executable under each relevent branch, you no longer need to switch between branches as you can just continuously re-\/use your executables.\hypertarget{md__r_e_a_d_m_e_autotoc_md3}{}\doxysubsection{\texorpdfstring{Thermalization}{Thermalization}}\label{md__r_e_a_d_m_e_autotoc_md3}
+Thermalization is ensuring the fact that starting from any initial configuration, equilibrium is reached at desired temperature. ~\newline
+ To check on equilibration, one must use \$\textbackslash{}texttt\{tw\}\texorpdfstring{$>$}{>}1\$ and \$\textbackslash{}texttt\{cycles\}\texorpdfstring{$>$}{>}1\$. Usually, one launches a first run with a {\ttfamily tw}={\ttfamily cycles}=1 to have an approximate of the relaxation time \$\textbackslash{}tau\+\_\+\textbackslash{}alpha\$ with \$\+C\+\_\+\+B\$ or \$\+F\+\_\+s\$. A good value for {\ttfamily tw} is then slightly below \$\textbackslash{}tau\+\_\+\textbackslash{}alpha\$ using {\ttfamily cycles}\texorpdfstring{$>$}{>}1; finally one reaches equilibrium when 1-\/ no memory-\/effects are visible between different cycles and 2-\/ the potential energy is constant.\hypertarget{md__r_e_a_d_m_e_autotoc_md4}{}\doxysubsection{\texorpdfstring{Production}{Production}}\label{md__r_e_a_d_m_e_autotoc_md4}
+Calculating most physical observables relies on having good ensemble statistics. To do so, after reaching equilibrium at desired temperature, one must get observables evolution from different starting configurations. To proceed, you must use \$\textbackslash{}texttt\{tw\}=\textbackslash{}texttt\{cycles\}=1\$ and select the observables of interest.~\newline
+ Most of the time, you can also use a slurm job with arrays each one running a specific starting configuration.\hypertarget{md__r_e_a_d_m_e_autotoc_md5}{}\doxysubsection{\texorpdfstring{Observables-\/only}{Observables-\/only}}\label{md__r_e_a_d_m_e_autotoc_md5}
+If you have ran a simulation without any observable flag, it is still possible to compute them {\itshape after} the simulation has ended. Using the corresponding executable (compiled from {\ttfamily observables-\/only}), the command is simpler than before 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{EXEC\_NAME\ -\/-\/outdir\ OUT\_DIRECTORY\ [-\/-\/MSD\ -\/-\/Cb\ -\/-\/Fs\ -\/-\/U]}
+
+\end{DoxyCode}
+
+\begin{DoxyItemize}
+\item {\ttfamily outdir}\+: SMC output directory (the simulation must be ended\+: if there is no {\ttfamily params.\+txt} file or {\ttfamily configs/} directory, it will return an error)
+\item {\ttfamily MSD}, {\ttfamily Cb}, {\ttfamily Fs}, {\ttfamily U}\+: check the master command
+\end{DoxyItemize}
+
+An {\ttfamily obs.\+txt} file will automatically be created in the existing directory with all demanded observables. 

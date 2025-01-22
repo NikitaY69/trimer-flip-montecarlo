@@ -25,23 +25,12 @@
 var NAVTREE =
 [
   [ "Trimer Flip Monte Carlo", "index.html", [
-    [ "Classes", "annotated.html", [
-      [ "Class List", "annotated.html", "annotated_dup" ],
-      [ "Class Index", "classes.html", null ],
-      [ "Class Members", "functions.html", [
-        [ "All", "functions.html", null ],
-        [ "Functions", "functions_func.html", null ],
-        [ "Variables", "functions_vars.html", null ]
-      ] ]
-    ] ],
-    [ "Files", "files.html", [
-      [ "File List", "files.html", "files_dup" ],
-      [ "File Members", "globals.html", [
-        [ "All", "globals.html", null ],
-        [ "Functions", "globals_func.html", null ],
-        [ "Variables", "globals_vars.html", null ],
-        [ "Typedefs", "globals_type.html", null ],
-        [ "Macros", "globals_defs.html", null ]
+    [ "Flip Monte Carlo algorithm for 3-dimensional trimer-mixtures", "md__r_e_a_d_m_e.html", [
+      [ "Compilation and execution", "md__r_e_a_d_m_e.html#autotoc_md1", null ],
+      [ "How to use it ?", "md__r_e_a_d_m_e.html#autotoc_md2", [
+        [ "Thermalization", "md__r_e_a_d_m_e.html#autotoc_md3", null ],
+        [ "Production", "md__r_e_a_d_m_e.html#autotoc_md4", null ],
+        [ "Observables-only", "md__r_e_a_d_m_e.html#autotoc_md5", null ]
       ] ]
     ] ]
   ] ]
@@ -49,7 +38,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"annotated.html"
+"index.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

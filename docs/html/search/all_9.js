@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['observables_2ecpp_0',['observables.cpp',['../observables_8cpp.html',1,'']]],
-  ['observables_2ehpp_1',['observables.hpp',['../observables_8hpp.html',1,'']]]
+  ['observables_20only_0',['Observables-only',['../md__r_e_a_d_m_e.html#autotoc_md5',1,'']]],
+  ['only_1',['Observables-only',['../md__r_e_a_d_m_e.html#autotoc_md5',1,'']]]
 ];
