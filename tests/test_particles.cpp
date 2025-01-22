@@ -8,26 +8,26 @@
 // configuration cfg = ReadTrimCFG(config_path);
 
 // Test the bcs function
-TEST_CASE("Test bcs function", "[test_particles][bcs]") {
+TEST_CASE("Test MinimumImageDistance function", "[test_particles][MinimumImageDistance]") {
     double epsilon = 0.01;
-    REQUIRE(bcs(0., Size/2+epsilon) == Approx(Size/2-epsilon));
-    REQUIRE(bcs(Size/2-epsilon, Size/2+epsilon) == Approx(2*epsilon));
-    REQUIRE(bcs(0., Size-epsilon) == Approx(epsilon));
+    REQUIRE(MinimumImageDistance(0., Size/2+epsilon) == Approx(Size/2-epsilon));
+    REQUIRE(MinimumImageDistance(Size/2-epsilon, Size/2+epsilon) == Approx(2*epsilon));
+    REQUIRE(MinimumImageDistance(0., Size-epsilon) == Approx(epsilon));
 }
 
 // Test the Pshift function
-TEST_CASE("Test Pshift function", "[test_particles][Pshift]") {
+TEST_CASE("Test ShiftInMainBox function", "[test_particles][ShiftInMainBox]") {
     double epsilon = 0.01;
 
     SECTION("Check Pshift at boundaries") {
-        REQUIRE(Pshift(0.0) == Approx(0.0));
-        REQUIRE(Pshift(Size) == Approx(0.0));
-        REQUIRE(Pshift(-Size) == Approx(0.0));
+        REQUIRE(ShiftInMainBox(0.0) == Approx(0.0));
+        REQUIRE(ShiftInMainBox(Size) == Approx(0.0));
+        REQUIRE(ShiftInMainBox(-Size) == Approx(0.0));
     }
 
     SECTION("Check that Pshift is periodic") {
-        REQUIRE(Pshift(Size+epsilon) == Approx(epsilon));
-        REQUIRE(Pshift(-epsilon) == Approx(Size-epsilon));
+        REQUIRE(ShiftInMainBox(Size+epsilon) == Approx(epsilon));
+        REQUIRE(ShiftInMainBox(-epsilon) == Approx(Size-epsilon));
     }
     
 }
