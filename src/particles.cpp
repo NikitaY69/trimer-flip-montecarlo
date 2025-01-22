@@ -4,10 +4,10 @@
 #include "particles.hpp"
 
 // Neighbours lists parameters
-const double rC = pow(2., 1./6.) * sigmaMax; // Cutoff radius for calculating potential
-const double rSkin = 0.7; // Radius of neighbours included in NL
-const double rNL = pow(rC+rSkin,2); // NL radius squared
-const double RUpdate = pow(rSkin,2)/4; // When R2Max exceeds this, update NL
+const double r_cutoff = pow(2., 1./6.) * sigmaMax; // Cutoff radius for calculating potential
+const double r_skin = 0.7; // Margin added to the neighbours list radius
+const double neighbours_radius_squared = pow(r_cutoff+r_skin,2); // NL radius squared
+const double maximum_displacement_before_update_squared = pow(r_skin,2)/4; // When R2Max exceeds this, update NL
 
 // Method to calculate center of mass coordinates
 void configuration::UpdateCM_coord(){
@@ -31,7 +31,7 @@ void configuration::UpdateNL(){
             double yij = bcs(Y[i], Y[j]); 
             double zij = bcs(Z[i], Z[j]);
             double rij2 = (xij*xij)+(yij*yij)+(zij*zij);
-            if (rij2 < rNL && i != j){
+            if (rij2 < neighbours_radius_squared && i != j){
                 NL[j].push_back(i);
                 NL[i].push_back(j);
             }
@@ -52,18 +52,18 @@ void configuration::GetBonds(){
 
 // Checking whether to update the neighbours list
 void configuration::CheckNL(){
-    double deltaX, deltaY, deltaZ, R2Max = 0;
+    double deltaX, deltaY, deltaZ, maximum_displacement = 0;
     std::vector <double> deltaR2(N);
     for (int i = 0; i < N; i++){
         deltaX = bcs(X[i],X0[i]);
         deltaY = bcs(Y[i],Y0[i]);
         deltaZ = bcs(Z[i],Z0[i]);
         deltaR2[i] = deltaX*deltaX + deltaY*deltaY + deltaZ*deltaZ;
-    } R2Max = *(std::max_element(deltaR2.begin(), deltaR2.end()));
-    if(R2Max > RUpdate){
+    } maximum_displacement = *(std::max_element(deltaR2.begin(), deltaR2.end()));
+    if(maximum_displacement > maximum_displacement_before_update_squared){
         // std::cout << (t-1) << std::endl;
         UpdateNL();
-        R2Max = 0;
+        maximum_displacement = 0;
         X0 = X; Y0 = Y; Z0 = Z;
     }
 }

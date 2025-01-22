@@ -111,10 +111,10 @@ void WriteObs(const configuration& cfg, const configuration& cfg0,
  * @brief Gets log-spaced snapshots.
  * 
  * @param cycles Number of cycles.
- * @param tau Number of Monte Carlo steps.
+ * @param tau Number of Monte Carlo steps inside one cycle.
  * @param tw Waiting time.
  * @param n_log Number of log-spaced points.
- * @return Vector of pairs of log-spaced snapshots.
+ * @return Vector of pairs with first element being the snapshot, the second element the cycle associated
  */
 std::vector <std::pair <int,int>> GetLogspacedSnapshots(int cycles, int tau, int tw, int n_log);
 

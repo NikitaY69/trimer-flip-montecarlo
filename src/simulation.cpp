@@ -12,7 +12,7 @@
 namespace fs = boost::filesystem;
 
 // Constants
-const double deltaMax = 0.17; // Max particle displacement
+const double maximum_displacement = 0.17; // Max particle displacement
 
 // Progress bar
 indicators::ProgressBar bar{
@@ -108,9 +108,9 @@ void MonteCarloRun(configuration& cfg, double T, int tau, int cycles, int tw, do
 
 //  Tries displacing one particle j by vector dr = (dx, dy, dz)
 void TryDisp(configuration& cfg, int j, double T){
-    double dx = (ranf()-0.5)*deltaMax;
-    double dy = (ranf()-0.5)*deltaMax;
-    double dz = (ranf()-0.5)*deltaMax;
+    double dx = (ranf()-0.5)*maximum_displacement;
+    double dy = (ranf()-0.5)*maximum_displacement;
+    double dz = (ranf()-0.5)*maximum_displacement;
     double Xold = cfg.X[j], Xnew = Pshift(cfg.X[j]+dx); 
     double Yold = cfg.Y[j], Ynew = Pshift(cfg.Y[j]+dy);
     double Zold = cfg.Z[j], Znew = Pshift(cfg.Z[j]+dz);
