@@ -1,3 +1,13 @@
+/**
+ * @file particles.hpp
+ * @brief Structures and functions for particle configurations and interactions.
+ *
+ * This module defines the `configuration` structure to represent the state of particles
+ * in a simulation, including their positions, bonded interactions, and Verlet lists.
+ * It also provides utility functions for handling periodic boundary conditions and
+ * managing particle coordinates.
+ */
+
 #ifndef PARTICLES_H
 #define PARTICLES_H
 
@@ -11,9 +21,9 @@ struct configuration {
     std::vector<double> X;      ///< Particles' X coordinates inside main box
     std::vector<double> Y;      ///< Particles' Y coordinates inside main box
     std::vector<double> Z;      ///< Particles' Z coordinates inside main box
-    std::vector<double> Xfull;  ///< Particles' full X coordinates
-    std::vector<double> Yfull;  ///< Particles' full Y coordinates
-    std::vector<double> Zfull;  ///< Particles' full Z coordinates
+    std::vector<double> Xfull;  ///< Particles' real X coordinates (for dynamical purposes)
+    std::vector<double> Yfull;  ///< Particles' real Y coordinates (for dynamical purposes)
+    std::vector<double> Zfull;  ///< Particles' real Z coordinates (for dynamical purposes)
     std::vector<double> X0;     ///< Particles' X coordinates at last neighbors update
     std::vector<double> Y0;     ///< Particles' Y coordinates at last neighbors update
     std::vector<double> Z0;     ///< Particles' Z coordinates at last neighbors update

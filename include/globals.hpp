@@ -1,3 +1,15 @@
+/**
+ * @file globals.hpp
+ * @brief Global variables and macros used across the simulation.
+ *
+ * This module defines shared global variables and constants, such as the number of particles,
+ * simulation box size, and particle diameters. It also includes a macro for generating random
+ * numbers within the range [0, 1].
+ *
+ * The constants and globals defined here are used to configure and manage simulation parameters
+ * at a global scope.
+ */
+
 #ifndef GLOBALS_H
 #define GLOBALS_H
 

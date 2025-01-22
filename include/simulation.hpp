@@ -1,3 +1,13 @@
+/**
+ * @file simulation.hpp
+ * @brief Core simulation functions for Monte Carlo methods.
+ *
+ * This module provides the main functions for running Monte Carlo simulations,
+ * including particle displacement, diameter swapping, and observable computations.
+ * These functions are the building blocks for simulations involving particle
+ * interactions and dynamics at various temperatures and configurations.
+ */
+
 #ifndef SIMULATION_H
 #define SIMULATION_H
 

@@ -1,3 +1,13 @@
+/**
+ * @file obs.hpp
+ * @brief Functions for calculating observables in particle simulations.
+ *
+ * This module provides functions to calculate various observables and potentials
+ * used in particle-based simulations. These include pairwise potentials like WCA
+ * and FENE, as well as system-level metrics such as total energy, mean square
+ * displacement, and intermediate self-scattering functions.
+ */
+
 #ifndef OBS_H
 #define OBS_H
 
