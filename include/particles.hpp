@@ -28,8 +28,8 @@ struct configuration {
     std::vector<double> Y0;     ///< Particles' Y coordinates at last neighbors update
     std::vector<double> Z0;     ///< Particles' Z coordinates at last neighbors update
     std::vector<int> S;         ///< Particles' types (NOT DIAMETERS)
-    std::vector<std::vector<int>> NL; ///< Verlet lists for each particle
-    std::vector<std::vector<int>> BN; ///< Bonded particles for each particle
+    std::vector<std::vector<int>> neighbours_list; ///< Verlet lists for each particle
+    std::vector<std::vector<int>> bonded_neighbours; ///< Bonded particles for each particle
     double XCM; ///< Center of mass X coordinate
     double YCM; ///< Center of mass Y coordinate
     double ZCM; ///< Center of mass Z coordinate
@@ -39,7 +39,7 @@ struct configuration {
      */
     configuration() 
         : X(N), Y(N), Z(N), Xfull(N), Yfull(N), Zfull(N), 
-          X0(N), Y0(N), Z0(N), S(N), NL(N), BN(N), 
+          X0(N), Y0(N), Z0(N), S(N), neighbours_list(N), bonded_neighbours(N), 
           XCM(0), YCM(0), ZCM(0) {}
 
     /**

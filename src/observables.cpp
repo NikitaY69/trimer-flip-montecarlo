@@ -40,12 +40,12 @@ double FENEPair(double x1, double y1, double z1, double s1, double x2, double y2
 //  Calculates potential associated to particle j
 double V(const configuration& cfg, int j){
     double total = 0, sj, sk;
-    for (int k: cfg.NL[j]){
+    for (int k: cfg.neighbours_list[j]){
         sj = diameters[int(cfg.S[j]-1)]; sk = diameters[int(cfg.S[k]-1)];
         total += WCAPair(cfg.X[j], cfg.Y[j], cfg.Z[j], sj, 
                          cfg.X[k], cfg.Y[k], cfg.Z[k], sk);
     }
-    for (int k: cfg.BN[j]){
+    for (int k: cfg.bonded_neighbours[j]){
         sj = diameters[int(cfg.S[j]-1)]; sk = diameters[int(cfg.S[k]-1)];
         total += FENEPair(cfg.X[j], cfg.Y[j], cfg.Z[j], sj, 
                           cfg.X[k], cfg.Y[k], cfg.Z[k], sk);

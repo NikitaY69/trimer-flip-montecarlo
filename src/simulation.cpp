@@ -133,7 +133,7 @@ void TryDisp(configuration& cfg, int j, double T){
 
 //  Tries swapping two particles diameters in the molecule containing particle j
 void TryFlip(configuration& cfg, int j, double T){
-    int a = rand() % 2; int k = cfg.BN[j][a]; 
+    int a = rand() % 2; int k = cfg.bonded_neighbours[j][a]; 
     // Energy of the two clusters before the move attempt
     double V_old = V(cfg, j) + V(cfg, k);
     // Temporarily saving old configurations

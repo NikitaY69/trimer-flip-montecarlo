@@ -24,7 +24,7 @@ void configuration::UpdateCM_coord(){
 
 // Method to calculate the verlet lists associated to each particle
 void configuration::UpdateNL(){
-    NL.clear(); NL = std::vector < std::vector <int> > (N);
+    neighbours_list.clear(); neighbours_list = std::vector < std::vector <int> > (N);
     for (int j=0; j<N-1; j++){
         for (int i=j+1; i<N; i++){
             double xij = bcs(X[i], X[j]); 
@@ -32,8 +32,8 @@ void configuration::UpdateNL(){
             double zij = bcs(Z[i], Z[j]);
             double rij2 = (xij*xij)+(yij*yij)+(zij*zij);
             if (rij2 < neighbours_radius_squared && i != j){
-                NL[j].push_back(i);
-                NL[i].push_back(j);
+                neighbours_list[j].push_back(i);
+                neighbours_list[i].push_back(j);
             }
         }
     }
@@ -42,11 +42,11 @@ void configuration::UpdateNL(){
 // Retrieves bonded particles for all particles (done only once)
 // ATM it is implicit that configurations are written in the trimers index order
 void configuration::GetBonds(){
-    BN.clear(); BN = std::vector < std::vector<int> > (N);
+    bonded_neighbours.clear(); bonded_neighbours = std::vector < std::vector<int> > (N);
     for (int i=0; i<N; i+=3){
-        BN[i].push_back(i+1); BN[i].push_back(i+2);
-        BN[i+1].push_back(i); BN[i+1].push_back(i+2);
-        BN[i+2].push_back(i); BN[i+2].push_back(i+1);
+        bonded_neighbours[i].push_back(i+1); bonded_neighbours[i].push_back(i+2);
+        bonded_neighbours[i+1].push_back(i); bonded_neighbours[i+1].push_back(i+2);
+        bonded_neighbours[i+2].push_back(i); bonded_neighbours[i+2].push_back(i+1);
     }
 }
 
