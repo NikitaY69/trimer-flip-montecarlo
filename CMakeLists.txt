@@ -66,7 +66,11 @@ add_library(TFMC_lib STATIC ${SRC_FILES})
 target_link_libraries(TFMC_lib Boost::program_options Boost::json Boost::filesystem indicators::indicators)
 
 # Add compiler options for the library
-target_compile_options(TFMC_lib PUBLIC -O3 -mfma -mbmi2 -flto)
+if(NOT APPLE)  # Only add these flags if not on macOS
+    target_compile_options(TFMC_lib PUBLIC -O3 -mfma -mbmi2 -flto)
+else()
+    target_compile_options(TFMC_lib PUBLIC -O3 -flto)  # macOS doesn't need mfma, mbmi2
+endif()
 
 # Add executable for the main application
 add_executable(TFMC src/main.cpp)
