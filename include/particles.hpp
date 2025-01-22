@@ -1,33 +1,83 @@
+/**
+ * @file particles.hpp
+ * @brief Structures and functions for particle configurations and interactions.
+ *
+ * This module defines the `configuration` structure to represent the state of particles
+ * in a simulation, including their positions, bonded interactions, and Verlet lists.
+ * It also provides utility functions for handling periodic boundary conditions and
+ * managing particle coordinates.
+ */
+
 #ifndef PARTICLES_H
 #define PARTICLES_H
 
 #include <vector>
 #include "globals.hpp"
 
-// Structure to keep track of the evolution of configurations
+/**
+ * @brief Structure to keep track of the evolution of configurations.
+ */
 struct configuration {
-    std::vector <double> X, Y, Z, Xfull, Yfull, Zfull, X0, Y0, Z0;
-    std::vector <int> S;
-    // X,Y,Z: size N vectors containing particles coordinates inside main box
-    // Xfull, Yfull, Zfull: size N vectors containing particles 
-    // X0, Y0, Z0: size N vectors containing particles coordinates at last neighbours update
-    // S: size N vector containing particles diameters
-    std::vector < std::vector<int> > NL, BN; // verlet lists and bonded particles for each particle
-    double XCM, YCM, ZCM; // center of mass coordinates
+    std::vector<double> X;      ///< Particles' X coordinates inside main box
+    std::vector<double> Y;      ///< Particles' Y coordinates inside main box
+    std::vector<double> Z;      ///< Particles' Z coordinates inside main box
+    std::vector<double> Xfull;  ///< Particles' real X coordinates (for dynamical purposes)
+    std::vector<double> Yfull;  ///< Particles' real Y coordinates (for dynamical purposes)
+    std::vector<double> Zfull;  ///< Particles' real Z coordinates (for dynamical purposes)
+    std::vector<double> X0;     ///< Particles' X coordinates at last neighbors update
+    std::vector<double> Y0;     ///< Particles' Y coordinates at last neighbors update
+    std::vector<double> Z0;     ///< Particles' Z coordinates at last neighbors update
+    std::vector<int> S;         ///< Particles' diameters
+    std::vector<std::vector<int>> NL; ///< Verlet lists for each particle
+    std::vector<std::vector<int>> BN; ///< Bonded particles for each particle
+    double XCM; ///< Center of mass X coordinate
+    double YCM; ///< Center of mass Y coordinate
+    double ZCM; ///< Center of mass Z coordinate
     
-    // Constructor to initialize vectors
-    configuration(): X(N), Y(N), Z(N), Xfull(N), Yfull(N), Zfull(N), 
-                     X0(N), Y0(N), Z0(N), S(N), // 
-                     NL(N), BN(N),
-                     XCM(0), YCM(0), ZCM(0){};
-    // Method to calculate center of mass coordinates
+    /**
+     * @brief Constructor to initialize vectors.
+     */
+    configuration() 
+        : X(N), Y(N), Z(N), Xfull(N), Yfull(N), Zfull(N), 
+          X0(N), Y0(N), Z0(N), S(N), NL(N), BN(N), 
+          XCM(0), YCM(0), ZCM(0) {}
+
+    /**
+     * @brief Method to calculate center of mass coordinates.
+     */
     void UpdateCM_coord();
-    // Method to update the verlet lists for each particle
-    void UpdateNL(), GetBonds();
-    // Method to check whether or not to update the neighbours list
+
+    /**
+     * @brief Method to update the verlet lists for each particle.
+     */
+    void UpdateNL();
+
+    /**
+     * @brief Method to retrieve bonded particles for all particles.
+     */
+    void GetBonds();
+
+    /**
+     * @brief Method to check whether or not to update the neighbors list.
+     */
     void CheckNL();
 };
 
-double bcs(double a, double b), Pshift(double a);
+/**
+ * @brief Calculates difference of a and b while applying periodic boundary conditions.
+ * 
+ * @param a First coordinate
+ * @param b Second coordinate
+ * @return Adjusted coordinate difference
+ */
+double bcs(double a, double b);
 
-#endif
+/**
+ * @brief Shifts coordinate inside main box.
+ * 
+ * @param a Coordinate to be shifted
+ * @return Shifted coordinate
+ */
+double Pshift(double a);
+
+#endif // PARTICLES_H
