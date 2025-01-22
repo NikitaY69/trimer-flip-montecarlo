@@ -39,6 +39,11 @@ const double sigmaMax = 1.1;
 const double diameters[3] = {0.9, 1.0, 1.1};
 
 /**
+ * @brief Density of the system
+ */
+const double density = 1.2;
+
+/**
  * @brief Generates a random number between 0 and 1.
  */
 #define ranf() \
