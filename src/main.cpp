@@ -66,7 +66,7 @@ int main(int argc, const char * argv[]) {
         // Make outdir and copy json file
         MakeOutDir(rootdir, params_path);
         // Do simulation
-        MonteCarloRun(initconf, T, tau, cycles, tw, p_flip, observables, rootdir, logPoints, linPoints); 
+        MonteCarloRun(initconf, T, tau, cycles, tw, p_flip, observables, rootdir, logPoints, linPoints, true); 
     }
     
     double time_elapsed = time(NULL) - t0;

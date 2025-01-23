@@ -67,7 +67,8 @@ TEST_CASE("Test Monte Carlo Run", "[test_simulation][MonteCarloRun]") {
     MakeOutDir(out, params_path);
 
     // Running
-    MonteCarloRun(cfg, T, tau, cycles, tw, p_flip, observables, out, n_log, n_lin);
+    bool progress_bar = false;
+    MonteCarloRun(cfg, T, tau, cycles, tw, p_flip, observables, out, n_log, n_lin, progress_bar);
 
     SECTION("Check if the dynamics is correct") {
         std::string last_cfg = out + "configs/cfg_500.xy";

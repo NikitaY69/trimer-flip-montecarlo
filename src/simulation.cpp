@@ -29,7 +29,7 @@ indicators::ProgressBar bar{
 
 // Monte Carlo Simulation loop
 void MonteCarloRun(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip, 
-        std::vector <std::string>& observables, std::string& out, int n_log, int n_lin){
+        std::vector <std::string>& observables, std::string& out, int n_log, int n_lin, bool progress_bar){
             
     int steps = tw*(cycles-1)+tau;
     int dataCounter=0;
@@ -100,11 +100,10 @@ void MonteCarloRun(configuration& cfg, double T, int tau, int cycles, int tw, do
             else TryFlip(cfg, floor(ranf()*N), T); //Flip probability 0.2
         }
         
-        if((t-1)%(steps/100)==0) bar.tick();
-        
-    }; // Flush progress bar to 100% and hide it
-    bar.set_progress(100);
-    bar.mark_as_completed();
+        if (progress_bar){
+            if((t-1)%(steps/100)==0) bar.tick();
+        }
+    }; 
     
     log_obs.close();
 }

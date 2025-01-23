@@ -28,9 +28,10 @@
  * @param out Output directory.
  * @param n_log Number of log-spaced points.
  * @param n_lin Number of linear-spaced points.
+ * @param progress_bar True/False statement to output progress_bar
  */
 void MonteCarloRun(configuration& cfg, double T, int tau, int cycles, int tw, double p_flip, 
-        std::vector <std::string>& observables, std::string& out, int n_log, int n_lin);
+        std::vector <std::string>& observables, std::string& out, int n_log, int n_lin, bool progress_bar);
 
 /**
  * @brief Tries displacing one particle.
