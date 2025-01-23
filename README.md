@@ -16,10 +16,11 @@ we use a purely attractive _Finitely Extensible Nonlinear Elastic_ (FENE) potent
 For more informations about the scientific background and particularly our package dynamical speedup compared to standard simulation methods, the reader is invited to consult `docs/report.pdf`.
 
 ## Installation
-Our project is guaranteed to run on linux-based systems as we personally use it 
-on a cluster running a very old version of Debian. Moreover, we tested it for C++ 11, 14 and 17 on the latest version of Ubuntu using
-github CI workflows and it works just as fine. The build tests for macos systems
-did not pass. We are currently investigating the problem and we hope to address this issue very soon. The procedure to install our project is described next.
+Our project is guaranteed to run on linux-based AND macos systems. We personally used it 
+on a cluster running a very old version of Debian with C++11. Moreover, we tested it for C++ 11, 14 and 17 on the latest version of Ubuntu and MacOS using
+github CI workflows and it works just as fine. The compiler used were `g++` for linux and `clang` for macos (automatically detected by CMake). 
+
+The procedure to install our project is described next.
 
 1. Clone the repository:
     ```bash
@@ -51,7 +52,7 @@ did not pass. We are currently investigating the problem and we hope to address 
     cd build
     cmake ..
     make
-    make install
+    sudo make install
     ```
     In case you are working on a remote machine and you don't have access to root files, you can specify the installation root by replacing the third command with 
     ```bash
@@ -61,6 +62,7 @@ did not pass. We are currently investigating the problem and we hope to address 
    ```bash
    ctest --output-on-failure
    ```
+   The integration test `test_simulation` will however fail on macos not because of bad building but because we used a deprecated random number generator for macos (the results are different). 
 ## Usage
 ### Executable
 TFMC provides a command-line executable that is parsed as follows
