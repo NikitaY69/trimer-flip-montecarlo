@@ -28,11 +28,10 @@ int main(int argc, const char * argv[]) {
     std::string params_path;
     std::string rootdir;
     std::vector <std::string> observables;
-    int seed;
     bool norun;
     
     // Parse command line arguments
-    if (!ParseCMDLine(argc, argv, input, params_path, observables, seed)){
+    if (!ParseCMDLine(argc, argv, input, params_path, observables)){
         return 1;
     };
 
@@ -42,7 +41,7 @@ int main(int argc, const char * argv[]) {
     }
 
     // Random number seed
-    srand(seed);
+    srand(time(NULL));
 
     // Recalculating size
     Size = pow(N/density, 1./3.);

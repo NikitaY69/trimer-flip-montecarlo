@@ -9,8 +9,7 @@ TEST_CASE("Test ParseCMDLine function", "[test_utils][ParseCMDLine]") {
         "program", 
         "--init", "input.cfg", 
         "--params", "params.json", 
-        "--observables", "MSD", "FS", 
-        "--seed", "12345"};
+        "--observables", "MSD", "FS"};
     int argc = sizeof(argv) / sizeof(argv[0]);
 
     std::string input;
@@ -18,10 +17,9 @@ TEST_CASE("Test ParseCMDLine function", "[test_utils][ParseCMDLine]") {
     std::vector<std::string> observables;
     int seed;
 
-    bool result = ParseCMDLine(argc, argv, input, params, observables, seed);
+    bool result = ParseCMDLine(argc, argv, input, params, observables);
     REQUIRE(result == true);
     REQUIRE(input == "input.cfg");
     REQUIRE(params == "params.json");
     REQUIRE(observables.size() == 2);
-    REQUIRE(seed == 12345);
 }

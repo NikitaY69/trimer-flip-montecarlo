@@ -25,14 +25,12 @@
  * @param input Path to initial configuration file.
  * @param params Path to JSON file for simulation parameters.
  * @param observables List of observables to compute.
- * @param seed Random seed.
  * @return true if parsing was successful, false otherwise.
  */
 bool ParseCMDLine(int argc, const char* argv[],
                         std::string& input,
                         std::string& params,
-                        std::vector<std::string>& observables,
-                        int& seed);
+                        std::vector<std::string>& observables);
 
 /**
  * @brief Reads parameters from a JSON file.
