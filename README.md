@@ -4,10 +4,10 @@ A command-line executable performing Flip Monte Carlo (FMC) simulations of glass
 ## Scientific overview 
 Our project generalizes the particle-swap move ([A. Ninarello _et al._, Phys. Rev. X 7, 021039 (2019)](https://link.aps.org/doi/10.1103/PhysRevX.7.021039)) to 3-dimensional trimer-mixtures. The latter has proven to drastically speed-up the dynamics of glassy polydisperse systems in a range of dimensions. 
 
-Our model consists of molecules composed of three particles A, B, C of equal mass $m=1$ and of diameters 
-$\sigma_\mathrm{A} = 0.9,~\sigma_\mathrm{B} = 1.0,~\sigma_\mathrm{C} = 1.1$. Particles fill the simulation volume with density $\rho=1.2$. 
+Our model consists of molecules composed of three particles A, B, C of equal mass \f$m=1\f$ and of diameters 
+\f$\sigma_\mathrm{A} = 0.9,~\sigma_\mathrm{B} = 1.0,~\sigma_\mathrm{C} = 1.1\f$. Particles fill the simulation volume with density \f$\rho=1.2\f$. 
 We employ periodic boundary conditions with the minimum image conventions in a cubic
-box of size $L=(N/\rho)^{1/3}$.  
+box of size \f$L=(N/\rho)^{1/3}\f$.  
 
 The interactions between particles (both intra-molecular and inter-molecular) are governed
 by a purely repulsive Weeks-Chandler-Andersen (WCA) potential. For bounded particles within the same molecule, 
@@ -22,10 +22,11 @@ github CI workflows and it works just as fine. The build tests for macos systems
 did not pass. We are currently investigating the problem and we hope to address this issue very soon. The procedure to install our project is described next.
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/NikitaY69/trimer-flip-montecarlo.git
-   cd trimer-flip-montecarlo/
-   ```
+    ```bash
+    git clone https://github.com/NikitaY69/trimer-flip-montecarlo.git
+    cd trimer-flip-montecarlo/
+    ```
+
 2. Make sure to possess the following dependencies: 
     - Boost (latest version)
     - CMake (latest version)
@@ -33,13 +34,17 @@ did not pass. We are currently investigating the problem and we hope to address 
     All other third_party libraries are directly fetched using CMake. We decided not to fetch Boost because of its long installation time. The building phase (see below) might work with older versions of CMake but we do not guarantee it. 
 
     To install Boost on __linux-based systems__, you can use 
-    ```bash
+
+    ```
     sudo apt-get install libboost-all-dev
     ```
+
     On __MacOS__, you can execute
-    ```bash
+    
+    ```
     brew install boost
     ```
+
 3. Build the project
     ```bash
     mkdir build
@@ -64,7 +69,7 @@ TFMC --init ${INPUT_FILE} --params ${PARAMS_JSON_FILE} [--observables U MSD Fs]
 ```
 - `INPUT_FILE`: path to starting configuration with data structure `MOL_INDEX TYPE X Y Z` (see `tests/config/initconf.xyz` for a reference).
 
-    The `MOL_INDEX` column is not mandatory as our script automatically supposes that particles are sorted in the order of the order of their molecule index. 
+    The `MOL_INDEX` column is not mandatory as our script automatically supposes that particles are sorted in the order of their molecule index. 
 
     `TYPE` particle type as in A B C (1 2 3)
 
