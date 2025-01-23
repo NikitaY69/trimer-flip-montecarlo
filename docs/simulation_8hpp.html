@@ -126,9 +126,9 @@ $(function(){initNavTree('simulation_8hpp.html',''); initResizable(true); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a70235deeac918b2fc9a91f6ec9b065bd" id="r_a70235deeac918b2fc9a91f6ec9b065bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a70235deeac918b2fc9a91f6ec9b065bd">MonteCarloRun</a> (<a class="el" href="structconfiguration.html">configuration</a> &amp;cfg, double T, int tau, int cycles, int tw, double p_flip, std::vector&lt; std::string &gt; &amp;observables, std::string &amp;out, int n_log, int n_lin)</td></tr>
-<tr class="memdesc:a70235deeac918b2fc9a91f6ec9b065bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs the Monte Carlo simulation.  <br /></td></tr>
-<tr class="separator:a70235deeac918b2fc9a91f6ec9b065bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8abe0d7e689ad4db9da9fb96504532b7" id="r_a8abe0d7e689ad4db9da9fb96504532b7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8abe0d7e689ad4db9da9fb96504532b7">MonteCarloRun</a> (<a class="el" href="structconfiguration.html">configuration</a> &amp;cfg, double T, int tau, int cycles, int tw, double p_flip, std::vector&lt; std::string &gt; &amp;observables, std::string &amp;out, int n_log, int n_lin, bool progress_bar)</td></tr>
+<tr class="memdesc:a8abe0d7e689ad4db9da9fb96504532b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs the Monte Carlo simulation.  <br /></td></tr>
+<tr class="separator:a8abe0d7e689ad4db9da9fb96504532b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af779a027fa1a897c451415431e8f1dc2" id="r_af779a027fa1a897c451415431e8f1dc2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af779a027fa1a897c451415431e8f1dc2">TryDisp</a> (<a class="el" href="structconfiguration.html">configuration</a> &amp;cfg, int j, double T)</td></tr>
 <tr class="memdesc:af779a027fa1a897c451415431e8f1dc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries displacing one particle.  <br /></td></tr>
 <tr class="separator:af779a027fa1a897c451415431e8f1dc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -197,8 +197,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a70235deeac918b2fc9a91f6ec9b065bd" name="a70235deeac918b2fc9a91f6ec9b065bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a70235deeac918b2fc9a91f6ec9b065bd">&#9670;&#160;</a></span>MonteCarloRun()</h2>
+<a id="a8abe0d7e689ad4db9da9fb96504532b7" name="a8abe0d7e689ad4db9da9fb96504532b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8abe0d7e689ad4db9da9fb96504532b7">&#9670;&#160;</a></span>MonteCarloRun()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -251,7 +251,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>n_lin</em></span>&#160;)</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>n_lin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>progress_bar</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -269,6 +274,7 @@ Functions</h2></td></tr>
     <tr><td class="paramname">out</td><td>Output directory. </td></tr>
     <tr><td class="paramname">n_log</td><td>Number of log-spaced points. </td></tr>
     <tr><td class="paramname">n_lin</td><td>Number of linear-spaced points. </td></tr>
+    <tr><td class="paramname">progress_bar</td><td>True/False statement to output progress_bar </td></tr>
   </table>
   </dd>
 </dl>

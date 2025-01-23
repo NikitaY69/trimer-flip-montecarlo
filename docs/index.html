@@ -121,10 +121,11 @@ Scientific overview</h1>
 <p>Our model consists of molecules composed of three particles A, B, C of equal mass \(m=1\) and of diameters \(\sigma_\mathrm{A} = 0.9,~\sigma_\mathrm{B} = 1.0,~\sigma_\mathrm{C} = 1.1\). Particles fill the simulation volume with density \(\rho=1.2\). We employ periodic boundary conditions with the minimum image conventions in a cubic box of size \(L=(N/\rho)^{1/3}\). <br  />
 </p>
 <p>The interactions between particles (both intra-molecular and inter-molecular) are governed by a purely repulsive Weeks-Chandler-Andersen (WCA) potential. For bounded particles within the same molecule, we use a purely attractive <em>Finitely Extensible Nonlinear Elastic</em> (FENE) potential.</p>
-<p>For more informations about the scientific background and particularly our package dynamical speedup compared to standard simulation methods, the reader is invited to consult <code>docs/report.pdf</code>.</p>
+<p>For more informations about the scientific background and particularly our package dynamical speedup compared to standard simulation methods, the reader is invited to consult <code>cite/report.pdf</code>.</p>
 <h1><a class="anchor" id="autotoc_md2"></a>
 Installation</h1>
-<p>Our project is guaranteed to run on linux-based systems as we personally use it on a cluster running a very old version of Debian. Moreover, we tested it for C++ 11, 14 and 17 on the latest version of Ubuntu using github CI workflows and it works just as fine. The build tests for macos systems did not pass. We are currently investigating the problem and we hope to address this issue very soon. The procedure to install our project is described next.</p>
+<p>Our project is guaranteed to run on linux-based AND macos systems. We personally used it on a cluster running a very old version of Debian with C++11. Moreover, we tested it for C++ 11, 14 and 17 on the latest version of Ubuntu and MacOS using github CI workflows and it works just as fine. The compiler used were <code>g++</code> for linux and <code>clang</code> for macos (automatically detected by CMake).</p>
+<p>The procedure to install our project is described next.</p>
 <ol type="1">
 <li>Clone the repository: <div class="fragment"><div class="line">git clone https://github.com/NikitaY69/trimer-flip-montecarlo.git</div>
 <div class="line">cd trimer-flip-montecarlo/</div>
@@ -143,11 +144,11 @@ Installation</h1>
 <div class="line">cd build</div>
 <div class="line">cmake ..</div>
 <div class="line">make</div>
-<div class="line">make install</div>
+<div class="line">sudo make install</div>
 </div><!-- fragment --> In case you are working on a remote machine and you don't have access to root files, you can specify the installation root by replacing the third command with <div class="fragment"><div class="line">cmake -DCMAKE_INSTALL_PREFIX=/path/to/local ..</div>
 </div><!-- fragment --></li>
 <li>Run tests <div class="fragment"><div class="line">ctest --output-on-failure</div>
-</div><!-- fragment --> </li>
+</div><!-- fragment --> The integration test <code>test_simulation</code> will however fail on macos not because of bad building but because we used a deprecated random number generator for macos (the results are different). </li>
 </ol>
 <h1><a class="anchor" id="autotoc_md3"></a>
 Usage</h1>
