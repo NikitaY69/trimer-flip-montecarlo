@@ -3,18 +3,18 @@ name: CI
 on:
   push:
     branches:
-      - 37-make-it-work-for-macos
+      - main
   pull_request:
     branches:
-      - 37-make-it-work-for-macos
+      - main
 
 jobs:
-  setup-environment:
+  build-and-test:
     runs-on: ${{ matrix.os }}
     
     strategy:
       matrix:
-        os: [macos-latest]
+        os: [ubuntu-latest]
         cpp_version: [11, 14, 17]
 
     continue-on-error: true
