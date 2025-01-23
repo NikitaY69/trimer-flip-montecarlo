@@ -51,10 +51,6 @@ find_package(Boost REQUIRED COMPONENTS program_options json filesystem)
 #     message(FATAL_ERROR "Boost not found")
 # endif()
 
-# Ensure the GCC LTO-friendly archiver and ranlib are used
-set(CMAKE_AR "gcc-ar")
-set(CMAKE_RANLIB "gcc-ranlib")
-
 # Source files for the library
 file(GLOB SRC_FILES "src/particles.cpp" "src/observables.cpp" "src/simulation.cpp"
                     "src/utils.cpp")
@@ -67,6 +63,9 @@ target_link_libraries(TFMC_lib Boost::program_options Boost::json Boost::filesys
 
 # Add compiler options for the library
 if(NOT APPLE)  # Only add these flags if not on macOS
+    # Ensure the GCC LTO-friendly archiver and ranlib are used
+    set(CMAKE_AR "gcc-ar")
+    set(CMAKE_RANLIB "gcc-ranlib")
     target_compile_options(TFMC_lib PUBLIC -O3 -mfma -mbmi2 -flto)
 else()
     target_compile_options(TFMC_lib PUBLIC -O3 -flto)  # macOS doesn't need mfma, mbmi2
