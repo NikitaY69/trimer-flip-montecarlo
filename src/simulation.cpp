@@ -102,7 +102,10 @@ void MonteCarloRun(configuration& cfg, double T, int tau, int cycles, int tw, do
         
         if((t-1)%(steps/100)==0) bar.tick();
         
-    };
+    }; // Flush progress bar to 100% and hide it
+    bar.set_progress(100);
+    bar.mark_as_completed();
+    
     log_obs.close();
 }
 

@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  setup-environment:
+  build-and-test:
     runs-on: ${{ matrix.os }}
     
     strategy:
