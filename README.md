@@ -13,7 +13,7 @@ The interactions between particles (both intra-molecular and inter-molecular) ar
 by a purely repulsive Weeks-Chandler-Andersen (WCA) potential. For bounded particles within the same molecule, 
 we use a purely attractive _Finitely Extensible Nonlinear Elastic_ (FENE) potential. 
 
-For more informations about the scientific background and particularly our package dynamical speedup compared to standard simulation methods, the reader is invited to consult `docs/report.pdf`.
+For more informations about the scientific background and particularly our package dynamical speedup compared to standard simulation methods, the reader is invited to consult `cite/report.pdf`.
 
 ## Installation
 Our project is guaranteed to run on linux-based AND macos systems. We personally used it 
