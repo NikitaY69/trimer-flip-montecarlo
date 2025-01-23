@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['y_0',['Y',['../structconfiguration.html#a19a64ec899893529f9ebdd1a6f66cd9e',1,'configuration']]],
-  ['y0_1',['Y0',['../structconfiguration.html#af56ca36d59ecb4cfec46dcd3e2222ba3',1,'configuration']]],
-  ['ycm_2',['YCM',['../structconfiguration.html#a5024b54b3430ebe77baf923419a7c1a7',1,'configuration']]],
-  ['yfull_3',['Yfull',['../structconfiguration.html#ab11f87b077ade6264b012284896d65a1',1,'configuration']]]
+  ['x_0',['X',['../structconfiguration.html#ab4f0f4b15c94ba25f06ac00cf6dc2b00',1,'configuration']]],
+  ['x0_1',['X0',['../structconfiguration.html#aa5a3a7113e5df010551ab96fb973f68c',1,'configuration']]],
+  ['xcm_2',['XCM',['../structconfiguration.html#a91552f0f57e6dfb6c7021d128d419efe',1,'configuration']]],
+  ['xfull_3',['Xfull',['../structconfiguration.html#ad2b0a0faa9d27227730feef847a2421c',1,'configuration']]]
 ];

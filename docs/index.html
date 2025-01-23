@@ -23,6 +23,13 @@
   $(function() { init_search(); });
 /* @license-end */
 </script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -127,14 +134,29 @@ Installation</h1>
 <li>CMake (latest version)</li>
 </ul>
 <p class="startli">All other third_party libraries are directly fetched using CMake. We decided not to fetch Boost because of its long installation time. The building phase (see below) might work with older versions of CMake but we do not guarantee it.</p>
-<p class="startli">To install Boost on <b>linux-based systems</b>, you can use <code>bash sudo apt-get install libboost-all-dev </code> On <b>MacOS</b>, you can execute <code>bash brew install boost @icode</code></p>
+<p class="startli">To install Boost on <b>linux-based systems</b>, you can use</p>
+<p class="startli"><code> sudo apt-get install libboost-all-dev </code></p>
+<p class="startli">On <b>MacOS</b>, you can execute</p>
+<p class="startli"><code> brew install boost </code></p>
 </li>
-<li><code>Build the project @endicode bash mkdir build cd build cmake .. make make install @icode In case you are working on a remote machine and you don't have access to root files, you can specify the installation root by replacing the third command with @endicode bash cmake -DCMAKE_INSTALL_PREFIX=/path/to/local .. @icode</code></li>
-<li><code>Run tests @endicode bash ctest --output-on-failure @icode ## Usage ### Executable TFMC provides a command-line executable that is parsed as follows @endicode bash TFMC --init ${INPUT_FILE} --params ${PARAMS_JSON_FILE} [--observables U MSD Fs] </code></li>
+<li>Build the project <div class="fragment"><div class="line">mkdir build</div>
+<div class="line">cd build</div>
+<div class="line">cmake ..</div>
+<div class="line">make</div>
+<div class="line">make install</div>
+</div><!-- fragment --> In case you are working on a remote machine and you don't have access to root files, you can specify the installation root by replacing the third command with <div class="fragment"><div class="line">cmake -DCMAKE_INSTALL_PREFIX=/path/to/local ..</div>
+</div><!-- fragment --></li>
+<li>Run tests <div class="fragment"><div class="line">ctest --output-on-failure</div>
+</div><!-- fragment --> </li>
 </ol>
-<ul>
+<h1><a class="anchor" id="autotoc_md3"></a>
+Usage</h1>
+<h2><a class="anchor" id="autotoc_md4"></a>
+Executable</h2>
+<p>TFMC provides a command-line executable that is parsed as follows </p><div class="fragment"><div class="line">TFMC --init ${INPUT_FILE} --params ${PARAMS_JSON_FILE} [--observables U MSD Fs]</div>
+</div><!-- fragment --><ul>
 <li><p class="startli"><code>INPUT_FILE</code>: path to starting configuration with data structure <code>MOL_INDEX TYPE X Y Z</code> (see <code>tests/config/initconf.xyz</code> for a reference).</p>
-<p class="startli">The <code>MOL_INDEX</code> column is not mandatory as our script automatically supposes that particles are sorted in the order of the order of their molecule index.</p>
+<p class="startli">The <code>MOL_INDEX</code> column is not mandatory as our script automatically supposes that particles are sorted in the order of their molecule index.</p>
 <p class="startli"><code>TYPE</code> particle type as in A B C (1 2 3)</p>
 <p class="startli"><code>X Y Z</code> coordinates</p>
 </li>
@@ -153,13 +175,13 @@ Installation</h1>
 <li><code>U MSD Fs</code>: list of observables than can be computed: total potential energy, mean-squared displacement and self-part of the intermediate scattering function. If no <code>--observables</code> is provided, only configurations are written. Observables are computed in the order of their appearance, e.g <code>--observables Fs MSD</code> will output Fs before MSD.</li>
 </ul>
 <p>We are currently developping an observables-only possibility where observables are computed ON TOP of configurations. The later has already been implemented but we did not massively test it.</p>
-<h2><a class="anchor" id="autotoc_md3"></a>
+<h2><a class="anchor" id="autotoc_md5"></a>
 Outputs</h2>
 <p>TFMC outputs configurations in <code>rootdir/configs/</code> and observables in <code>rootdir/obs.txt</code>. Configs are written just like the <code>INPUT_FILE</code> but without the <code>MOL_INDEX</code> column. Observables are written with the data structure <code>t cycle obs1 obs2 ...</code></p>
-<h1><a class="anchor" id="autotoc_md4"></a>
+<h1><a class="anchor" id="autotoc_md6"></a>
 Documentation</h1>
 <p>The documentation of TFMC is available at <a href="https://nikitay69.github.io/trimer-flip-montecarlo/">https://nikitay69.github.io/trimer-flip-montecarlo/</a>.</p>
-<h1><a class="anchor" id="autotoc_md5"></a>
+<h1><a class="anchor" id="autotoc_md7"></a>
 What TFMC is not ?</h1>
 <p>TFMC is NOT a post-processing package. The executable is solely designed to equilibrate configurations at desired temperature and compute observables on the fly. Because the <code>rootdir</code> automatically copies the <code>JSON_PARAMS_FILE</code>, deploying automatized post-processing workflows for massive datasets is extremely easy with Python. On top of that, the HEADER of the <code>obs.txt</code> eases the automatization of workflows. </p>
 </div></div><!-- PageDoc -->

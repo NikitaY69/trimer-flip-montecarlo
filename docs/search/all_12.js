@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['z_0',['Z',['../structconfiguration.html#a7ab4969249313a8f851502da06e93d39',1,'configuration']]],
-  ['z0_1',['Z0',['../structconfiguration.html#a97a2760c4ebb644d1d08d0fe387f46b7',1,'configuration']]],
-  ['zcm_2',['ZCM',['../structconfiguration.html#aed5568b7042d359ae00decde23e67a29',1,'configuration']]],
-  ['zfull_3',['Zfull',['../structconfiguration.html#ae7f38bfbba00ac402ceffd3e68a79d4f',1,'configuration']]]
+  ['y_0',['Y',['../structconfiguration.html#a19a64ec899893529f9ebdd1a6f66cd9e',1,'configuration']]],
+  ['y0_1',['Y0',['../structconfiguration.html#af56ca36d59ecb4cfec46dcd3e2222ba3',1,'configuration']]],
+  ['ycm_2',['YCM',['../structconfiguration.html#a5024b54b3430ebe77baf923419a7c1a7',1,'configuration']]],
+  ['yfull_3',['Yfull',['../structconfiguration.html#ab11f87b077ade6264b012284896d65a1',1,'configuration']]]
 ];

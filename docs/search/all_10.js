@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['x_0',['X',['../structconfiguration.html#ab4f0f4b15c94ba25f06ac00cf6dc2b00',1,'configuration']]],
-  ['x0_1',['X0',['../structconfiguration.html#aa5a3a7113e5df010551ab96fb973f68c',1,'configuration']]],
-  ['xcm_2',['XCM',['../structconfiguration.html#a91552f0f57e6dfb6c7021d128d419efe',1,'configuration']]],
-  ['xfull_3',['Xfull',['../structconfiguration.html#ad2b0a0faa9d27227730feef847a2421c',1,'configuration']]]
+  ['wcapair_0',['WCAPair',['../observables_8hpp.html#ae525dc7622ce18191825f4d0a9e799ef',1,'observables.hpp']]],
+  ['what_20tfmc_20is_20not_1',['What TFMC is not ?',['../index.html#autotoc_md7',1,'']]],
+  ['writeobs_2',['WriteObs',['../utils_8hpp.html#a7768eab2db6156fbf3bed2f0ebf26f92',1,'utils.hpp']]],
+  ['writetrimcfg_3',['WriteTrimCFG',['../utils_8hpp.html#a07e3bb41d44803bfba7484314696c3ba',1,'utils.hpp']]]
 ];
